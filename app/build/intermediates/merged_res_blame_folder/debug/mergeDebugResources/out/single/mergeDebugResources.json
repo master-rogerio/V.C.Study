@@ -1,0 +1,158 @@
+[
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_environments.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_environments.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_item_deck.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\item_deck.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_park_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_park_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_item_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\item_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_environments.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_environments.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_dialog_add_flashcard.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_flashcard.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_empty_deck.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_empty_deck.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_selected_icon_background.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\selected_icon_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_restaurant_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_restaurant_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_delete.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_delete.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_item_flashcard.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\item_flashcard.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\raw_flashcards_animation.json.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\raw\\flashcards_animation.json"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_home.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\anim_slide_in_right.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\anim\\slide_in_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_icon_selector.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\icon_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_school_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_school_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\menu_exercise_menu.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\menu\\exercise_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.study.app-debug-42:/layout_activity_home.xml.flat",
+        "source": "com.example.study.app-main-44:/layout/activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_exercise.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_exercise.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_empty_deck_state.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\empty_deck_state.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_add.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_add.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_deck.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_deck.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_exercise_selection.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_exercise_selection.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_dialog_add_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_exercise.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_exercise.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_empty_flashcards.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_empty_flashcards.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_work_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_work_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_deck.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_deck.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_home_location.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_home_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_empty_flashcards_state.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\empty_flashcards_state.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\layout_dialog_add_deck.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_deck.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-debug-42:\\drawable_ic_edit_minimal.xml.flat",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\drawable\\ic_edit_minimal.xml"
+    }
+]

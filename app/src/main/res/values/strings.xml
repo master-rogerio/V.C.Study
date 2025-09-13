@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meus Baralhos</string>
+    <string name="add_flashcard">Adicionar Flashcard</string>
+    <string name="front_side">Frente</string>
+    <string name="back_side">Verso</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Excluir</string>
+    <string name="next_review">Próxima revisão: %1$s</string>
+    <string name="no_cards">Nenhum flashcard disponível</string>
+    <string name="quality_1">Muito difícil</string>
+    <string name="quality_2">Difícil</string>
+    <string name="quality_3">Bom</string>
+    <string name="quality_4">Fácil</string>
+    <string name="quality_5">Muito fácil</string>
+    <string name="add_deck">Adicionar Deck</string>
+    <string name="edit_deck">Editar Deck</string>
+    <string name="deck_name">Nome do Deck</string>
+    <string name="deck_theme">Tema do Deck</string>
+    <string name="card_count">%1$d cartões</string>
+    <string name="no_decks">Nenhum deck disponível</string>
+    <string name="delete_deck">Excluir Deck</string>
+    <string name="delete_deck_message">Deseja realmente excluir este deck? Todos os flashcards associados também serão excluídos.</string>
+    <string name="edit_flashcard">Editar Flashcard</string>
+    <string name="deck_options">Opções do Deck</string>
+    <string name="open">Abrir</string>
+    <string name="edit">Editar</string>
+    <string name="review">Revisar</string>
+    <string name="flashcard_options">Opções do Flashcard</string>
+    <string name="deck_header">Deck: %1$s</string>
+    <string name="delete_deck_from_edit">Excluir Deck</string>
+    <string name="empty_deck_title">Nenhum deck encontrado</string>
+    <string name="empty_deck_message">Crie seu primeiro deck para começar a estudar!</string>
+    <string name="empty_flashcards_title">Nenhum flashcard encontrado</string>
+    <string name="empty_flashcards_message">Adicione flashcards a este deck para começar a estudar!</string>
+    <string name="environments">Ambientes</string>
+    
+    <!-- Strings para a tela de Ambientes -->
+    <string name="add_location">Adicionar Localização</string>
+    <string name="add_new_location">Adicionar nova localização</string>
+    <string name="location_name">Nome da localização</string>
+    <string name="select_icon">Selecione um ícone</string>
+    <string name="save_location">Salvar localização</string>
+    <string name="delete_location">Excluir localização</string>
+    <string name="no_locations">Nenhuma localização cadastrada</string>
+    <string name="location_coordinates">Lat: %1$.4f, Long: %2$.4f</string>
+    <string name="location_saved">Localização salva com sucesso</string>
+    <string name="location_deleted">Localização excluída com sucesso</string>
+    <string name="error_saving_location">Erro ao salvar localização</string>
+    <string name="error_location_permission">Permissão de localização necessária</string>
+</resources>
