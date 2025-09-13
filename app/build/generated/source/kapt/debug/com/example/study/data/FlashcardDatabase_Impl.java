@@ -33,18 +33,21 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
 
   private volatile UserLocationDao _userLocationDao;
 
+  private volatile FavoriteLocationDao _favoriteLocationDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(5) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(7) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `decks` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `theme` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `flashcards` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `deckId` INTEGER NOT NULL, `type` TEXT NOT NULL, `front` TEXT NOT NULL, `back` TEXT NOT NULL, `clozeText` TEXT, `clozeAnswer` TEXT, `options` TEXT, `correctOptionIndex` INTEGER, `lastReviewed` INTEGER, `nextReviewDate` INTEGER, `easeFactor` REAL NOT NULL, `interval` INTEGER NOT NULL, `repetitions` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`deckId`) REFERENCES `decks`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_flashcards_deckId` ON `flashcards` (`deckId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_location` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `timestamp` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_locations` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `radius` INTEGER NOT NULL, `iconName` TEXT NOT NULL, `preferredCardTypes` TEXT NOT NULL, `studySessionCount` INTEGER NOT NULL, `averagePerformance` REAL NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a6b6b0d0358b2f9e1fa64b6debc9a515')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a000fc704dbbf7f6a7138c145f654dcd')");
       }
 
       @Override
@@ -52,6 +55,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
         db.execSQL("DROP TABLE IF EXISTS `decks`");
         db.execSQL("DROP TABLE IF EXISTS `flashcards`");
         db.execSQL("DROP TABLE IF EXISTS `user_location`");
+        db.execSQL("DROP TABLE IF EXISTS `favorite_locations`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -153,9 +157,28 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
                   + " Expected:\n" + _infoUserLocation + "\n"
                   + " Found:\n" + _existingUserLocation);
         }
+        final HashMap<String, TableInfo.Column> _columnsFavoriteLocations = new HashMap<String, TableInfo.Column>(9);
+        _columnsFavoriteLocations.put("id", new TableInfo.Column("id", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("latitude", new TableInfo.Column("latitude", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("longitude", new TableInfo.Column("longitude", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("radius", new TableInfo.Column("radius", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("iconName", new TableInfo.Column("iconName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("preferredCardTypes", new TableInfo.Column("preferredCardTypes", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("studySessionCount", new TableInfo.Column("studySessionCount", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("averagePerformance", new TableInfo.Column("averagePerformance", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysFavoriteLocations = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesFavoriteLocations = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoFavoriteLocations = new TableInfo("favorite_locations", _columnsFavoriteLocations, _foreignKeysFavoriteLocations, _indicesFavoriteLocations);
+        final TableInfo _existingFavoriteLocations = TableInfo.read(db, "favorite_locations");
+        if (!_infoFavoriteLocations.equals(_existingFavoriteLocations)) {
+          return new RoomOpenHelper.ValidationResult(false, "favorite_locations(com.example.study.data.FavoriteLocation).\n"
+                  + " Expected:\n" + _infoFavoriteLocations + "\n"
+                  + " Found:\n" + _existingFavoriteLocations);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "a6b6b0d0358b2f9e1fa64b6debc9a515", "c6c05b2d6bea150cdf2987378ee009a6");
+    }, "a000fc704dbbf7f6a7138c145f654dcd", "a8881d9f567eef067b093cc8d7dbcd5a");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -166,7 +189,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "decks","flashcards","user_location");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "decks","flashcards","user_location","favorite_locations");
   }
 
   @Override
@@ -185,6 +208,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
       _db.execSQL("DELETE FROM `decks`");
       _db.execSQL("DELETE FROM `flashcards`");
       _db.execSQL("DELETE FROM `user_location`");
+      _db.execSQL("DELETE FROM `favorite_locations`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -205,6 +229,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
     _typeConvertersMap.put(FlashcardDao.class, FlashcardDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(DeckDao.class, DeckDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(UserLocationDao.class, UserLocationDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(FavoriteLocationDao.class, FavoriteLocationDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -261,6 +286,20 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
           _userLocationDao = new UserLocationDao_Impl(this);
         }
         return _userLocationDao;
+      }
+    }
+  }
+
+  @Override
+  public FavoriteLocationDao favoriteLocationDao() {
+    if (_favoriteLocationDao != null) {
+      return _favoriteLocationDao;
+    } else {
+      synchronized(this) {
+        if(_favoriteLocationDao == null) {
+          _favoriteLocationDao = new FavoriteLocationDao_Impl(this);
+        }
+        return _favoriteLocationDao;
       }
     }
   }

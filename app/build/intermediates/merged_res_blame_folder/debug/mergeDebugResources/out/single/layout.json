@@ -12,12 +12,12 @@
         "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\item_deck.xml"
     },
     {
-        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-mergeDebugResources-41:\\layout\\dialog_add_deck.xml",
-        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_deck.xml"
-    },
-    {
         "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-mergeDebugResources-41:\\layout\\dialog_add_flashcard.xml",
         "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_flashcard.xml"
+    },
+    {
+        "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-mergeDebugResources-41:\\layout\\dialog_add_deck.xml",
+        "source": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-main-44:\\layout\\dialog_add_deck.xml"
     },
     {
         "merged": "C:\\Users\\Roger ThaT\\.gradle\\daemon\\8.10.2\\com.example.study.app-mergeDebugResources-41:\\layout\\item_location.xml",

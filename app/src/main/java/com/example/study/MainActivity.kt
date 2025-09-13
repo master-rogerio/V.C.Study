@@ -1,6 +1,188 @@
 package com.example.study
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.study.data.Flashcard
+import com.example.study.databinding.ActivityMainBinding
+import com.example.study.ui.FlashcardAdapter
+import com.example.study.ui.FlashcardViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: FlashcardViewModel
+    private lateinit var adapter: FlashcardAdapter
+    private var currentDeckId: Long = -1
+    private var currentDeckName: String = ""
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        currentDeckId = intent.getLongExtra("deckId", -1)
+        currentDeckName = intent.getStringExtra("deckName") ?: ""
+        supportActionBar?.title = currentDeckName
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        viewModel = ViewModelProvider(this)[FlashcardViewModel::class.java]
+        setupRecyclerView()
+        setupFab()
+        setupBottomNavigation()
+        observeFlashcards()
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        requestUserLocation()
+    }
+
+    private fun setupBottomNavigation() {
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_decks -> {
+                    startActivity(Intent(this, DeckActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_exercise -> {
+                    startActivity(Intent(this, ExerciseSelectionActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_environments -> {
+                    startActivity(Intent(this, EnvironmentsActivity::class.java))
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = FlashcardAdapter(
+            onItemClick = { flashcard -> showQualityDialog(flashcard) },
+            onEditClick = { flashcard -> showAddFlashcardDialog(flashcard) }
+        )
+
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = this@MainActivity.adapter
+        }
+    }
+
+    private fun setupFab() {
+        binding.fab.setOnClickListener {
+            showAddFlashcardDialog()
+        }
+    }
+
+    private fun observeFlashcards() {
+        lifecycleScope.launch {
+            if (currentDeckId != -1L) {
+                viewModel.getFlashcardsForDeckByCreation(currentDeckId).collectLatest { flashcards ->
+                    adapter.submitList(flashcards)
+                    updateEmptyView(flashcards.isEmpty())
+                }
+            } else {
+                viewModel.dueFlashcards.collectLatest { flashcards ->
+                    adapter.submitList(flashcards)
+                    updateEmptyView(flashcards.isEmpty())
+                }
+            }
+        }
+    }
+
+    private fun updateEmptyView(isEmpty: Boolean) {
+        binding.emptyView.root.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.recyclerview.visibility = if (isEmpty) View.GONE else View.VISIBLE
+    }
+
+    private fun showAddFlashcardDialog(flashcard: Flashcard? = null) {
+        // ...
+    }
+/*
+    private fun showDeleteDialog(flashcard: Flashcard) {
+        // ...
+    }
+
+ */
+
+    private fun showQualityDialog(flashcard: Flashcard) {
+        // ...
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private fun requestUserLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1001)
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+                viewModel.saveUserLocation(latitude, longitude)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1001 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            requestUserLocation()
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.exercise_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_shuffle -> {
+                true
+            }
+            R.id.action_environments -> {
+                startActivity(Intent(this, EnvironmentsActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+}
+
+/*package com.example.study
+
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -398,3 +580,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+ */

@@ -1,6 +1,233 @@
 package com.example.study
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.study.adapter.LocationAdapter
+import com.example.study.data.FlashcardType
+import com.example.study.databinding.ActivityEnvironmentsBinding
+import com.example.study.databinding.DialogAddLocationBinding
+import com.example.study.ui.FlashcardViewModel
+import com.example.study.util.GeofenceHelper
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import android.widget.RadioButton
+
+class EnvironmentsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEnvironmentsBinding
+    private lateinit var viewModel: FlashcardViewModel
+    private lateinit var adapter: LocationAdapter
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var geofenceHelper: GeofenceHelper
+
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
+        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        // CORRIGIDO: Substituído 'getOrDefault' pelo operador Elvis '?:' para compatibilidade
+        when {
+            permissions[Manifest.permission.ACCESS_BACKGROUND_LOCATION] ?: false -> {
+                observeLocations()
+            }
+            permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                requestBackgroundLocationPermission()
+            }
+            else -> {
+                Toast.makeText(this, "Permissão de localização é necessária para esta funcionalidade.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityEnvironmentsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        supportActionBar?.title = getString(R.string.environments)
+
+        viewModel = ViewModelProvider(this)[FlashcardViewModel::class.java]
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        geofenceHelper = GeofenceHelper(this)
+
+        setupRecyclerView()
+        setupFab()
+        setupBottomNavigation()
+        checkPermissionsAndObserve()
+    }
+
+    private fun checkPermissionsAndObserve() {
+        if (hasFineLocationPermission() && hasBackgroundLocationPermission()) {
+            observeLocations()
+        } else if (!hasFineLocationPermission()){
+            requestFineLocationPermission()
+        } else {
+            requestBackgroundLocationPermission()
+        }
+    }
+
+    private fun hasFineLocationPermission() =
+        ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+    private fun hasBackgroundLocationPermission() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+
+    private fun requestFineLocationPermission() {
+        permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+    }
+
+    private fun requestBackgroundLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            AlertDialog.Builder(this)
+                .setTitle("Permissão Adicional Necessária")
+                .setMessage("Para que as notificações de estudo funcionem com a aplicação fechada, por favor, escolha 'Permitir o tempo todo' na janela de permissões.")
+                .setPositiveButton("Ok") { _, _ ->
+                    permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION))
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = LocationAdapter(
+            this,
+            onDeleteClick = { location ->
+                viewModel.deleteFavoriteLocation(location.id)
+                Toast.makeText(this, R.string.location_deleted, Toast.LENGTH_SHORT).show()
+            }
+        )
+        binding.rvLocations.layoutManager = LinearLayoutManager(this)
+        binding.rvLocations.adapter = adapter
+    }
+
+    private fun observeLocations() {
+        viewModel.getAllFavoriteLocations().observe(this) { locations ->
+            adapter.submitList(locations)
+            binding.tvEmptyLocations.visibility = if (locations.isNullOrEmpty()) View.VISIBLE else View.GONE
+            binding.rvLocations.visibility = if (locations.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+            if (hasBackgroundLocationPermission() && locations.isNotEmpty()) {
+                Log.d("Geofence", "A adicionar ${locations.size} geofences.")
+                geofenceHelper.addGeofences(locations, geofencePendingIntent)
+            }
+        }
+    }
+
+    private fun setupFab() {
+        binding.fabAddLocation.setOnClickListener {
+            showAddLocationDialog()
+        }
+    }
+
+    @SuppressLint("MissingPermission") // Adicionado para informar que a permissão é verificada antes
+    private fun showAddLocationDialog() {
+        if (!hasFineLocationPermission()) {
+            requestFineLocationPermission()
+            return
+        }
+
+        val dialogBinding = DialogAddLocationBinding.inflate(layoutInflater)
+        val dialogView = dialogBinding.root
+
+        val dialog = com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.add_location)
+            .setView(dialogView)
+            .setPositiveButton(R.string.save_location, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+
+        dialog.show()
+
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val locationName = dialogBinding.etLocationName.text.toString().trim()
+
+            if (locationName.isEmpty()) {
+                dialogBinding.tilLocationName.error = "Nome é obrigatório"
+                return@setOnClickListener
+            }
+
+            // --- LÓGICA DE CAPTURA DO ÍCONE CORRIGIDA ---
+            val selectedRadioButtonId = dialogBinding.rgIconSelection.checkedRadioButtonId
+            val selectedRadioButton = dialogView.findViewById<RadioButton>(selectedRadioButtonId)
+            val iconName = selectedRadioButton?.tag?.toString() ?: "ic_location"
+            // --- FIM DA CORREÇÃO ---
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        val latitude = it.latitude
+                        val longitude = it.longitude
+                        // Passa o iconName para ser guardado
+                        viewModel.saveFavoriteLocation(locationName, latitude, longitude, iconName, emptyList())
+                        Toast.makeText(this, R.string.location_saved, Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    } ?: run {
+                        Toast.makeText(this, R.string.error_saving_location, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, R.string.error_saving_location, Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun setupBottomNavigation() {
+        binding.bottomNavigation.selectedItemId = R.id.navigation_environments
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_decks -> {
+                    startActivity(Intent(this, DeckActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_exercise -> {
+                    startActivity(Intent(this, ExerciseSelectionActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_environments -> true
+                else -> false
+            }
+        }
+    }
+
+
+
+
+
+}
+
+/*
+package com.example.study
+
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -200,3 +427,5 @@ class EnvironmentsActivity : AppCompatActivity() {
         }
     }
 }
+
+ */

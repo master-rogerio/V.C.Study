@@ -3,6 +3,8 @@ package com.example.study.data
 import androidx.room.TypeConverter
 import com.example.study.data.converter.FlashcardTypeConverter
 import com.example.study.data.converter.ListConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.Date
 
 class Converters {
@@ -38,5 +40,19 @@ class Converters {
     @TypeConverter
     fun toStringList(list: List<String>?): String? {
         return listConverter.fromList(list)
+    }
+
+    @TypeConverter
+    fun fromFlashcardTypeList(value: String?): List<FlashcardType>? {
+        if (value == null) {
+            return null
+        }
+        val listType = object : TypeToken<List<FlashcardType>>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun toFlashcardTypeList(list: List<FlashcardType>?): String? {
+        return Gson().toJson(list)
     }
 } 

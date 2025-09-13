@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Meus Baralhos</string>
+    <string name="app_name">V.C. Study</string>
     <string name="add_flashcard">Adicionar Flashcard</string>
     <string name="front_side">Frente</string>
     <string name="back_side">Verso</string>

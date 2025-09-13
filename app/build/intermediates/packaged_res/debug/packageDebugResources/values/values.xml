@@ -12,7 +12,7 @@
     <string name="add_flashcard">Adicionar Flashcard</string>
     <string name="add_location">Adicionar Localização</string>
     <string name="add_new_location">Adicionar nova localização</string>
-    <string name="app_name">Meus Baralhos</string>
+    <string name="app_name">V.C. Study</string>
     <string name="back_side">Verso</string>
     <string name="cancel">Cancelar</string>
     <string name="card_count">%1$d cartões</string>
@@ -65,7 +65,7 @@
         <item name="android:drawablePadding">0dp</item>
         <item name="android:layout_margin">4dp</item>
     </style>
-    <style name="Theme.FlashCards" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.VCStudy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>

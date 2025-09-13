@@ -103,8 +103,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
   }
 
   @Override
-  public Object insert(final UserLocation userLocation,
-      final Continuation<? super Long> $completion) {
+  public Object insert(final UserLocation userLocation, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -118,12 +117,11 @@ public final class UserLocationDao_Impl implements UserLocationDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final UserLocation userLocation,
-      final Continuation<? super Unit> $completion) {
+  public Object delete(final UserLocation userLocation, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -137,11 +135,11 @@ public final class UserLocationDao_Impl implements UserLocationDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteById(final long id, final Continuation<? super Unit> $completion) {
+  public Object deleteById(final long id, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -162,11 +160,11 @@ public final class UserLocationDao_Impl implements UserLocationDao {
           __preparedStmtOfDeleteById.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -185,7 +183,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -299,8 +297,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
   }
 
   @Override
-  public Object getUserLocationById(final long id,
-      final Continuation<? super UserLocation> $completion) {
+  public Object getUserLocationById(final long id, final Continuation<? super UserLocation> arg1) {
     final String _sql = "SELECT * FROM user_location WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -350,7 +347,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @NonNull
