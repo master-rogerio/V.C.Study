@@ -48,4 +48,9 @@ class HomeActivity : AppCompatActivity() {
             finish() // Finalizando a atividade atual para não manter a pilha de navegação
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.root.clearFocus()
+    }
 }

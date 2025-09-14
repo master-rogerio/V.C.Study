@@ -15,8 +15,8 @@ import com.google.android.material.card.MaterialCardView
 
 class DeckAdapter(
     private val onItemClick: (Deck) -> Unit,
-    private val onEditClick: (Deck) -> Unit = {}, // Valor padrão vazio
-    private val getFlashcardCount: (Long) -> Int
+    private val onEditClick: (Deck) -> Unit = {},
+    private val getFlashcardCount: (Long) -> Int = { 0 }
 ) : ListAdapter<Deck, DeckAdapter.DeckViewHolder>(DeckDiffCallback()) {
 
     private val flashcardCounts = mutableMapOf<Long, Int>()

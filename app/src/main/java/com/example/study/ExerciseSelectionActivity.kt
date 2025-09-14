@@ -38,12 +38,8 @@ class ExerciseSelectionActivity : AppCompatActivity() {
         adapter = DeckAdapter(
             onItemClick = { deck -> startExercise(deck.id, deck.name) },
             getFlashcardCount = { deckId ->
-                var count = 0
-                lifecycleScope.launch {
-                    val actualCount = deckViewModel.getFlashcardCountForDeck(deckId)
-                    adapter.updateFlashcardCount(deckId, actualCount)
-                }
-                count
+                // CORRIGIDO: Retornar valor padrão, será atualizado em observeDecks()
+                0
             }
         )
 
@@ -63,6 +59,11 @@ class ExerciseSelectionActivity : AppCompatActivity() {
         lifecycleScope.launch {
             deckViewModel.allDecks.collectLatest { decks ->
                 adapter.submitList(decks)
+                decks.forEach { deck ->
+                    val count = deckViewModel.getFlashcardCountForDeck(deck.id)
+                    adapter.updateFlashcardCount(deck.id, count)
+                }
+
                 if (decks.isEmpty()) {
                     binding.emptyView.root.visibility = View.VISIBLE
                     binding.recyclerview.visibility = View.GONE

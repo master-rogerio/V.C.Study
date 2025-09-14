@@ -131,6 +131,25 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
         favoriteLocationDao.insert(favoriteLocation)
     }
 
+    fun saveFavoriteLocationWithRadius(
+        name: String,
+        latitude: Double,
+        longitude: Double,
+        iconName: String,
+        preferredTypes: List<FlashcardType>,
+        radius: Int
+    ) = viewModelScope.launch {
+        val favoriteLocation = FavoriteLocation(
+            name = name,
+            latitude = latitude,
+            longitude = longitude,
+            radius = radius,
+            iconName = iconName,
+            preferredCardTypes = preferredTypes
+        )
+        favoriteLocationDao.insert(favoriteLocation)
+    }
+
     fun getAllFavoriteLocations() = favoriteLocationDao.getAllFavoriteLocations()
 
     fun deleteFavoriteLocation(id: String) = viewModelScope.launch {

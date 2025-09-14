@@ -30,6 +30,156 @@
         android:textSize="16sp"
         android:layout_marginBottom="8dp" />
 
+    <!-- CORRIGIDO: RadioGroup apenas para ícones -->
+    <RadioGroup
+        android:id="@+id/rgIconSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/rbIconLocation"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_location"
+            android:checked="true"
+            android:tag="ic_location" />
+
+        <RadioButton
+            android:id="@+id/rbIconHome"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_home_location"
+            android:tag="ic_home_location" />
+
+        <RadioButton
+            android:id="@+id/rbIconSchool"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_school_location"
+            android:tag="ic_school_location" />
+
+        <RadioButton
+            android:id="@+id/rbIconWork"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_work_location"
+            android:tag="ic_work_location" />
+
+        <RadioButton
+            android:id="@+id/rbIconPark"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_park_location"
+            android:tag="ic_park_location" />
+
+        <RadioButton
+            android:id="@+id/rbIconRestaurant"
+            style="@style/LocationIconStyle"
+            android:drawableTop="@drawable/ic_restaurant_location"
+            android:tag="ic_restaurant_location" />
+    </RadioGroup>
+
+    <!-- CORRIGIDO: Seção separada para tipos preferidos -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipos de Flashcards Preferidos"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_front_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Frente e Verso"
+            android:checked="true" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_cloze"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Omissão de palavras" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Digite a resposta" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_multiple_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Múltipla escolha" />
+    </LinearLayout>
+
+    <!-- CORRIGIDO: Seção separada para configuração do raio -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raio do Geofence (metros)"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/radiusSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="50"
+        android:valueTo="500"
+        android:value="100"
+        android:stepSize="25" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/radiusValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="100 metros"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+</LinearLayout>
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilLocationName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/location_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLocationName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvSelectIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_icon"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,6 +229,75 @@
                 style="@style/LocationIconStyle"
                 android:drawableTop="@drawable/ic_restaurant_location"
                 android:tag="ic_restaurant_location" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipos de Flashcards Preferidos"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_front_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Frente e Verso"
+                    android:checked="true" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_cloze"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Omissão de palavras" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Digite a resposta" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_multiple_choice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Múltipla escolha" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Raio do Geofence (metros)"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/radiusSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="50"
+                    android:valueTo="500"
+                    android:value="100"
+                    android:stepSize="25" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/radiusValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100 metros"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+            </LinearLayout>
         </RadioGroup>
     </LinearLayout>
 </LinearLayout>
+
+-->

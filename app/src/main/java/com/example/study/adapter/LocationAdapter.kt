@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.study.R
 import com.example.study.data.FavoriteLocation
+import com.example.study.data.FlashcardType
 import com.example.study.databinding.ItemLocationBinding
 import java.util.Locale
 
 
 class LocationAdapter(
     private val context: Context,
-    private val onDeleteClick: (FavoriteLocation) -> Unit
+    private val onDeleteClick: (FavoriteLocation) -> Unit,
+    private val onItemClick: (FavoriteLocation) -> Unit = {}
 ) : ListAdapter<FavoriteLocation, LocationAdapter.LocationViewHolder>(LocationDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
@@ -43,6 +45,24 @@ class LocationAdapter(
                 location.longitude
             )
 
+            binding.sessionCount.text = location.studySessionCount.toString()
+            binding.averagePerformance.text = "${location.averagePerformance.toInt()}%"
+            binding.radiusDisplay.text = "${location.radius}m"
+
+            // Exibir tipos preferidos
+            val typesText = if (location.preferredCardTypes.isNotEmpty()) {
+                location.preferredCardTypes.joinToString(", ") { type ->
+                    when (type) {
+                        FlashcardType.FRONT_BACK -> "Frente e Verso"
+                        FlashcardType.CLOZE -> "Omissão"
+                        FlashcardType.TEXT_INPUT -> "Digite"
+                        FlashcardType.MULTIPLE_CHOICE -> "Múltipla"
+                    }
+                }
+            } else {
+                "Todos os tipos"
+            }
+            binding.preferredTypes.text = "Tipos: $typesText"
 
             val iconResId = context.resources.getIdentifier(
                 location.iconName, // Usa o nome do ícone guardado
@@ -59,6 +79,10 @@ class LocationAdapter(
 
             binding.deleteButton.setOnClickListener {
                 onDeleteClick(location)
+            }
+
+            binding.root.setOnClickListener {
+                onItemClick(location)
             }
         }
     }

@@ -4,9 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.ServiceConnection
 import android.location.Location
+import android.os.IBinder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,11 +24,13 @@ import com.example.study.adapter.LocationAdapter
 import com.example.study.data.FlashcardType
 import com.example.study.databinding.ActivityEnvironmentsBinding
 import com.example.study.databinding.DialogAddLocationBinding
+import com.example.study.data.FavoriteLocation
 import com.example.study.ui.FlashcardViewModel
 import com.example.study.util.GeofenceHelper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import android.widget.RadioButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class EnvironmentsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEnvironmentsBinding
@@ -56,6 +61,41 @@ class EnvironmentsActivity : AppCompatActivity() {
         }
     }
 
+    private var locationService: LocationForegroundService? = null
+    private var serviceBound = false
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            serviceBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            serviceBound = false
+        }
+    }
+
+
+    private fun startLocationForegroundService() {
+        val serviceIntent = Intent(this, LocationForegroundService::class.java)
+        serviceIntent.action = LocationForegroundService.ACTION_START_SERVICE
+
+        // Verifica a versão do Android
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Para Android 8.0 (Oreo) e superior
+            startForegroundService(serviceIntent)
+        } else {
+            // Para versões mais antigas
+            startService(serviceIntent)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Não parar o serviço aqui - deixar rodando em background
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEnvironmentsBinding.inflate(layoutInflater)
@@ -71,6 +111,7 @@ class EnvironmentsActivity : AppCompatActivity() {
         setupFab()
         setupBottomNavigation()
         checkPermissionsAndObserve()
+        startLocationForegroundService()
     }
 
     private fun checkPermissionsAndObserve() {
@@ -116,8 +157,12 @@ class EnvironmentsActivity : AppCompatActivity() {
             onDeleteClick = { location ->
                 viewModel.deleteFavoriteLocation(location.id)
                 Toast.makeText(this, R.string.location_deleted, Toast.LENGTH_SHORT).show()
+            },
+            onItemClick = { location -> //
+                showLocationAnalytics(location)
             }
         )
+
         binding.rvLocations.layoutManager = LinearLayoutManager(this)
         binding.rvLocations.adapter = adapter
     }
@@ -151,6 +196,11 @@ class EnvironmentsActivity : AppCompatActivity() {
         val dialogBinding = DialogAddLocationBinding.inflate(layoutInflater)
         val dialogView = dialogBinding.root
 
+        // Configuração do slider de raio
+        dialogBinding.radiusSlider.addOnChangeListener { _, value, _ ->
+            dialogBinding.radiusValue.text = "${value.toInt()} metros"
+        }
+
         val dialog = com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
             .setTitle(R.string.add_location)
             .setView(dialogView)
@@ -168,19 +218,36 @@ class EnvironmentsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // --- LÓGICA DE CAPTURA DO ÍCONE CORRIGIDA ---
+            // Captura do ícone selecionado
             val selectedRadioButtonId = dialogBinding.rgIconSelection.checkedRadioButtonId
             val selectedRadioButton = dialogView.findViewById<RadioButton>(selectedRadioButtonId)
             val iconName = selectedRadioButton?.tag?.toString() ?: "ic_location"
-            // --- FIM DA CORREÇÃO ---
+
+            // Captura dos tipos preferidos
+            val preferredTypes = mutableListOf<FlashcardType>()
+            if (dialogBinding.checkboxFrontBack.isChecked) {
+                preferredTypes.add(FlashcardType.FRONT_BACK)
+            }
+            if (dialogBinding.checkboxCloze.isChecked) {
+                preferredTypes.add(FlashcardType.CLOZE)
+            }
+            if (dialogBinding.checkboxTextInput.isChecked) {
+                preferredTypes.add(FlashcardType.TEXT_INPUT)
+            }
+            if (dialogBinding.checkboxMultipleChoice.isChecked) {
+                preferredTypes.add(FlashcardType.MULTIPLE_CHOICE)
+            }
+
+            // Captura do raio selecionado
+            val radius = dialogBinding.radiusSlider.value.toInt()
 
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
                     location?.let {
                         val latitude = it.latitude
                         val longitude = it.longitude
-                        // Passa o iconName para ser guardado
-                        viewModel.saveFavoriteLocation(locationName, latitude, longitude, iconName, emptyList())
+                        // Passa o iconName e tipos preferidos para serem guardados
+                        viewModel.saveFavoriteLocationWithRadius(locationName, latitude, longitude, iconName, preferredTypes, radius)
                         Toast.makeText(this, R.string.location_saved, Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                     } ?: run {
@@ -218,6 +285,40 @@ class EnvironmentsActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLocationAnalytics(location: FavoriteLocation) {
+        val analyticsText = """
+        �� ${location.name}
+        
+        📊 Estatísticas:
+        • Sessões de estudo: ${location.studySessionCount}
+        • Performance média: ${location.averagePerformance.toInt()}%
+        • Raio do geofence: ${location.radius}m
+        
+        🎯 Tipos preferidos:
+        ${if (location.preferredCardTypes.isNotEmpty()) {
+            location.preferredCardTypes.joinToString("\n• ") { type ->
+                when (type) {
+                    FlashcardType.FRONT_BACK -> "• Frente e Verso"
+                    FlashcardType.CLOZE -> "• Omissão de palavras"
+                    FlashcardType.TEXT_INPUT -> "• Digite a resposta"
+                    FlashcardType.MULTIPLE_CHOICE -> "• Múltipla escolha"
+                }
+            }
+        } else {
+            "• Todos os tipos"
+        }}
+        
+        📍 Coordenadas:
+        • Latitude: ${location.latitude}
+        • Longitude: ${location.longitude}
+    """.trimIndent()
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Analytics do Local")
+            .setMessage(analyticsText)
+            .setPositiveButton("OK", null)
+            .show()
+    }
 
 
 

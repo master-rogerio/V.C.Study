@@ -70,12 +70,8 @@ class DeckActivity : AppCompatActivity() {
             onItemClick = { deck -> openFlashcardActivity(deck) },
             onEditClick = { deck -> showAddDeckDialog(deck) },
             getFlashcardCount = { deckId ->
-                var count = 0
-                lifecycleScope.launch {
-                    count = deckViewModel.getFlashcardCountForDeck(deckId)
-                    adapter.updateFlashcardCount(deckId, count)
-                }
-                count
+                // CORRIGIDO: Retornar valor padrão, será atualizado em observeDecks()
+                0
             }
         )
 
@@ -95,6 +91,13 @@ class DeckActivity : AppCompatActivity() {
         lifecycleScope.launch {
             deckViewModel.allDecks.collectLatest { decks ->
                 adapter.submitList(decks)
+                
+                // CORRIGIDO: Atualizar contagens de forma assíncrona
+                decks.forEach { deck ->
+                    val count = deckViewModel.getFlashcardCountForDeck(deck.id)
+                    adapter.updateFlashcardCount(deck.id, count)
+                }
+                
                 if (decks.isEmpty()) {
                     binding.emptyView.root.visibility = View.VISIBLE
                     binding.recyclerview.visibility = View.GONE
@@ -168,6 +171,11 @@ class DeckActivity : AppCompatActivity() {
         intent.putExtra("deckId", deck.id)
         intent.putExtra("deckName", deck.name)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.root.clearFocus()
     }
 }
 
@@ -251,12 +259,8 @@ class DeckActivity : AppCompatActivity() {
             onItemClick = { deck -> openFlashcardActivity(deck) },
             onEditClick = { deck -> showAddDeckDialog(deck) },
             getFlashcardCount = { deckId ->
-                var count = 0
-                lifecycleScope.launch {
-                    count = deckViewModel.getFlashcardCountForDeck(deckId)
-                    adapter.updateFlashcardCount(deckId, count)
-                }
-                count
+                // CORRIGIDO: Retornar valor padrão, será atualizado em observeDecks()
+                0
             }
         )
 
@@ -276,6 +280,13 @@ class DeckActivity : AppCompatActivity() {
         lifecycleScope.launch {
             deckViewModel.allDecks.collectLatest { decks ->
                 adapter.submitList(decks)
+                
+                // CORRIGIDO: Atualizar contagens de forma assíncrona
+                decks.forEach { deck ->
+                    val count = deckViewModel.getFlashcardCountForDeck(deck.id)
+                    adapter.updateFlashcardCount(deck.id, count)
+                }
+                
                 if (decks.isEmpty()) {
                     binding.emptyView.root.visibility = View.VISIBLE
                     binding.recyclerview.visibility = View.GONE
