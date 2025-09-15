@@ -40,6 +40,7 @@ fun DecksScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToExercise: () -> Unit,
     onNavigateToEnvironments: () -> Unit,
+    onNavigateToAI: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DeckViewModel = viewModel()
 ) {
@@ -96,6 +97,7 @@ fun DecksScreen(
                         0 -> onNavigateToHome()
                         2 -> onNavigateToExercise()
                         3 -> onNavigateToEnvironments()
+                        4 -> onNavigateToAI()
                     }
                 }
             )

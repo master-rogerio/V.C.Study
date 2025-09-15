@@ -73,6 +73,11 @@ private fun StudyNavigation(
                     navController.navigate("environments") {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToAI = {
+                    navController.navigate("ai_assistant") {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -97,6 +102,11 @@ private fun StudyNavigation(
                     navController.navigate("environments") {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToAI = {
+                    navController.navigate("ai_assistant") {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -118,7 +128,7 @@ private fun StudyNavigation(
         }
 
         composable("exercise_selection") {
-            ExerciseSelectionScreen(
+            com.example.study.ui.screens.ExerciseSelectionScreen(
                 onNavigateToHome = {
                     navController.navigate("home") {
                         popUpTo("home") { inclusive = true }
@@ -135,6 +145,11 @@ private fun StudyNavigation(
                         launchSingleTop = true
                     }
                 },
+                onNavigateToAI = {
+                    navController.navigate("ai_assistant") {
+                        launchSingleTop = true
+                    }
+                },
                 onNavigateToExercise = { deckId, deckName ->
                     navController.navigate("exercise/$deckId/$deckName")
                 }
@@ -145,7 +160,7 @@ private fun StudyNavigation(
             val deckId = backStackEntry.arguments?.getString("deckId")?.toLongOrNull() ?: -1L
             val deckName = backStackEntry.arguments?.getString("deckName") ?: ""
             
-            ExerciseScreen(
+            com.example.study.ui.screens.ExerciseScreen(
                 deckId = deckId,
                 deckName = deckName,
                 onNavigateBack = {
@@ -185,7 +200,7 @@ private fun StudyNavigation(
         }
 
         composable("environments") {
-            EnvironmentsScreen(
+            com.example.study.ui.screens.EnvironmentsScreen(
                 onNavigateToHome = {
                     navController.navigate("home") {
                         popUpTo("home") { inclusive = true }
@@ -199,6 +214,32 @@ private fun StudyNavigation(
                 },
                 onNavigateToExercise = {
                     navController.navigate("exercise_selection") {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable("ai_assistant") {
+            com.example.study.ui.screens.AIAssistantScreen(
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToDecks = {
+                    navController.navigate("decks") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToExercise = {
+                    navController.navigate("exercise_selection") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToEnvironments = {
+                    navController.navigate("environments") {
                         launchSingleTop = true
                     }
                 }
@@ -227,20 +268,6 @@ private fun ExerciseSelectionScreen(
     )
 }
 
-@Composable
-private fun ExerciseScreen(
-    deckId: Long,
-    deckName: String,
-    onNavigateBack: () -> Unit,
-    onNavigateToResults: (Int, Int) -> Unit
-) {
-    // TODO: Implementar tela de exercício
-    PlaceholderExerciseScreen(
-        deckName = deckName,
-        onNavigateBack = onNavigateBack,
-        onNavigateToResults = onNavigateToResults
-    )
-}
 
 @Composable
 private fun ExerciseResultsScreen(
@@ -260,20 +287,3 @@ private fun ExerciseResultsScreen(
     )
 }
 
-@Composable
-private fun EnvironmentsScreen(
-    onNavigateToHome: () -> Unit,
-    onNavigateToDecks: () -> Unit,
-    onNavigateToExercise: () -> Unit
-) {
-    // TODO: Implementar tela de ambientes
-    PlaceholderScreen(
-        title = "Ambientes",
-        subtitle = "Estude por localização",
-        onNavigateToHome = onNavigateToHome,
-        onNavigateToDecks = onNavigateToDecks,
-        onNavigateToExercise = onNavigateToExercise,
-        onNavigateToEnvironments = { /* Current screen */ },
-        selectedTab = 3
-    )
-}

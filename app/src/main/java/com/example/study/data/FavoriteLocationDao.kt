@@ -2,6 +2,7 @@ package com.example.study.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteLocationDao {
@@ -10,6 +11,9 @@ interface FavoriteLocationDao {
 
     @Query("SELECT * FROM favorite_locations")
     fun getAllFavoriteLocations(): LiveData<List<FavoriteLocation>>
+    
+    @Query("SELECT * FROM favorite_locations")
+    fun getAllFavoriteLocationsFlow(): Flow<List<FavoriteLocation>>
 
     @Query("SELECT * FROM favorite_locations WHERE id = :id")
     suspend fun getFavoriteLocationById(id: String): FavoriteLocation?

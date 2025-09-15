@@ -31,6 +31,7 @@ fun HomeScreen(
     onNavigateToDecks: () -> Unit,
     onNavigateToExercise: () -> Unit,
     onNavigateToEnvironments: () -> Unit,
+    onNavigateToAI: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -72,6 +73,7 @@ fun HomeScreen(
                         1 -> onNavigateToDecks()
                         2 -> onNavigateToExercise()
                         3 -> onNavigateToEnvironments()
+                        4 -> onNavigateToAI()
                     }
                 }
             )
@@ -105,7 +107,8 @@ fun HomeScreen(
                 QuickActionsSection(
                     onNavigateToDecks = onNavigateToDecks,
                     onNavigateToExercise = onNavigateToExercise,
-                    onNavigateToEnvironments = onNavigateToEnvironments
+                    onNavigateToEnvironments = onNavigateToEnvironments,
+                    onNavigateToAI = onNavigateToAI
                 )
             }
             
@@ -281,7 +284,8 @@ private fun StatCard(
 private fun QuickActionsSection(
     onNavigateToDecks: () -> Unit,
     onNavigateToExercise: () -> Unit,
-    onNavigateToEnvironments: () -> Unit
+    onNavigateToEnvironments: () -> Unit,
+    onNavigateToAI: () -> Unit
 ) {
     Column {
         Text(
@@ -319,6 +323,15 @@ private fun QuickActionsSection(
                     subtitle = "Estudar por localização",
                     icon = Icons.Default.LocationOn,
                     onClick = onNavigateToEnvironments
+                )
+            }
+            
+            item {
+                QuickActionCard(
+                    title = "Viber.AI",
+                    subtitle = "Assistente inteligente",
+                    icon = Icons.Default.Psychology,
+                    onClick = onNavigateToAI
                 )
             }
         }

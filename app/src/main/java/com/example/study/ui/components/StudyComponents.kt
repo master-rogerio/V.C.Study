@@ -363,6 +363,12 @@ fun StudyBottomNavigation(
             icon = { Icon(Icons.Default.LocationOn, contentDescription = "Ambientes") },
             label = { Text("Ambientes") }
         )
+        NavigationBarItem(
+            selected = selectedItem == 4,
+            onClick = { onItemSelected(4) },
+            icon = { Icon(Icons.Default.Psychology, contentDescription = "IA Assistente") },
+            label = { Text("IA") }
+        )
     }
 }
 

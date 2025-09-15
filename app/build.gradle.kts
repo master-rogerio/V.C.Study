@@ -116,6 +116,10 @@ dependencies {
     
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    
+    // Places API for address autocomplete
+    implementation("com.google.android.libraries.places:places:3.3.0")
     
     // Lottie para animações
     implementation("com.airbnb.android:lottie:6.1.0")

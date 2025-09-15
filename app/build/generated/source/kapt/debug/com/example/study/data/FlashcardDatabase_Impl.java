@@ -38,16 +38,16 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(7) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(8) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `decks` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `theme` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `flashcards` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `deckId` INTEGER NOT NULL, `type` TEXT NOT NULL, `front` TEXT NOT NULL, `back` TEXT NOT NULL, `clozeText` TEXT, `clozeAnswer` TEXT, `options` TEXT, `correctOptionIndex` INTEGER, `lastReviewed` INTEGER, `nextReviewDate` INTEGER, `easeFactor` REAL NOT NULL, `interval` INTEGER NOT NULL, `repetitions` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`deckId`) REFERENCES `decks`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_flashcards_deckId` ON `flashcards` (`deckId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_location` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `timestamp` INTEGER NOT NULL)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_locations` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `radius` INTEGER NOT NULL, `iconName` TEXT NOT NULL, `preferredCardTypes` TEXT NOT NULL, `studySessionCount` INTEGER NOT NULL, `averagePerformance` REAL NOT NULL, PRIMARY KEY(`id`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_locations` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `radius` INTEGER NOT NULL, `isGeofenceActive` INTEGER NOT NULL, `iconName` TEXT NOT NULL, `preferredCardTypes` TEXT NOT NULL, `studySessionCount` INTEGER NOT NULL, `averagePerformance` REAL NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a000fc704dbbf7f6a7138c145f654dcd')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b282f69337866e4d12933280890157ae')");
       }
 
       @Override
@@ -157,12 +157,14 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
                   + " Expected:\n" + _infoUserLocation + "\n"
                   + " Found:\n" + _existingUserLocation);
         }
-        final HashMap<String, TableInfo.Column> _columnsFavoriteLocations = new HashMap<String, TableInfo.Column>(9);
+        final HashMap<String, TableInfo.Column> _columnsFavoriteLocations = new HashMap<String, TableInfo.Column>(11);
         _columnsFavoriteLocations.put("id", new TableInfo.Column("id", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("address", new TableInfo.Column("address", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("latitude", new TableInfo.Column("latitude", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("longitude", new TableInfo.Column("longitude", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("radius", new TableInfo.Column("radius", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteLocations.put("isGeofenceActive", new TableInfo.Column("isGeofenceActive", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("iconName", new TableInfo.Column("iconName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("preferredCardTypes", new TableInfo.Column("preferredCardTypes", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteLocations.put("studySessionCount", new TableInfo.Column("studySessionCount", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -178,7 +180,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "a000fc704dbbf7f6a7138c145f654dcd", "a8881d9f567eef067b093cc8d7dbcd5a");
+    }, "b282f69337866e4d12933280890157ae", "bb342123abca0a8def1073898faeef2b");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

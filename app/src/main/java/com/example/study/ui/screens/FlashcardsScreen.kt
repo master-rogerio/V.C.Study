@@ -678,7 +678,6 @@ private fun DeleteFlashcardDialog(
     )
 }
 
-// TODO: Implementar AddEditFlashcardDialog
 @Composable
 private fun AddEditFlashcardDialog(
     deckId: Long,
@@ -686,16 +685,10 @@ private fun AddEditFlashcardDialog(
     onDismiss: () -> Unit,
     onSave: (Flashcard) -> Unit
 ) {
-    // Placeholder - implementar na próxima iteração
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Adicionar/Editar Flashcard") },
-        text = { Text("Dialog em desenvolvimento...") },
-        confirmButton = {
-            StudyButton(
-                onClick = onDismiss,
-                text = "OK"
-            )
-        }
+    com.example.study.ui.components.AddEditFlashcardDialog(
+        deckId = deckId,
+        flashcard = flashcard,
+        onDismiss = onDismiss,
+        onSave = onSave
     )
 }
