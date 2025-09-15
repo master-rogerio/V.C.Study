@@ -38,7 +38,21 @@ fun ExerciseScreen(
 ) {
     val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
     val dueFlashcards = remember(flashcards) {
-        flashcards.filter { it.nextReviewDate?.time ?: 0 <= System.currentTimeMillis() }
+        // For exercise mode, we want to include flashcards that need review
+        // Priority: new cards (null date) or cards due for review
+        val currentTime = System.currentTimeMillis()
+        val filtered = flashcards.filter { flashcard ->
+            flashcard.nextReviewDate == null || 
+            flashcard.nextReviewDate.time <= currentTime
+        }
+        
+        // If no cards are due, but we have flashcards, include all for practice
+        // This ensures users can always practice, even if technically "not due"
+        if (filtered.isEmpty() && flashcards.isNotEmpty()) {
+            flashcards
+        } else {
+            filtered
+        }
     }
     
     var currentIndex by remember { mutableIntStateOf(0) }
@@ -53,11 +67,8 @@ fun ExerciseScreen(
         dueFlashcards[currentIndex]
     } else null
 
-    LaunchedEffect(dueFlashcards) {
-        if (dueFlashcards.isEmpty()) {
-            exerciseCompleted = true
-        }
-    }
+    // Don't automatically complete if no due flashcards - let user see the empty state
+    // exerciseCompleted will be set when user actually completes all cards
 
     Scaffold(
         modifier = modifier,
