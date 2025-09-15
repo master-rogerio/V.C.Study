@@ -49,7 +49,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val exerciseIntent = Intent(context, ExerciseActivity::class.java).apply {
+        val exerciseIntent = Intent(context, MainActivity::class.java).apply {
             putExtra("locationId", locationId)
             putExtra("deckName", "Estudo em $locationName")
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
