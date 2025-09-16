@@ -1,6 +1,5 @@
 package com.example.study.ui.screens
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,8 +21,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.study.data.Deck
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
-import com.example.study.ui.DeckViewModel
-import com.example.study.ui.FlashcardViewModel
+import com.example.study.ui.view.DeckViewModel
+import com.example.study.ui.view.FlashcardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -323,7 +322,7 @@ private fun DeckExerciseItem(
             )
         } else {
             CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
         },
         shape = RoundedCornerShape(16.dp),

@@ -50,7 +50,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.study.data.Flashcard
 import com.example.study.databinding.ActivityMainBinding
 import com.example.study.ui.FlashcardAdapter
-import com.example.study.ui.FlashcardViewModel
+import com.example.study.ui.view.FlashcardViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.flow.collectLatest
@@ -238,7 +238,7 @@ import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.databinding.ActivityMainBinding
 import com.example.study.ui.FlashcardAdapter
-import com.example.study.ui.FlashcardViewModel
+import com.example.study.ui.view.FlashcardViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

@@ -37,9 +37,9 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.padding(top = 20.dp),
         topBar = {
-            MediumTopAppBar(
+            TopAppBar(
                 title = {
                     Column {
                         Text(

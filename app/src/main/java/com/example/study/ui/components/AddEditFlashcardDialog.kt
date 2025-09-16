@@ -3,6 +3,8 @@ package com.example.study.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -14,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.ui.theme.StudyShapes
@@ -54,39 +57,66 @@ fun AddEditFlashcardDialog(
                 listOf(option1, option2, option3, option4).all { it.isNotBlank() }
     }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = StudyShapes.dialogShape,
-            color = MaterialTheme.colorScheme.surface
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier.fillMaxHeight(0.85f)
+                .padding(),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp)
-                    .verticalScroll(rememberScrollState())
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                // Title
-                Text(
-                    text = if (flashcard == null) "Novo Flashcard" else "Editar Flashcard",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
+                // Header
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Surface(
+                            modifier = Modifier.size(40.dp),
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primaryContainer
+                        ) {
+                            Icon(
+                                imageVector = if (flashcard == null) Icons.Default.Add else Icons.Default.Edit,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                        
+                        Text(
+                            text = if (flashcard == null) "Novo Flashcard" else "Editar Flashcard",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    
+                    Text(
+                        text = if (flashcard == null) 
+                            "Crie um novo flashcard para seu deck" 
+                        else 
+                            "Edite as informações do flashcard",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
                 
                 // Type Selector
                 FlashcardTypeSelector(
                     selectedType = selectedType,
                     onTypeSelected = { selectedType = it }
                 )
-                
-                Spacer(modifier = Modifier.height(24.dp))
                 
                 // Content based on type
                 when (selectedType) {
@@ -135,21 +165,27 @@ fun AddEditFlashcardDialog(
                     }
                 }
                 
-                Spacer(modifier = Modifier.height(24.dp))
-                
                 // Action buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    StudyButton(
+                    OutlinedButton(
                         onClick = onDismiss,
-                        text = "Cancelar",
-                        variant = ButtonVariant.Secondary,
-                        modifier = Modifier.weight(1f)
-                    )
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text(
+                            text = "Cancelar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                     
-                    StudyButton(
+                    Button(
                         onClick = {
                             val newFlashcard = when (selectedType) {
                                 FlashcardType.FRONT_BACK -> Flashcard(
@@ -195,10 +231,19 @@ fun AddEditFlashcardDialog(
                             }
                             onSave(newFlashcard)
                         },
-                        text = "Salvar",
                         enabled = isValid,
-                        modifier = Modifier.weight(1f)
-                    )
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = "Salvar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 }
             }
         }
@@ -217,7 +262,7 @@ private fun FlashcardTypeSelector(
             fontWeight = FontWeight.Medium
         )
         
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -227,18 +272,19 @@ private fun FlashcardTypeSelector(
                 type = FlashcardType.FRONT_BACK,
                 isSelected = selectedType == FlashcardType.FRONT_BACK,
                 onClick = { onTypeSelected(FlashcardType.FRONT_BACK) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+
             )
             
             FlashcardTypeChip(
                 type = FlashcardType.CLOZE,
                 isSelected = selectedType == FlashcardType.CLOZE,
                 onClick = { onTypeSelected(FlashcardType.CLOZE) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp)
             )
         }
         
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -248,14 +294,15 @@ private fun FlashcardTypeSelector(
                 type = FlashcardType.TEXT_INPUT,
                 isSelected = selectedType == FlashcardType.TEXT_INPUT,
                 onClick = { onTypeSelected(FlashcardType.TEXT_INPUT) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp)
             )
             
             FlashcardTypeChip(
                 type = FlashcardType.MULTIPLE_CHOICE,
                 isSelected = selectedType == FlashcardType.MULTIPLE_CHOICE,
                 onClick = { onTypeSelected(FlashcardType.MULTIPLE_CHOICE) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).height(50.dp),
+
             )
         }
     }
@@ -369,7 +416,7 @@ private fun TextInputFields(
     onAnswerChange: (String) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         OutlinedTextField(
             value = questionText,
@@ -385,7 +432,7 @@ private fun TextInputFields(
             onValueChange = onAnswerChange,
             label = { Text("Resposta esperada") },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.study.ui // Certifique-se de que o pacote corresponde ao seu
+package com.example.study.ui.view // Certifique-se de que o pacote corresponde ao seu
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

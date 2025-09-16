@@ -1,8 +1,8 @@
-package com.example.study.ui
+package com.example.study.ui.view
 
+import android.Manifest
 import android.app.Application
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
@@ -47,7 +47,7 @@ class EnvironmentViewModel(application: Application) : AndroidViewModel(applicat
     fun addGeofence(location: FavoriteLocation) {
         if (ActivityCompat.checkSelfPermission(
                 getApplication(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             return

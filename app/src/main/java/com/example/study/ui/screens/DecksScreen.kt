@@ -1,12 +1,8 @@
 package com.example.study.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
+import android.widget.Space
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,14 +12,14 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.window.Dialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -31,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.study.data.Deck
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
-import com.example.study.ui.DeckViewModel
+import com.example.study.ui.view.DeckViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -511,54 +507,149 @@ private fun AddEditDeckDialog(
     var name by remember { mutableStateOf(deck?.name ?: "") }
     var theme by remember { mutableStateOf(deck?.theme ?: "") }
 
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = if (deck == null) "Novo Deck" else "Editar Deck",
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Nome do deck") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-
-                OutlinedTextField(
-                    value = theme,
-                    onValueChange = { theme = it },
-                    label = { Text("Tema/Assunto") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-            }
-        },
-        confirmButton = {
-            StudyButton(
-                onClick = {
-                    if (name.isNotBlank() && theme.isNotBlank()) {
-                        onSave(name.trim(), theme.trim())
+                // Header
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Surface(
+                            modifier = Modifier.size(40.dp),
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primaryContainer
+                        ) {
+                            Icon(
+                                imageVector = if (deck == null) Icons.Default.Add else Icons.Default.Edit,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                        
+                        Text(
+                            text = if (deck == null) "Novo Deck" else "Editar Deck",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
-                },
-                text = "Salvar",
-                enabled = name.isNotBlank() && theme.isNotBlank()
-            )
-        },
-        dismissButton = {
-            StudyButton(
-                onClick = onDismiss,
-                text = "Cancelar",
-                variant = ButtonVariant.Secondary
-            )
+                    
+                    Text(
+                        text = if (deck == null) 
+                            "Crie um novo deck para organizar seus flashcards" 
+                        else 
+                            "Edite as informações do seu deck",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                // Form Fields
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Nome do deck") },
+                        placeholder = { Text("Ex: Matemática Básica") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Book,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                        )
+                    )
+
+                    OutlinedTextField(
+                        value = theme,
+                        onValueChange = { theme = it },
+                        label = { Text("Tema/Assunto") },
+                        placeholder = { Text("Ex: Álgebra e Geometria") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Topic,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                // Action Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text(
+                            text = "Cancelar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    
+                    Button(
+                        onClick = {
+                            if (name.isNotBlank() && theme.isNotBlank()) {
+                                onSave(name.trim(), theme.trim())
+                            }
+                        },
+                        enabled = name.isNotBlank() && theme.isNotBlank(),
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = "Salvar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
         }
-    )
+    }
 }
 
 @Composable

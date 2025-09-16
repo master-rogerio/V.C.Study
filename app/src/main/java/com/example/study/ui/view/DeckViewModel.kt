@@ -1,4 +1,4 @@
-package com.example.study.ui
+package com.example.study.ui.view
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
