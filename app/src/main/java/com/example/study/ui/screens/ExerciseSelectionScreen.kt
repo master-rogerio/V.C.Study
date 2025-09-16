@@ -2,10 +2,12 @@ package com.example.study.ui.screens
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -187,8 +189,13 @@ private fun ExerciseStatsCard(
     onStartMixedExercise: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    StudyCard(
-        modifier = modifier
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+        ),
+        shape = RoundedCornerShape(20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
@@ -302,16 +309,25 @@ private fun DeckExerciseItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    StudyCard(
-        onClick = if (dueCount > 0) onClick else null,
-        modifier = modifier,
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .then(
+                if (dueCount > 0) {
+                    Modifier.clickable { onClick() }
+                } else Modifier
+            ),
         colors = if (dueCount > 0) {
-            CardDefaults.cardColors()
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
         } else {
             CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
             )
-        }
+        },
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = if (dueCount > 0) 2.dp else 1.dp)
     ) {
         Row(
             modifier = Modifier

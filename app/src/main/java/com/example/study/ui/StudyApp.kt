@@ -28,33 +28,80 @@ fun StudyApp() {
 private fun StudyNavigation(
     navController: NavHostController
 ) {
+    // Track tab order for directional animations
+    val tabRoutes = listOf("home", "decks", "exercise_selection", "environments", "ai_assistant")
+    
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    var previousRoute by remember { mutableStateOf("home") }
+    
+    val currentRoute = currentBackStackEntry?.destination?.route?.split("/")?.firstOrNull() ?: "home"
+    
+    // Determine animation direction based on tab indices
+    val isMovingForward = remember(currentRoute) {
+        val currentIndex = tabRoutes.indexOf(currentRoute)
+        val previousIndex = tabRoutes.indexOf(previousRoute)
+        val result = if (currentIndex != -1 && previousIndex != -1) {
+            currentIndex > previousIndex
+        } else true // Default to forward for non-tab routes
+        previousRoute = currentRoute
+        result
+    }
+    
     NavHost(
         navController = navController,
         startDestination = "home",
         modifier = Modifier.fillMaxSize(),
         enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { 1000 },
-                animationSpec = tween(300)
-            ) + fadeIn(animationSpec = tween(300))
+            val targetRoute = targetState.destination.route?.split("/")?.firstOrNull()
+            val initialRoute = initialState.destination.route?.split("/")?.firstOrNull()
+            
+            if (targetRoute in tabRoutes && initialRoute in tabRoutes) {
+                val targetIndex = tabRoutes.indexOf(targetRoute)
+                val initialIndex = tabRoutes.indexOf(initialRoute)
+                val movingRight = targetIndex > initialIndex
+                
+                slideInHorizontally(
+                    initialOffsetX = { if (movingRight) it else -it },
+                    animationSpec = tween(300)
+                ) + fadeIn(animationSpec = tween(200))
+            } else {
+                slideInHorizontally(
+                    initialOffsetX = { 1000 },
+                    animationSpec = tween(300)
+                ) + fadeIn(animationSpec = tween(200))
+            }
         },
         exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { -1000 },
-                animationSpec = tween(300)
-            ) + fadeOut(animationSpec = tween(300))
+            val targetRoute = targetState.destination.route?.split("/")?.firstOrNull()
+            val initialRoute = initialState.destination.route?.split("/")?.firstOrNull()
+            
+            if (targetRoute in tabRoutes && initialRoute in tabRoutes) {
+                val targetIndex = tabRoutes.indexOf(targetRoute)
+                val initialIndex = tabRoutes.indexOf(initialRoute)
+                val movingRight = targetIndex > initialIndex
+                
+                slideOutHorizontally(
+                    targetOffsetX = { if (movingRight) -it else it },
+                    animationSpec = tween(300)
+                ) + fadeOut(animationSpec = tween(200))
+            } else {
+                slideOutHorizontally(
+                    targetOffsetX = { -1000 },
+                    animationSpec = tween(300)
+                ) + fadeOut(animationSpec = tween(200))
+            }
         },
         popEnterTransition = {
             slideInHorizontally(
                 initialOffsetX = { -1000 },
                 animationSpec = tween(300)
-            ) + fadeIn(animationSpec = tween(300))
+            ) + fadeIn(animationSpec = tween(200))
         },
         popExitTransition = {
             slideOutHorizontally(
                 targetOffsetX = { 1000 },
                 animationSpec = tween(300)
-            ) + fadeOut(animationSpec = tween(300))
+            ) + fadeOut(animationSpec = tween(200))
         }
     ) {
         composable("home") {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -349,15 +350,17 @@ private fun AnswerCard(
     isCorrect: Boolean?,
     modifier: Modifier = Modifier
 ) {
-    StudyCard(
-        modifier = modifier,
+    Card(
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = when (isCorrect) {
-                true -> SuccessColor.copy(alpha = 0.1f)
-                false -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                true -> MaterialTheme.colorScheme.primaryContainer
+                false -> MaterialTheme.colorScheme.errorContainer
                 null -> MaterialTheme.colorScheme.surfaceVariant
             }
-        )
+        ),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier
@@ -366,32 +369,49 @@ private fun AnswerCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (isCorrect != null) {
-                Icon(
-                    imageVector = if (isCorrect) Icons.Default.CheckCircle else Icons.Default.Cancel,
-                    contentDescription = null,
-                    tint = if (isCorrect) SuccessColor else MaterialTheme.colorScheme.error,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
+                Surface(
+                    modifier = Modifier.size(32.dp),
+                    shape = CircleShape,
+                    color = when (isCorrect) {
+                        true -> MaterialTheme.colorScheme.primary
+                        false -> MaterialTheme.colorScheme.error
+                    }
+                ) {
+                    Icon(
+                        imageVector = if (isCorrect) Icons.Default.Check else Icons.Default.Close,
+                        contentDescription = null,
+                        tint = when (isCorrect) {
+                            true -> MaterialTheme.colorScheme.onPrimary
+                            false -> MaterialTheme.colorScheme.onError
+                        },
+                        modifier = Modifier.padding(6.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
             }
             
             Column {
                 Text(
-                    text = if (isCorrect != null) {
-                        if (isCorrect) "Correto!" else "Incorreto"
-                    } else "Resposta:",
-                    style = MaterialTheme.typography.labelMedium,
+                    text = when (isCorrect) {
+                        true -> "Correto!"
+                        false -> "Incorreto"
+                        null -> "Resposta:"
+                    },
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.SemiBold,
                     color = when (isCorrect) {
-                        true -> SuccessColor
+                        true -> MaterialTheme.colorScheme.primary
                         false -> MaterialTheme.colorScheme.error
                         null -> MaterialTheme.colorScheme.onSurfaceVariant
                     }
                 )
                 
+                Spacer(modifier = Modifier.height(4.dp))
+                
                 Text(
                     text = answer,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -455,30 +475,41 @@ private fun QualityButtons(
     onQualitySelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = RoundedCornerShape(20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Text(
-            text = "Como você se saiu?",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium
-        )
-        
-        val qualities = listOf(
-            1 to "Muito Difícil",
-            2 to "Difícil", 
-            3 to "Normal",
-            4 to "Fácil",
-            5 to "Muito Fácil"
-        )
-        
-        qualities.forEach { (quality, text) ->
-            QualityButton(
-                text = text,
-                quality = quality,
-                onClick = { onQualitySelected(quality) }
+        Column(
+            modifier = Modifier.padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "Como você se saiu?",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
             )
+            
+            val qualities = listOf(
+                1 to Pair("Muito Difícil", "😰"),
+                2 to Pair("Difícil", "😅"), 
+                3 to Pair("Normal", "😐"),
+                4 to Pair("Fácil", "😊"),
+                5 to Pair("Muito Fácil", "😎")
+            )
+            
+            qualities.forEach { (quality, textEmoji) ->
+                QualityButton(
+                    text = textEmoji.first,
+                    emoji = textEmoji.second,
+                    quality = quality,
+                    onClick = { onQualitySelected(quality) }
+                )
+            }
         }
     }
 }
@@ -486,31 +517,56 @@ private fun QualityButtons(
 @Composable
 private fun QualityButton(
     text: String,
+    emoji: String,
     quality: Int,
     onClick: () -> Unit
 ) {
-    val color = when (quality) {
-        1, 2 -> MaterialTheme.colorScheme.error
-        3 -> MaterialTheme.colorScheme.tertiary
-        4, 5 -> SuccessColor
-        else -> MaterialTheme.colorScheme.primary
+    val containerColor = when (quality) {
+        1, 2 -> MaterialTheme.colorScheme.errorContainer
+        3 -> MaterialTheme.colorScheme.tertiaryContainer
+        4, 5 -> MaterialTheme.colorScheme.primaryContainer
+        else -> MaterialTheme.colorScheme.primaryContainer
+    }
+    
+    val contentColor = when (quality) {
+        1, 2 -> MaterialTheme.colorScheme.onErrorContainer
+        3 -> MaterialTheme.colorScheme.onTertiaryContainer
+        4, 5 -> MaterialTheme.colorScheme.onPrimaryContainer
+        else -> MaterialTheme.colorScheme.onPrimaryContainer
     }
     
     Surface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = StudyShapes.buttonShape,
-        color = color.copy(alpha = 0.1f),
-        border = androidx.compose.foundation.BorderStroke(1.dp, color.copy(alpha = 0.3f))
+        shape = RoundedCornerShape(12.dp),
+        color = containerColor,
+        tonalElevation = 2.dp
     ) {
-        Text(
-            text = text,
+        Row(
             modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Medium,
-            color = color,
-            textAlign = TextAlign.Center
-        )
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = emoji,
+                style = MaterialTheme.typography.titleLarge
+            )
+            
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
+                color = contentColor,
+                modifier = Modifier.weight(1f)
+            )
+            
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = contentColor.copy(alpha = 0.7f),
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
 
