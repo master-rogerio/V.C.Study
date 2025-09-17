@@ -19,7 +19,9 @@ import com.example.study.ui.theme.VCStudyTheme
 fun StudyApp(
     intelligentRotation: Boolean = false,
     preferredCardTypes: List<String> = emptyList(),
-    locationId: String? = null
+    locationId: String? = null,
+    source: String? = null,
+    locationName: String? = null
 ) {
     VCStudyTheme {
         val navController = rememberNavController()
@@ -27,7 +29,9 @@ fun StudyApp(
             navController = navController,
             intelligentRotation = intelligentRotation,
             preferredCardTypes = preferredCardTypes,
-            locationId = locationId
+            locationId = locationId,
+            source = source,
+            locationName = locationName
         )
     }
 }
@@ -38,7 +42,9 @@ private fun StudyNavigation(
     navController: NavHostController,
     intelligentRotation: Boolean = false,
     preferredCardTypes: List<String> = emptyList(),
-    locationId: String? = null
+    locationId: String? = null,
+    source: String? = null,
+    locationName: String? = null
 ) {
     // Track tab order for directional animations
     val tabRoutes = listOf("home", "decks", "exercise_selection", "environments", "ai_assistant")
@@ -47,6 +53,21 @@ private fun StudyNavigation(
     var previousRoute by remember { mutableStateOf("home") }
     
     val currentRoute = currentBackStackEntry?.destination?.route?.split("/")?.firstOrNull() ?: "home"
+    
+    // Navegação inteligente baseada em geofencing
+    LaunchedEffect(intelligentRotation, source, locationId) {
+        if (intelligentRotation && source != null && locationId != null) {
+            when (source) {
+                "geofence", "location_service" -> {
+                    // Navegar diretamente para a seleção de exercícios com rotação inteligente
+                    navController.navigate("exercise_selection") {
+                        popUpTo("home") { inclusive = false }
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+    }
     
     // Determine animation direction based on tab indices
     val isMovingForward = remember(currentRoute) {
@@ -229,7 +250,12 @@ private fun StudyNavigation(
                 },
                 onNavigateToExercise = { deckId, deckName ->
                     navController.navigate("exercise/$deckId/$deckName")
-                }
+                },
+                intelligentRotation = intelligentRotation,
+                preferredCardTypes = preferredCardTypes,
+                locationId = locationId,
+                source = source,
+                locationName = locationName
             )
         }
 

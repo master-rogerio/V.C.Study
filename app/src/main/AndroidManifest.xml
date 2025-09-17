@@ -36,7 +36,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.example.study.ACTION_GEOFENCE_TRANSITION" />
-            </intent-filter> />
+            </intent-filter>
         </receiver>
         <service
             android:name=".LocationService"
