@@ -622,3 +622,6 @@
 /app/build/tmp/kotlin-classes/debug/com/example/study/ui/StudyAppKt$StudyNavigation$5$8$4$1.class
 /app/build/tmp/kotlin-classes/debug/com/example/study/ui/StudyAppKt$StudyNavigation$5$8$4.class
 /app/build/tmp/kotlin-classes/debug/com/example/study/ui/StudyAppKt$StudyNavigation$5$8.class
+/.gradle/
+/app/build/
+/.idea/

@@ -8,6 +8,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.window.Dialog
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -15,11 +18,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.study.data.FavoriteLocation
+import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
 import com.example.study.ui.view.EnvironmentViewModel
@@ -49,6 +54,16 @@ fun EnvironmentsScreen(
             }
         }
     }
+
+    LaunchedEffect(locations) {
+        val hasActiveLocations = locations.any { it.isGeofenceActive }
+        if (hasActiveLocations) {
+            viewModel.startLocationService()
+        } else {
+            viewModel.stopLocationService()
+        }
+    }
+
 
     Scaffold(
         modifier = modifier,
@@ -139,7 +154,7 @@ fun EnvironmentsScreen(
             } else {
                 LocationsList(
                     locations = filteredLocations,
-                    onLocationClick = { location -> 
+                    onLocationClick = { location ->
                         // TODO: Navegar para estudos neste local
                     },
                     onEditClick = { location -> locationToEdit = location },
@@ -150,7 +165,7 @@ fun EnvironmentsScreen(
                         if (updated.isGeofenceActive) {
                             viewModel.addGeofence(updated)
                         } else {
-                            viewModel.removeGeofence(updated.id.toString())
+                            viewModel.removeGeofence(updated)
                         }
                     },
                     modifier = Modifier.weight(1f)
@@ -167,13 +182,15 @@ fun EnvironmentsScreen(
                 showAddLocationDialog = false
                 locationToEdit = null
             },
-            onSave = { name, address, latitude, longitude ->
+            onSave = { name, address, latitude, longitude, iconName, preferredCardTypes ->
                 if (locationToEdit != null) {
                     val updated = locationToEdit!!.copy(
                         name = name,
                         address = address,
                         latitude = latitude,
-                        longitude = longitude
+                        longitude = longitude,
+                        iconName = iconName,
+                        preferredCardTypes = preferredCardTypes
                     )
                     viewModel.update(updated)
                 } else {
@@ -181,7 +198,9 @@ fun EnvironmentsScreen(
                         name = name,
                         address = address,
                         latitude = latitude,
-                        longitude = longitude
+                        longitude = longitude,
+                        iconName = iconName,
+                        preferredCardTypes = preferredCardTypes
                     )
                     viewModel.insert(newLocation)
                 }
@@ -197,7 +216,7 @@ fun EnvironmentsScreen(
             locationName = location.name,
             onConfirm = {
                 if (location.isGeofenceActive) {
-                    viewModel.removeGeofence(location.id.toString())
+                    viewModel.removeGeofence(location)
                 }
                 viewModel.delete(location)
                 showDeleteDialog = null
@@ -224,9 +243,9 @@ private fun InfoCard(
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Text(
                 text = "Adicione seus locais favoritos de estudo e receba lembretes automáticos quando estiver por perto!",
                 style = MaterialTheme.typography.bodyMedium,
@@ -295,6 +314,18 @@ private fun LocationsList(
 }
 
 @Composable
+private fun getIconForLocation(iconName: String): ImageVector {
+    return when (iconName) {
+        "ic_home" -> Icons.Default.Home
+        "ic_work" -> Icons.Default.Work
+        "ic_park" -> Icons.Default.Park
+        "ic_fitness" -> Icons.Default.FitnessCenter
+        else -> Icons.Default.LocationOn
+    }
+}
+
+
+@Composable
 private fun LocationItem(
     location: FavoriteLocation,
     onClick: () -> Unit,
@@ -329,15 +360,15 @@ private fun LocationItem(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.LocationOn,
+                            imageVector = getIconForLocation(location.iconName),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.width(16.dp))
-                    
+
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
@@ -348,7 +379,7 @@ private fun LocationItem(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        
+
                         Text(
                             text = location.address,
                             style = MaterialTheme.typography.bodyMedium,
@@ -394,9 +425,9 @@ private fun LocationItem(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -419,9 +450,9 @@ private fun LocationItem(
                         },
                         modifier = Modifier.size(16.dp)
                     )
-                    
+
                     Spacer(modifier = Modifier.width(8.dp))
-                    
+
                     Text(
                         text = if (location.isGeofenceActive) {
                             "Lembretes ativos"
@@ -436,7 +467,7 @@ private fun LocationItem(
                         }
                     )
                 }
-                
+
                 Switch(
                     checked = location.isGeofenceActive,
                     onCheckedChange = { onToggleGeofence() }
@@ -447,6 +478,381 @@ private fun LocationItem(
 }
 
 @Composable
+private fun AddEditLocationDialog(
+    location: FavoriteLocation?,
+    onDismiss: () -> Unit,
+    onSave: (name: String, address: String, latitude: Double, longitude: Double, iconName: String, preferredCardTypes: List<FlashcardType>) -> Unit
+) {
+    var name by remember { mutableStateOf(location?.name ?: "") }
+    var address by remember { mutableStateOf(location?.address ?: "") }
+    var selectedLocation by remember {
+        mutableStateOf(
+            if (location != null) {
+                com.google.android.gms.maps.model.LatLng(location.latitude, location.longitude)
+            } else null
+        )
+    }
+    var showLocationPicker by remember { mutableStateOf(false) }
+
+    var selectedIcon by remember { mutableStateOf(location?.iconName ?: "ic_location") }
+    var selectedCardTypes by remember {
+        mutableStateOf(location?.preferredCardTypes ?: emptyList())
+    }
+
+    // Ícones disponíveis
+    val availableIcons = listOf(
+        "ic_location" to Icons.Default.LocationOn,
+        "ic_home" to Icons.Default.Home,
+        "ic_work" to Icons.Default.Work,
+        "ic_park" to Icons.Default.Park,
+        "ic_fitness" to Icons.Default.FitnessCenter
+    )
+
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
+                .fillMaxHeight(0.9f) // Altura máxima
+                .padding(8.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()) // Scroll vertical
+                    .padding(32.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                // Header
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Surface(
+                            modifier = Modifier.size(40.dp),
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primaryContainer
+                        ) {
+                            Icon(
+                                imageVector = if (location == null) Icons.Default.Add else Icons.Default.Edit,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Text(
+                            text = if (location == null) "Novo Local" else "Editar Local",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Text(
+                        text = if (location == null)
+                            "Adicione um local onde você gosta de estudar"
+                        else
+                            "Edite as informações do local",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                // Form Fields
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Nome do local") },
+                        placeholder = { Text("Ex: Biblioteca Central") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Place,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                        )
+                    )
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = "Escolha um ícone para o local:",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                        ) {
+                            availableIcons.forEach { (iconName, iconVector) ->
+                                Surface(
+                                    onClick = { selectedIcon = iconName },
+                                    modifier = Modifier.size(48.dp),
+                                    shape = CircleShape,
+                                    color = if (selectedIcon == iconName)
+                                        MaterialTheme.colorScheme.primary
+                                    else
+                                        MaterialTheme.colorScheme.surfaceVariant,
+                                    border = BorderStroke(
+                                        2.dp,
+                                        if (selectedIcon == iconName)
+                                            MaterialTheme.colorScheme.primary
+                                        else
+                                            MaterialTheme.colorScheme.outline
+                                    )
+                                ) {
+                                    Icon(
+                                        imageVector = iconVector,
+                                        contentDescription = null,
+                                        tint = if (selectedIcon == iconName)
+                                            MaterialTheme.colorScheme.onPrimary
+                                        else
+                                            MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier
+                                            .size(18.dp)
+                                            .padding(12.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = "Tipos de flashcards preferidos:",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+
+                        val flashcardTypes = listOf(
+                            FlashcardType.FRONT_BACK to "Frente e Verso",
+                            FlashcardType.CLOZE to "Omissão de palavras",
+                            FlashcardType.TEXT_INPUT to "Digite a resposta",
+                            FlashcardType.MULTIPLE_CHOICE to "Múltipla escolha"
+                        )
+
+                        flashcardTypes.forEach { (type, label) ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Checkbox(
+                                    checked = selectedCardTypes.contains(type),
+                                    onCheckedChange = { isChecked ->
+                                        if (isChecked) {
+                                            selectedCardTypes = selectedCardTypes + type
+                                        } else {
+                                            selectedCardTypes = selectedCardTypes - type
+                                        }
+                                    }
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = label,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        }
+                    }
+
+                    OutlinedTextField(
+                        value = address,
+                        onValueChange = { address = it },
+                        label = { Text("Endereço") },
+                        placeholder = { Text("Toque no ícone de localização") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = false,
+                        maxLines = 2,
+                        readOnly = true,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                        ),
+                        trailingIcon = {
+                            Surface(
+                                onClick = { showLocationPicker = true },
+                                modifier = Modifier.size(40.dp),
+                                shape = CircleShape,
+                                color = MaterialTheme.colorScheme.primaryContainer
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.LocationOn,
+                                    contentDescription = "Selecionar localização",
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
+                        }
+                    )
+
+                    // Location Info Card
+                    if (selectedLocation != null) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f)
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.CheckCircle,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Text(
+                                        text = "Localização selecionada",
+                                        style = MaterialTheme.typography.labelLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                                    )
+                                }
+
+                                Text(
+                                    text = "Lat: ${String.format("%.6f", selectedLocation!!.latitude)}, " +
+                                            "Lng: ${String.format("%.6f", selectedLocation!!.longitude)}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
+                                )
+                            }
+                        }
+                    } else {
+                        Surface(
+                            onClick = { showLocationPicker = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                            )
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.LocationOn,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+
+                                Text(
+                                    text = "Toque para selecionar localização",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                Icon(
+                                    imageVector = Icons.Default.ChevronRight,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Action Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text(
+                            text = "Cancelar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+
+                    Button(
+                        onClick = {
+                            if (name.isNotBlank() && address.isNotBlank() && selectedLocation != null) {
+                                onSave(
+                                    name.trim(),
+                                    address.trim(),
+                                    selectedLocation!!.latitude,
+                                    selectedLocation!!.longitude,
+                                    selectedIcon,
+                                    selectedCardTypes
+                                )
+                            }
+                        },
+                        enabled = name.isNotBlank() && address.isNotBlank() && selectedLocation != null,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            text = "Salvar",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    // Location Picker Dialog
+    LocationPickerDialog(
+        isVisible = showLocationPicker,
+        initialLocation = selectedLocation,
+        initialAddress = address,
+        onLocationSelected = { latLng, addressText ->
+            selectedLocation = latLng
+            address = addressText
+            showLocationPicker = false
+        },
+        onDismiss = { showLocationPicker = false }
+    )
+}
+
+/*
 private fun AddEditLocationDialog(
     location: FavoriteLocation?,
     onDismiss: () -> Unit,
@@ -712,6 +1118,8 @@ private fun AddEditLocationDialog(
         onDismiss = { showLocationPicker = false }
     )
 }
+
+ */
 
 @Composable
 private fun DeleteLocationDialog(

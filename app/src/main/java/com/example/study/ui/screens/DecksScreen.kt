@@ -46,6 +46,14 @@ fun DecksScreen(
     var showDeleteDialog by remember { mutableStateOf<Deck?>(null) }
     var searchQuery by remember { mutableStateOf("") }
     var isGridView by remember { mutableStateOf(true) }
+    var flashcardCounts by remember { mutableStateOf<Map<Long, Int>>(emptyMap()) }
+
+    LaunchedEffect(decks) {
+        decks.forEach { deck ->
+            val count = viewModel.getFlashcardCountForDeck(deck.id)
+            flashcardCounts = flashcardCounts + (deck.id to count)
+        }
+    }
 
     val filteredDecks = remember(decks, searchQuery) {
         if (searchQuery.isBlank()) {
@@ -148,6 +156,7 @@ fun DecksScreen(
                 if (isGridView) {
                     DecksGrid(
                         decks = filteredDecks,
+                        flashcardCounts = flashcardCounts,
                         onDeckClick = { deck -> onNavigateToFlashcards(deck.id, deck.name) },
                         onEditClick = { deck -> deckToEdit = deck },
                         onDeleteClick = { deck -> showDeleteDialog = deck },
@@ -156,6 +165,7 @@ fun DecksScreen(
                 } else {
                     DecksList(
                         decks = filteredDecks,
+                        flashcardCounts = flashcardCounts,
                         onDeckClick = { deck -> onNavigateToFlashcards(deck.id, deck.name) },
                         onEditClick = { deck -> deckToEdit = deck },
                         onDeleteClick = { deck -> showDeleteDialog = deck },
@@ -235,6 +245,7 @@ private fun SearchBar(
 @Composable
 private fun DecksGrid(
     decks: List<Deck>,
+    flashcardCounts: Map<Long, Int>,
     onDeckClick: (Deck) -> Unit,
     onEditClick: (Deck) -> Unit,
     onDeleteClick: (Deck) -> Unit,
@@ -250,6 +261,7 @@ private fun DecksGrid(
         items(decks, key = { it.id }) { deck ->
             DeckGridItem(
                 deck = deck,
+                flashcardCount = flashcardCounts[deck.id] ?: 0,
                 onClick = { onDeckClick(deck) },
                 onEditClick = { onEditClick(deck) },
                 onDeleteClick = { onDeleteClick(deck) },
@@ -267,6 +279,7 @@ private fun DecksGrid(
 @Composable
 private fun DecksList(
     decks: List<Deck>,
+    flashcardCounts: Map<Long, Int>,
     onDeckClick: (Deck) -> Unit,
     onEditClick: (Deck) -> Unit,
     onDeleteClick: (Deck) -> Unit,
@@ -280,6 +293,7 @@ private fun DecksList(
         items(decks, key = { it.id }) { deck ->
             DeckListItem(
                 deck = deck,
+                flashcardCount = flashcardCounts[deck.id] ?: 0,
                 onClick = { onDeckClick(deck) },
                 onEditClick = { onEditClick(deck) },
                 onDeleteClick = { onDeleteClick(deck) }
@@ -291,6 +305,7 @@ private fun DecksList(
 @Composable
 private fun DeckGridItem(
     deck: Deck,
+    flashcardCount: Int,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -390,7 +405,7 @@ private fun DeckGridItem(
             Spacer(modifier = Modifier.height(12.dp))
 
             StudyChip(
-                text = "0 cards", // TODO: Buscar número real de cards
+                text = "$flashcardCount cards", // Usa número real de cards
                 selected = false
             )
         }
@@ -400,6 +415,7 @@ private fun DeckGridItem(
 @Composable
 private fun DeckListItem(
     deck: Deck,
+    flashcardCount: Int,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -454,7 +470,7 @@ private fun DeckListItem(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "0 flashcards", // TODO: Buscar número real
+                    text = "$flashcardCount flashcards",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )

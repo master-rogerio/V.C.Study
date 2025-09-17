@@ -1,6 +1,7 @@
 package com.example.study
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,16 +15,49 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
+        //Rotação inteligente de conteudo
+        val locationId = intent.getStringExtra("locationId")
+        val preferredCardTypes = intent.getStringArrayExtra("preferredCardTypes")
+        val intelligentRotation = intent.getBooleanExtra("intelligentRotation", false)
+
+        // Log para debug
+        if (intelligentRotation) {
+            android.util.Log.d("Geofence", "Rotação inteligente ativada para localização: $locationId")
+            android.util.Log.d("Geofence", "Tipos de cards preferidos: ${preferredCardTypes?.joinToString()}")
+        }
+
+        // Configuração para resolver problemas de hover - Otimização de Performance
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         setContent {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                StudyApp()
+                StudyApp(
+                    intelligentRotation = intelligentRotation,
+                    preferredCardTypes = preferredCardTypes?.toList() ?: emptyList(),
+                    locationId = locationId
+                )
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Limpa recursos para evitar memory leaks
+    }
+
 }
 
 

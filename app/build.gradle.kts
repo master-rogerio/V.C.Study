@@ -53,7 +53,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
+        kotlinCompilerExtensionVersion = "1.5.8" //Versão antiga "1.5.10"
     }
     packagingOptions {
         resources {
@@ -76,8 +76,8 @@ dependencies {
     // Gson para serialização/desserialização JSON
     implementation("com.google.code.gson:gson:2.10.1")
 
-    // Compose BOM - versão compatível com Kotlin 1.9.22
-    val composeBom = platform("androidx.compose:compose-bom:2024.04.01")
+    // Compose BOM - versão mais estável para API 28
+    val composeBom = platform("androidx.compose:compose-bom:2024.02.00") //Modificado era 2024.04.01
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
@@ -88,10 +88,14 @@ dependencies {
     // UI do Compose
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-text-android") //Adicionada
     implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.ui:ui-util") //Adicionada
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.animation:animation-graphics")
+
+
 
     // Integração do Compose com Activities e ViewModels
     implementation("androidx.activity:activity-compose:1.8.2")

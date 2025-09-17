@@ -16,17 +16,29 @@ import com.example.study.ui.screens.*
 import com.example.study.ui.theme.VCStudyTheme
 
 @Composable
-fun StudyApp() {
+fun StudyApp(
+    intelligentRotation: Boolean = false,
+    preferredCardTypes: List<String> = emptyList(),
+    locationId: String? = null
+) {
     VCStudyTheme {
         val navController = rememberNavController()
-        StudyNavigation(navController = navController)
+        StudyNavigation(
+            navController = navController,
+            intelligentRotation = intelligentRotation,
+            preferredCardTypes = preferredCardTypes,
+            locationId = locationId
+        )
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun StudyNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    intelligentRotation: Boolean = false,
+    preferredCardTypes: List<String> = emptyList(),
+    locationId: String? = null
 ) {
     // Track tab order for directional animations
     val tabRoutes = listOf("home", "decks", "exercise_selection", "environments", "ai_assistant")
@@ -46,7 +58,68 @@ private fun StudyNavigation(
         previousRoute = currentRoute
         result
     }
-    
+
+    // Otimização de animações para melhor performance
+    NavHost(
+        navController = navController,
+        startDestination = "home",
+        modifier = Modifier.fillMaxSize(),
+        enterTransition = {
+            val targetRoute = targetState.destination.route?.split("/")?.firstOrNull()
+            val initialRoute = initialState.destination.route?.split("/")?.firstOrNull()
+
+            if (targetRoute in tabRoutes && initialRoute in tabRoutes) {
+                val targetIndex = tabRoutes.indexOf(targetRoute)
+                val initialIndex = tabRoutes.indexOf(initialRoute)
+                val movingRight = targetIndex > initialIndex
+
+                slideInHorizontally(
+                    initialOffsetX = { if (movingRight) it else -it },
+                    animationSpec = tween(100) // Reduzido de 300 para 100
+                ) + fadeIn(animationSpec = tween(150)) // Reduzido de 200 para 150
+            } else {
+                slideInHorizontally(
+                    initialOffsetX = { 1000 },
+                    animationSpec = tween(200) // Reduzido de 300 para 200
+                ) + fadeIn(animationSpec = tween(150)) // Reduzido de 200 para 150
+            }
+        },
+        exitTransition = {
+            val targetRoute = targetState.destination.route?.split("/")?.firstOrNull()
+            val initialRoute = initialState.destination.route?.split("/")?.firstOrNull()
+
+            if (targetRoute in tabRoutes && initialRoute in tabRoutes) {
+                val targetIndex = tabRoutes.indexOf(targetRoute)
+                val initialIndex = tabRoutes.indexOf(initialRoute)
+                val movingRight = targetIndex > initialIndex
+
+                slideOutHorizontally(
+                    targetOffsetX = { if (movingRight) -it else it },
+                    animationSpec = tween(200) // Reduzido de 300 para 200
+                ) + fadeOut(animationSpec = tween(150)) // Reduzido de 200 para 150
+            } else {
+                slideOutHorizontally(
+                    targetOffsetX = { -1000 },
+                    animationSpec = tween(200) // Reduzido de 300 para 200
+                ) + fadeOut(animationSpec = tween(150)) // Reduzido de 200 para 150
+            }
+        },
+        popEnterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { -1000 },
+                animationSpec = tween(200) // Reduzido de 300 para 200
+            ) + fadeIn(animationSpec = tween(150)) // Reduzido de 200 para 150
+        },
+        popExitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { 1000 },
+                animationSpec = tween(200) // Reduzido de 300 para 200
+            ) + fadeOut(animationSpec = tween(150)) // Reduzido de 200 para 150
+        }
+    ) {
+
+
+    /* Correção de animações
     NavHost(
         navController = navController,
         startDestination = "home",
@@ -104,6 +177,7 @@ private fun StudyNavigation(
             ) + fadeOut(animationSpec = tween(200))
         }
     ) {
+        */
         composable("home") {
             HomeScreen(
                 onNavigateToDecks = {
@@ -125,6 +199,36 @@ private fun StudyNavigation(
                     navController.navigate("ai_assistant") {
                         launchSingleTop = true
                     }
+                }
+            )
+        }
+
+        // Navegação inteligente para exercícios
+        composable("exercise_selection") {
+            com.example.study.ui.screens.ExerciseSelectionScreen(
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToDecks = {
+                    navController.navigate("decks") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToEnvironments = {
+                    navController.navigate("environments") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToAI = {
+                    navController.navigate("ai_assistant") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToExercise = { deckId, deckName ->
+                    navController.navigate("exercise/$deckId/$deckName")
                 }
             )
         }

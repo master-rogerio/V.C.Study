@@ -1,3 +1,5 @@
+//REMOVER!!!!!!
+
 package com.example.study.util
 
 //Lógica do Geofencenig
