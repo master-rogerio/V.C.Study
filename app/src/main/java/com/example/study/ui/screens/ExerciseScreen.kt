@@ -1,7 +1,9 @@
 package com.example.study.ui.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -33,8 +35,15 @@ fun ExerciseScreen(
     val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
     val dueFlashcards = remember(flashcards) {
         val currentTime = System.currentTimeMillis()
-        val filtered = flashcards.filter { it.nextReviewDate == null || it.nextReviewDate.time <= currentTime }
-        if (filtered.isEmpty() && flashcards.isNotEmpty()) flashcards else filtered
+        val filtered = flashcards.filter { flashcard ->
+            flashcard.nextReviewDate == null ||
+                    flashcard.nextReviewDate.time <= currentTime
+        }
+        if (filtered.isEmpty() && flashcards.isNotEmpty()) {
+            flashcards
+        } else {
+            filtered
+        }
     }
 
     var currentIndex by remember { mutableIntStateOf(0) }
@@ -45,7 +54,29 @@ fun ExerciseScreen(
     var selectedOption by remember { mutableIntStateOf(-1) }
     var showQualityButtons by remember { mutableStateOf(false) }
 
-    val currentFlashcard = dueFlashcards.getOrNull(currentIndex)
+    val currentFlashcard = if (dueFlashcards.isNotEmpty() && currentIndex < dueFlashcards.size) {
+        dueFlashcards[currentIndex]
+    } else null
+
+    // Função centralizada para processar a resposta e avançar
+    fun handleNextCard(flashcard: Flashcard, quality: Int, isCorrect: Boolean) {
+        if (isCorrect) score++
+
+        val updatedFlashcard = viewModel.calculateNextReview(flashcard, quality)
+        viewModel.update(updatedFlashcard)
+
+        if (currentIndex < dueFlashcards.size - 1) {
+            currentIndex++
+            resetForNextCard(
+                onResetAnswer = { userAnswer = "" },
+                onResetOption = { selectedOption = -1 },
+                onResetShowAnswer = { isShowingAnswer = false },
+                onResetQualityButtons = { showQualityButtons = false }
+            )
+        } else {
+            exerciseCompleted = true
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -53,21 +84,64 @@ fun ExerciseScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text("Exercício", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                        Text(deckName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            text = "Exercício",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = deckName,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 },
-                navigationIcon = { IconButton(onClick = onNavigateBack) { Icon(Icons.Default.ArrowBack, "Voltar") } },
-                actions = { Text("${currentIndex + 1}/${dueFlashcards.size}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(end = 16.dp)) }
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Voltar"
+                        )
+                    }
+                },
+                actions = {
+                    if (dueFlashcards.isNotEmpty() && currentFlashcard != null) {
+                        Text(
+                            text = "${currentIndex + 1}/${dueFlashcards.size}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(end = 16.dp)
+                        )
+                    }
+                }
             )
         }
     ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             when {
-                exerciseCompleted -> ExerciseCompletedScreen(score, dueFlashcards.size) { onNavigateToResults(score, dueFlashcards.size) }
+                exerciseCompleted -> {
+                    ExerciseCompletedScreen(
+                        score = score,
+                        total = dueFlashcards.size,
+                        onNavigateToResults = { onNavigateToResults(score, dueFlashcards.size) }
+                    )
+                }
+
                 currentFlashcard != null -> {
-                    Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        StudyProgressBar((currentIndex + 1).toFloat() / dueFlashcards.size, showPercentage = false)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        StudyProgressBar(
+                            progress = (currentIndex + 1).toFloat() / dueFlashcards.size,
+                            showPercentage = false
+                        )
+
                         FlashcardExerciseContent(
                             flashcard = currentFlashcard,
                             isShowingAnswer = isShowingAnswer,
@@ -76,41 +150,77 @@ fun ExerciseScreen(
                             selectedOption = selectedOption,
                             onOptionSelected = { selectedOption = it },
                             showQualityButtons = showQualityButtons,
-                            onRevealAnswer = { isShowingAnswer = true; showQualityButtons = currentFlashcard.type == FlashcardType.FRONT_BACK },
+                            onRevealAnswer = {
+                                isShowingAnswer = true
+                                // Mostra botões de qualidade apenas para o tipo FRENTE/VERSO
+                                showQualityButtons = currentFlashcard.type == FlashcardType.FRONT_BACK
+                            },
                             onQualitySelected = { quality ->
+                                // Chamado apenas pelos botões de qualidade (FRENTE/VERSO)
+                                val isCorrect = quality >= 3
+                                handleNextCard(currentFlashcard, quality, isCorrect)
+                            },
+                            onContinue = {
+                                // Chamado pelo botão "Continuar" para outros tipos de card
                                 val isCorrect = when (currentFlashcard.type) {
-                                    FlashcardType.FRONT_BACK -> quality >= 3
-                                    FlashcardType.TEXT_INPUT -> userAnswer.trim().equals(currentFlashcard.back.trim(), ignoreCase = true)
-                                    FlashcardType.MULTIPLE_CHOICE -> selectedOption == currentFlashcard.correctOptionIndex
-                                    FlashcardType.CLOZE -> userAnswer.trim().equals(currentFlashcard.clozeAnswer?.trim() ?: "", ignoreCase = true)
+                                    FlashcardType.TEXT_INPUT -> {
+                                        userAnswer.trim().equals(currentFlashcard.back.trim(), ignoreCase = true)
+                                    }
+                                    FlashcardType.MULTIPLE_CHOICE -> {
+                                        selectedOption == currentFlashcard.correctOptionIndex
+                                    }
+                                    FlashcardType.CLOZE -> {
+                                        userAnswer.trim().equals(currentFlashcard.clozeAnswer?.trim() ?: "", ignoreCase = true)
+                                    }
+                                    else -> false // Não deve acontecer
                                 }
-                                if (isCorrect) score++
-                                viewModel.update(viewModel.calculateNextReview(currentFlashcard, quality))
-                                if (currentIndex < dueFlashcards.size - 1) {
-                                    currentIndex++
-                                    userAnswer = ""
-                                    selectedOption = -1
-                                    isShowingAnswer = false
-                                    showQualityButtons = false
-                                } else {
-                                    exerciseCompleted = true
-                                }
+                                // Qualidade automática: 4 (Fácil) se acertou, 1 (Muito Difícil) se errou.
+                                val quality = if (isCorrect) 4 else 1
+                                handleNextCard(currentFlashcard, quality, isCorrect)
                             },
                             modifier = Modifier.weight(1f)
                         )
                     }
                 }
-                else -> StudyEmptyState("Nenhum flashcard para revisar", "Todos os flashcards deste deck estão em dia!", Icons.Default.CheckCircle, modifier = Modifier.fillMaxSize())
+
+                else -> {
+                    StudyEmptyState(
+                        title = "Nenhum flashcard para revisar",
+                        subtitle = "Todos os flashcards deste deck estão em dia!",
+                        icon = Icons.Default.CheckCircle,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun FlashcardExerciseContent(flashcard: Flashcard, isShowingAnswer: Boolean, userAnswer: String, onUserAnswerChange: (String) -> Unit, selectedOption: Int, onOptionSelected: (Int) -> Unit, showQualityButtons: Boolean, onRevealAnswer: () -> Unit, onQualitySelected: (Int) -> Unit, modifier: Modifier = Modifier) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(24.dp)) {
-        StudyCard(modifier = Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+private fun FlashcardExerciseContent(
+    flashcard: Flashcard,
+    isShowingAnswer: Boolean,
+    userAnswer: String,
+    onUserAnswerChange: (String) -> Unit,
+    selectedOption: Int,
+    onOptionSelected: (Int) -> Unit,
+    showQualityButtons: Boolean,
+    onRevealAnswer: () -> Unit,
+    onQualitySelected: (Int) -> Unit,
+    onContinue: () -> Unit, // Novo callback
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()), // Adicionado para evitar overflow
+        verticalArrangement = Arrangement.spacedBy(16.dp) // Reduzido para melhor encaixe
+    ) {
+        StudyCard(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 StudyChip(text = flashcard.type.name, selected = false)
                 flashcard.frontImageUrl?.let { AsyncImage(it, "Imagem da pergunta", modifier = Modifier.fillMaxWidth().height(150.dp).clip(RoundedCornerShape(12.dp))) }
                 flashcard.frontAudioUrl?.let { AudioPlayer(it) }
@@ -121,15 +231,26 @@ private fun FlashcardExerciseContent(flashcard: Flashcard, isShowingAnswer: Bool
             }
         }
 
+        // Renderiza os inputs e botões de acordo com o tipo
         when (flashcard.type) {
             FlashcardType.FRONT_BACK -> {
-                if (!isShowingAnswer) StudyButton(onRevealAnswer, text = "Revelar Resposta", icon = Icons.Default.Visibility, modifier = Modifier.fillMaxWidth())
-                else AnswerCard(flashcard.back, null, flashcard.backImageUrl, flashcard.backAudioUrl)
+                if (!isShowingAnswer) {
+                    StudyButton(onRevealAnswer, text = "Revelar Resposta", icon = Icons.Default.Visibility, modifier = Modifier.fillMaxWidth())
+                } else {
+                    AnswerCard(flashcard.back, null, flashcard.backImageUrl, flashcard.backAudioUrl)
+                }
             }
             FlashcardType.TEXT_INPUT, FlashcardType.CLOZE -> {
-                OutlinedTextField(userAnswer, onUserAnswerChange, label = { Text("Digite sua resposta") }, modifier = Modifier.fillMaxWidth())
-                if (!isShowingAnswer) StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
-                else {
+                OutlinedTextField(
+                    value = userAnswer,
+                    onValueChange = onUserAnswerChange,
+                    label = { Text("Digite sua resposta") },
+                    modifier = Modifier.fillMaxWidth(),
+                    readOnly = isShowingAnswer
+                )
+                if (!isShowingAnswer) {
+                    StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
+                } else {
                     val expected = flashcard.clozeAnswer ?: flashcard.back
                     AnswerCard(expected, userAnswer.trim().equals(expected.trim(), ignoreCase = true), flashcard.backImageUrl, flashcard.backAudioUrl)
                 }
@@ -138,15 +259,34 @@ private fun FlashcardExerciseContent(flashcard: Flashcard, isShowingAnswer: Bool
                 flashcard.options?.forEachIndexed { index, option ->
                     OptionCard(option, selectedOption == index, if (isShowingAnswer) index == flashcard.correctOptionIndex else null, onClick = { if (!isShowingAnswer) onOptionSelected(index) })
                 }
-                if (selectedOption != -1 && !isShowingAnswer) StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
+                if (selectedOption != -1 && !isShowingAnswer) {
+                    StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
+                }
             }
         }
 
-        if (showQualityButtons || (isShowingAnswer && flashcard.type != FlashcardType.FRONT_BACK)) {
-            QualityButtons(onQualitySelected, modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.weight(1f)) // Empurra os botões para baixo
+
+        // Mostra botões de qualidade APENAS para FRENTE/VERSO
+        if (showQualityButtons) {
+            QualityButtons(
+                onQualitySelected = onQualitySelected,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        // Mostra botão "Continuar" para os OUTROS tipos após a resposta ser revelada
+        if (isShowingAnswer && flashcard.type != FlashcardType.FRONT_BACK) {
+            StudyButton(
+                onClick = onContinue,
+                text = "Continuar",
+                icon = Icons.Default.ArrowForward,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
+
 
 @Composable
 private fun AnswerCard(answer: String, isCorrect: Boolean?, imageUrl: String?, audioUrl: String?, modifier: Modifier = Modifier) {
@@ -207,9 +347,9 @@ private fun OptionCard(
                     else -> MaterialTheme.colorScheme.onSurfaceVariant
                 }
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Text(
                 text = option,
                 style = MaterialTheme.typography.bodyLarge
@@ -225,14 +365,13 @@ private fun QualityButtons(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier
+                .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
@@ -241,15 +380,15 @@ private fun QualityButtons(
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             val qualities = listOf(
                 1 to Pair("Muito Difícil", "😰"),
-                2 to Pair("Difícil", "😅"), 
+                2 to Pair("Difícil", "😅"),
                 3 to Pair("Normal", "😐"),
                 4 to Pair("Fácil", "😊"),
                 5 to Pair("Muito Fácil", "😎")
             )
-            
+
             qualities.forEach { (quality, textEmoji) ->
                 QualityButton(
                     text = textEmoji.first,
@@ -275,14 +414,14 @@ private fun QualityButton(
         4, 5 -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.primaryContainer
     }
-    
+
     val contentColor = when (quality) {
         1, 2 -> MaterialTheme.colorScheme.onErrorContainer
         3 -> MaterialTheme.colorScheme.onTertiaryContainer
         4, 5 -> MaterialTheme.colorScheme.onPrimaryContainer
         else -> MaterialTheme.colorScheme.onPrimaryContainer
     }
-    
+
     Surface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
@@ -299,7 +438,7 @@ private fun QualityButton(
                 text = emoji,
                 style = MaterialTheme.typography.titleLarge
             )
-            
+
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
@@ -307,7 +446,7 @@ private fun QualityButton(
                 color = contentColor,
                 modifier = Modifier.weight(1f)
             )
-            
+
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = null,
@@ -337,27 +476,27 @@ private fun ExerciseCompletedScreen(
             modifier = Modifier.size(80.dp),
             tint = MaterialTheme.colorScheme.primary
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text(
             text = "Exercício Concluído!",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = "Você completou todas as revisões pendentes.",
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         StudyButton(
             onClick = onNavigateToResults,
             text = "Ver Resultados",
