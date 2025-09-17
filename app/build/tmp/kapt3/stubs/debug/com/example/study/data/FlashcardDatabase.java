@@ -1,7 +1,7 @@
 package com.example.study.data;
 
 @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000&\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\b\'\u0018\u0000 \u000b2\u00020\u0001:\u0001\u000bB\u0005\u00a2\u0006\u0002\u0010\u0002J\b\u0010\u0003\u001a\u00020\u0004H&J\b\u0010\u0005\u001a\u00020\u0006H&J\b\u0010\u0007\u001a\u00020\bH&J\b\u0010\t\u001a\u00020\nH&\u00a8\u0006\f"}, d2 = {"Lcom/example/study/data/FlashcardDatabase;", "Landroidx/room/RoomDatabase;", "()V", "deckDao", "Lcom/example/study/data/DeckDao;", "favoriteLocationDao", "Lcom/example/study/data/FavoriteLocationDao;", "flashcardDao", "Lcom/example/study/data/FlashcardDao;", "userLocationDao", "Lcom/example/study/data/UserLocationDao;", "Companion", "app_debug"})
-@androidx.room.Database(entities = {com.example.study.data.Deck.class, com.example.study.data.Flashcard.class, com.example.study.data.UserLocation.class, com.example.study.data.FavoriteLocation.class}, version = 7, exportSchema = false)
+@androidx.room.Database(entities = {com.example.study.data.Deck.class, com.example.study.data.Flashcard.class, com.example.study.data.UserLocation.class, com.example.study.data.FavoriteLocation.class}, version = 8, exportSchema = false)
 @androidx.room.TypeConverters(value = {com.example.study.data.Converters.class})
 public abstract class FlashcardDatabase extends androidx.room.RoomDatabase {
     @kotlin.jvm.Volatile()

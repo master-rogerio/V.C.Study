@@ -181,7 +181,7 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
 
   @Override
   public Object insert(final FavoriteLocation favoriteLocation,
-      final Continuation<? super Long> $completion) {
+      final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -195,12 +195,12 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
   public Object delete(final FavoriteLocation favoriteLocation,
-      final Continuation<? super Unit> $completion) {
+      final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -214,12 +214,12 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
   public Object update(final FavoriteLocation favoriteLocation,
-      final Continuation<? super Unit> $completion) {
+      final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -233,11 +233,11 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteById(final String id, final Continuation<? super Unit> $completion) {
+  public Object deleteById(final String id, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -262,11 +262,11 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           __preparedStmtOfDeleteById.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -285,7 +285,7 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -462,7 +462,7 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
 
   @Override
   public Object getFavoriteLocationById(final String id,
-      final Continuation<? super FavoriteLocation> $completion) {
+      final Continuation<? super FavoriteLocation> arg1) {
     final String _sql = "SELECT * FROM favorite_locations WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -547,7 +547,7 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @NonNull

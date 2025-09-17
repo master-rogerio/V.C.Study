@@ -16,6 +16,10 @@ interface DeckDao {
     @Query("SELECT * FROM decks WHERE id = :id")
     suspend fun getDeckById(id: Long): Deck?
 
+    // ADIÇÃO: Nova função para encontrar um deck pelo nome
+    @Query("SELECT * FROM decks WHERE name = :name LIMIT 1")
+    suspend fun getDeckByName(name: String): Deck?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(deck: Deck): Long
 
@@ -27,4 +31,4 @@ interface DeckDao {
 
     @Query("SELECT COUNT(*) FROM flashcards WHERE deckId = :deckId")
     suspend fun getFlashcardCountForDeck(deckId: Long): Int
-} 
+}

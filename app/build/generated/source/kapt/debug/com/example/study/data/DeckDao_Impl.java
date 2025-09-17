@@ -258,6 +258,58 @@ public final class DeckDao_Impl implements DeckDao {
   }
 
   @Override
+  public Object getDeckByName(final String name, final Continuation<? super Deck> $completion) {
+    final String _sql = "SELECT * FROM decks WHERE name = ? LIMIT 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (name == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, name);
+    }
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Deck>() {
+      @Override
+      @Nullable
+      public Deck call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfTheme = CursorUtil.getColumnIndexOrThrow(_cursor, "theme");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final Deck _result;
+          if (_cursor.moveToFirst()) {
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final String _tmpName;
+            if (_cursor.isNull(_cursorIndexOfName)) {
+              _tmpName = null;
+            } else {
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+            }
+            final String _tmpTheme;
+            if (_cursor.isNull(_cursorIndexOfTheme)) {
+              _tmpTheme = null;
+            } else {
+              _tmpTheme = _cursor.getString(_cursorIndexOfTheme);
+            }
+            final long _tmpCreatedAt;
+            _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
+            _result = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
   public Object getFlashcardCountForDeck(final long deckId,
       final Continuation<? super Integer> $completion) {
     final String _sql = "SELECT COUNT(*) FROM flashcards WHERE deckId = ?";

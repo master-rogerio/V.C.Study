@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.example.study.app-mergeDebugResources-78:/layout/dialog_add_flashcard.xml",
+        "source": "com.example.study.app-main-81:/layout/dialog_add_flashcard.xml"
+    },
+    {
+        "merged": "com.example.study.app-mergeDebugResources-78:/layout/activity_ai_quiz.xml",
+        "source": "com.example.study.app-main-81:/layout/activity_ai_quiz.xml"
+    }
+]

@@ -1,5 +1,6 @@
 package com.example.study.ui.screens
 
+import android.content.Intent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
@@ -12,10 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.study.AIQuizActivity
 import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
@@ -28,10 +31,11 @@ fun FlashcardsScreen(
     deckId: Long,
     deckName: String,
     onNavigateBack: () -> Unit,
-    onNavigateToExercise: () -> Unit,
+    onNavigateToExercise: () -> Unit, // Mantido para compatibilidade, mas agora chama o Quiz IA
     modifier: Modifier = Modifier,
     viewModel: FlashcardViewModel = viewModel()
 ) {
+    val context = LocalContext.current // Obter o contexto para iniciar a Activity
     val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
     var showAddFlashcardDialog by remember { mutableStateOf(false) }
     var flashcardToEdit by remember { mutableStateOf<Flashcard?>(null) }
@@ -45,7 +49,7 @@ fun FlashcardsScreen(
         } else {
             flashcards.filter { flashcard ->
                 flashcard.front.contains(searchQuery, ignoreCase = true) ||
-                flashcard.back.contains(searchQuery, ignoreCase = true)
+                        flashcard.back.contains(searchQuery, ignoreCase = true)
             }
         }
     }
@@ -78,14 +82,20 @@ fun FlashcardsScreen(
                 },
                 actions = {
                     if (flashcards.isNotEmpty()) {
-                        IconButton(onClick = onNavigateToExercise) {
+                        // BOTÃO MODIFICADO PARA INICIAR O QUIZ COM IA
+                        IconButton(onClick = {
+                            val intent = Intent(context, AIQuizActivity::class.java).apply {
+                                putExtra("quizTheme", deckName) // Usa o nome do deck como tema
+                            }
+                            context.startActivity(intent)
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.PlayArrow,
-                                contentDescription = "Iniciar exercício"
+                                contentDescription = "Iniciar Quiz com IA"
                             )
                         }
                     }
-                    IconButton(onClick = { /* TODO: Configurações */ }) {
+                    IconButton(onClick = { /* TODO: Menu */ }) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
                             contentDescription = "Menu"
@@ -110,17 +120,20 @@ fun FlashcardsScreen(
                 .padding(paddingValues)
         ) {
             if (flashcards.isNotEmpty()) {
-                // Search bar
                 SearchBar(
                     query = searchQuery,
                     onQueryChange = { searchQuery = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
 
-                // Study progress
                 StudyProgressCard(
                     flashcards = flashcards,
-                    onStartStudy = onNavigateToExercise,
+                    onStartStudy = { // Ação do botão de estudo também foi atualizada
+                        val intent = Intent(context, AIQuizActivity::class.java).apply {
+                            putExtra("quizTheme", deckName)
+                        }
+                        context.startActivity(intent)
+                    },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
@@ -129,7 +142,6 @@ fun FlashcardsScreen(
 
             if (filteredFlashcards.isEmpty()) {
                 if (flashcards.isEmpty()) {
-                    // No flashcards at all
                     StudyEmptyState(
                         title = "Nenhum flashcard criado",
                         subtitle = "Adicione flashcards para começar a estudar este deck",
@@ -141,7 +153,6 @@ fun FlashcardsScreen(
                             .padding(16.dp)
                     )
                 } else {
-                    // No flashcards match search
                     StudyEmptyState(
                         title = "Nenhum flashcard encontrado",
                         subtitle = "Tente ajustar sua busca ou criar um novo flashcard",
@@ -163,7 +174,6 @@ fun FlashcardsScreen(
         }
     }
 
-    // Add/Edit Flashcard Dialog
     if (showAddFlashcardDialog || flashcardToEdit != null) {
         AddEditFlashcardDialog(
             deckId = deckId,
@@ -184,7 +194,6 @@ fun FlashcardsScreen(
         )
     }
 
-    // Quality Dialog
     showQualityDialog?.let { flashcard ->
         QualityDialog(
             flashcard = flashcard,
@@ -197,7 +206,6 @@ fun FlashcardsScreen(
         )
     }
 
-    // Delete Confirmation Dialog
     showDeleteDialog?.let { flashcard ->
         DeleteFlashcardDialog(
             onConfirm = {
@@ -247,8 +255,8 @@ private fun StudyProgressCard(
     onStartStudy: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dueFlashcards = flashcards.filter { 
-        it.nextReviewDate?.time ?: 0 <= System.currentTimeMillis() 
+    val dueFlashcards = flashcards.filter {
+        it.nextReviewDate?.time ?: 0 <= System.currentTimeMillis()
     }
     val progress = if (flashcards.isNotEmpty()) {
         (flashcards.size - dueFlashcards.size).toFloat() / flashcards.size
@@ -402,7 +410,7 @@ private fun FlashcardItem(
                 targetState = isFlipped,
                 transitionSpec = {
                     fadeIn(animationSpec = tween(300)) togetherWith
-                    fadeOut(animationSpec = tween(300))
+                            fadeOut(animationSpec = tween(300))
                 },
                 label = "flashcard_flip"
             ) { flipped ->

@@ -9,6 +9,11 @@ class DeckRepository(private val deckDao: DeckDao) {
         return deckDao.getDeckById(id)
     }
 
+    // ADIÇÃO: Tornando a nova função acessível
+    suspend fun getDeckByName(name: String): Deck? {
+        return deckDao.getDeckByName(name)
+    }
+
     suspend fun insert(deck: Deck): Long {
         return deckDao.insert(deck)
     }
@@ -24,4 +29,4 @@ class DeckRepository(private val deckDao: DeckDao) {
     suspend fun getFlashcardCountForDeck(deckId: Long): Int {
         return deckDao.getFlashcardCountForDeck(deckId)
     }
-} 
+}

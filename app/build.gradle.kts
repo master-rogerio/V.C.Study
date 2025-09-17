@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,6 +23,16 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // ADIÇÃO NOSSA: Lendo a chave de API do arquivo local.properties
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(FileInputStream(localPropertiesFile))
+        }
+        // Expondo a chave no BuildConfig para acesso seguro no código
+        buildConfigField("String", "GEMINI_API_KEY", "\"${localProperties.getProperty("GEMINI_API_KEY")}\"")
+
 
         // Adicionando opção para o Room exportar esquemas
         javaCompileOptions {
@@ -51,6 +64,10 @@ android {
     }
     buildFeatures {
         compose = true
+        // ADIÇÃO NOSSA: Habilitando o BuildConfig
+        buildConfig = true
+        // ADIÇÃO NOSSA: Garantindo que o viewBinding (se necessário em outras telas) continue ativo
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
@@ -67,14 +84,18 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
+
     // Room components - versão mais recente
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-    
+
     // Gson para serialização/desserialização JSON
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // ADIÇÃO NOSSA: Retrofit para chamadas de rede
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Compose BOM - versão compatível com Kotlin 1.9.22
     val composeBom = platform("androidx.compose:compose-bom:2024.04.01")
@@ -104,30 +125,30 @@ dependencies {
     // Ferramentas para preview e debug
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    
+
     // Lifecycle components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    
+
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-    
+
     // Places API for address autocomplete
     implementation("com.google.android.libraries.places:places:3.3.0")
-    
+
     // Lottie para animações
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("com.airbnb.android:lottie-compose:6.1.0")
 
     // Icons extended
     implementation("androidx.compose.material:material-icons-extended")
-    
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
