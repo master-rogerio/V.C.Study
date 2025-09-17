@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.study.app-mergeDebugResources-75:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
+            "outputFile": "com.example.study.app-mergeDebugResources-76:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Duzão\\.gradle\\caches\\8.10.2\\transforms\\06cefa67cafc819beea49482e696ce78\\transformed\\material-1.11.0\\res\\values-w360dp-port-v13\\values-w360dp-port-v13.xml",
+                    "source": "D:\\Android\\Android Studio\\jbr\\caches\\8.10.2\\transforms\\1dffefb89bd69c9df22a8377209e5dba\\transformed\\material-1.12.0\\res\\values-w360dp-port-v13\\values-w360dp-port-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

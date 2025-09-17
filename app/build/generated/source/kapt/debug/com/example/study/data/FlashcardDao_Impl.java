@@ -52,7 +52,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR ABORT INTO `flashcards` (`id`,`deckId`,`type`,`front`,`back`,`clozeText`,`clozeAnswer`,`options`,`correctOptionIndex`,`lastReviewed`,`nextReviewDate`,`easeFactor`,`interval`,`repetitions`,`createdAt`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `flashcards` (`id`,`deckId`,`type`,`front`,`back`,`frontImageUrl`,`frontAudioUrl`,`backImageUrl`,`backAudioUrl`,`clozeText`,`clozeAnswer`,`options`,`correctOptionIndex`,`lastReviewed`,`nextReviewDate`,`easeFactor`,`interval`,`repetitions`,`createdAt`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -76,43 +76,63 @@ public final class FlashcardDao_Impl implements FlashcardDao {
         } else {
           statement.bindString(5, entity.getBack());
         }
-        if (entity.getClozeText() == null) {
+        if (entity.getFrontImageUrl() == null) {
           statement.bindNull(6);
         } else {
-          statement.bindString(6, entity.getClozeText());
+          statement.bindString(6, entity.getFrontImageUrl());
         }
-        if (entity.getClozeAnswer() == null) {
+        if (entity.getFrontAudioUrl() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, entity.getClozeAnswer());
+          statement.bindString(7, entity.getFrontAudioUrl());
+        }
+        if (entity.getBackImageUrl() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, entity.getBackImageUrl());
+        }
+        if (entity.getBackAudioUrl() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getBackAudioUrl());
+        }
+        if (entity.getClozeText() == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindString(10, entity.getClozeText());
+        }
+        if (entity.getClozeAnswer() == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, entity.getClozeAnswer());
         }
         final String _tmp_1 = __converters.toStringList(entity.getOptions());
         if (_tmp_1 == null) {
-          statement.bindNull(8);
+          statement.bindNull(12);
         } else {
-          statement.bindString(8, _tmp_1);
+          statement.bindString(12, _tmp_1);
         }
         if (entity.getCorrectOptionIndex() == null) {
-          statement.bindNull(9);
+          statement.bindNull(13);
         } else {
-          statement.bindLong(9, entity.getCorrectOptionIndex());
+          statement.bindLong(13, entity.getCorrectOptionIndex());
         }
         final Long _tmp_2 = __converters.dateToTimestamp(entity.getLastReviewed());
         if (_tmp_2 == null) {
-          statement.bindNull(10);
+          statement.bindNull(14);
         } else {
-          statement.bindLong(10, _tmp_2);
+          statement.bindLong(14, _tmp_2);
         }
         final Long _tmp_3 = __converters.dateToTimestamp(entity.getNextReviewDate());
         if (_tmp_3 == null) {
-          statement.bindNull(11);
+          statement.bindNull(15);
         } else {
-          statement.bindLong(11, _tmp_3);
+          statement.bindLong(15, _tmp_3);
         }
-        statement.bindDouble(12, entity.getEaseFactor());
-        statement.bindLong(13, entity.getInterval());
-        statement.bindLong(14, entity.getRepetitions());
-        statement.bindLong(15, entity.getCreatedAt());
+        statement.bindDouble(16, entity.getEaseFactor());
+        statement.bindLong(17, entity.getInterval());
+        statement.bindLong(18, entity.getRepetitions());
+        statement.bindLong(19, entity.getCreatedAt());
       }
     };
     this.__deletionAdapterOfFlashcard = new EntityDeletionOrUpdateAdapter<Flashcard>(__db) {
@@ -132,7 +152,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `flashcards` SET `id` = ?,`deckId` = ?,`type` = ?,`front` = ?,`back` = ?,`clozeText` = ?,`clozeAnswer` = ?,`options` = ?,`correctOptionIndex` = ?,`lastReviewed` = ?,`nextReviewDate` = ?,`easeFactor` = ?,`interval` = ?,`repetitions` = ?,`createdAt` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `flashcards` SET `id` = ?,`deckId` = ?,`type` = ?,`front` = ?,`back` = ?,`frontImageUrl` = ?,`frontAudioUrl` = ?,`backImageUrl` = ?,`backAudioUrl` = ?,`clozeText` = ?,`clozeAnswer` = ?,`options` = ?,`correctOptionIndex` = ?,`lastReviewed` = ?,`nextReviewDate` = ?,`easeFactor` = ?,`interval` = ?,`repetitions` = ?,`createdAt` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -156,44 +176,64 @@ public final class FlashcardDao_Impl implements FlashcardDao {
         } else {
           statement.bindString(5, entity.getBack());
         }
-        if (entity.getClozeText() == null) {
+        if (entity.getFrontImageUrl() == null) {
           statement.bindNull(6);
         } else {
-          statement.bindString(6, entity.getClozeText());
+          statement.bindString(6, entity.getFrontImageUrl());
         }
-        if (entity.getClozeAnswer() == null) {
+        if (entity.getFrontAudioUrl() == null) {
           statement.bindNull(7);
         } else {
-          statement.bindString(7, entity.getClozeAnswer());
+          statement.bindString(7, entity.getFrontAudioUrl());
+        }
+        if (entity.getBackImageUrl() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, entity.getBackImageUrl());
+        }
+        if (entity.getBackAudioUrl() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getBackAudioUrl());
+        }
+        if (entity.getClozeText() == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindString(10, entity.getClozeText());
+        }
+        if (entity.getClozeAnswer() == null) {
+          statement.bindNull(11);
+        } else {
+          statement.bindString(11, entity.getClozeAnswer());
         }
         final String _tmp_1 = __converters.toStringList(entity.getOptions());
         if (_tmp_1 == null) {
-          statement.bindNull(8);
+          statement.bindNull(12);
         } else {
-          statement.bindString(8, _tmp_1);
+          statement.bindString(12, _tmp_1);
         }
         if (entity.getCorrectOptionIndex() == null) {
-          statement.bindNull(9);
+          statement.bindNull(13);
         } else {
-          statement.bindLong(9, entity.getCorrectOptionIndex());
+          statement.bindLong(13, entity.getCorrectOptionIndex());
         }
         final Long _tmp_2 = __converters.dateToTimestamp(entity.getLastReviewed());
         if (_tmp_2 == null) {
-          statement.bindNull(10);
+          statement.bindNull(14);
         } else {
-          statement.bindLong(10, _tmp_2);
+          statement.bindLong(14, _tmp_2);
         }
         final Long _tmp_3 = __converters.dateToTimestamp(entity.getNextReviewDate());
         if (_tmp_3 == null) {
-          statement.bindNull(11);
+          statement.bindNull(15);
         } else {
-          statement.bindLong(11, _tmp_3);
+          statement.bindLong(15, _tmp_3);
         }
-        statement.bindDouble(12, entity.getEaseFactor());
-        statement.bindLong(13, entity.getInterval());
-        statement.bindLong(14, entity.getRepetitions());
-        statement.bindLong(15, entity.getCreatedAt());
-        statement.bindLong(16, entity.getId());
+        statement.bindDouble(16, entity.getEaseFactor());
+        statement.bindLong(17, entity.getInterval());
+        statement.bindLong(18, entity.getRepetitions());
+        statement.bindLong(19, entity.getCreatedAt());
+        statement.bindLong(20, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAllForDeck = new SharedSQLiteStatement(__db) {
@@ -287,7 +327,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
 
   @Override
   public Flow<List<Flashcard>> getAllFlashcardsByReview() {
-    final String _sql = "SELECT `flashcards`.`id` AS `id`, `flashcards`.`deckId` AS `deckId`, `flashcards`.`type` AS `type`, `flashcards`.`front` AS `front`, `flashcards`.`back` AS `back`, `flashcards`.`clozeText` AS `clozeText`, `flashcards`.`clozeAnswer` AS `clozeAnswer`, `flashcards`.`options` AS `options`, `flashcards`.`correctOptionIndex` AS `correctOptionIndex`, `flashcards`.`lastReviewed` AS `lastReviewed`, `flashcards`.`nextReviewDate` AS `nextReviewDate`, `flashcards`.`easeFactor` AS `easeFactor`, `flashcards`.`interval` AS `interval`, `flashcards`.`repetitions` AS `repetitions`, `flashcards`.`createdAt` AS `createdAt` FROM flashcards ORDER BY nextReviewDate ASC";
+    final String _sql = "SELECT * FROM flashcards ORDER BY nextReviewDate ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"flashcards"}, new Callable<List<Flashcard>>() {
       @Override
@@ -295,21 +335,25 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       public List<Flashcard> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = 0;
-          final int _cursorIndexOfDeckId = 1;
-          final int _cursorIndexOfType = 2;
-          final int _cursorIndexOfFront = 3;
-          final int _cursorIndexOfBack = 4;
-          final int _cursorIndexOfClozeText = 5;
-          final int _cursorIndexOfClozeAnswer = 6;
-          final int _cursorIndexOfOptions = 7;
-          final int _cursorIndexOfCorrectOptionIndex = 8;
-          final int _cursorIndexOfLastReviewed = 9;
-          final int _cursorIndexOfNextReviewDate = 10;
-          final int _cursorIndexOfEaseFactor = 11;
-          final int _cursorIndexOfInterval = 12;
-          final int _cursorIndexOfRepetitions = 13;
-          final int _cursorIndexOfCreatedAt = 14;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfDeckId = CursorUtil.getColumnIndexOrThrow(_cursor, "deckId");
+          final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
+          final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
+          final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
+          final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
+          final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
+          final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
+          final int _cursorIndexOfCorrectOptionIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "correctOptionIndex");
+          final int _cursorIndexOfLastReviewed = CursorUtil.getColumnIndexOrThrow(_cursor, "lastReviewed");
+          final int _cursorIndexOfNextReviewDate = CursorUtil.getColumnIndexOrThrow(_cursor, "nextReviewDate");
+          final int _cursorIndexOfEaseFactor = CursorUtil.getColumnIndexOrThrow(_cursor, "easeFactor");
+          final int _cursorIndexOfInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "interval");
+          final int _cursorIndexOfRepetitions = CursorUtil.getColumnIndexOrThrow(_cursor, "repetitions");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final List<Flashcard> _result = new ArrayList<Flashcard>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Flashcard _item;
@@ -336,6 +380,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -387,7 +455,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -405,7 +473,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
 
   @Override
   public Flow<List<Flashcard>> getAllFlashcardsByCreation() {
-    final String _sql = "SELECT `flashcards`.`id` AS `id`, `flashcards`.`deckId` AS `deckId`, `flashcards`.`type` AS `type`, `flashcards`.`front` AS `front`, `flashcards`.`back` AS `back`, `flashcards`.`clozeText` AS `clozeText`, `flashcards`.`clozeAnswer` AS `clozeAnswer`, `flashcards`.`options` AS `options`, `flashcards`.`correctOptionIndex` AS `correctOptionIndex`, `flashcards`.`lastReviewed` AS `lastReviewed`, `flashcards`.`nextReviewDate` AS `nextReviewDate`, `flashcards`.`easeFactor` AS `easeFactor`, `flashcards`.`interval` AS `interval`, `flashcards`.`repetitions` AS `repetitions`, `flashcards`.`createdAt` AS `createdAt` FROM flashcards ORDER BY createdAt DESC";
+    final String _sql = "SELECT * FROM flashcards ORDER BY createdAt DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"flashcards"}, new Callable<List<Flashcard>>() {
       @Override
@@ -413,21 +481,25 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       public List<Flashcard> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = 0;
-          final int _cursorIndexOfDeckId = 1;
-          final int _cursorIndexOfType = 2;
-          final int _cursorIndexOfFront = 3;
-          final int _cursorIndexOfBack = 4;
-          final int _cursorIndexOfClozeText = 5;
-          final int _cursorIndexOfClozeAnswer = 6;
-          final int _cursorIndexOfOptions = 7;
-          final int _cursorIndexOfCorrectOptionIndex = 8;
-          final int _cursorIndexOfLastReviewed = 9;
-          final int _cursorIndexOfNextReviewDate = 10;
-          final int _cursorIndexOfEaseFactor = 11;
-          final int _cursorIndexOfInterval = 12;
-          final int _cursorIndexOfRepetitions = 13;
-          final int _cursorIndexOfCreatedAt = 14;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfDeckId = CursorUtil.getColumnIndexOrThrow(_cursor, "deckId");
+          final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
+          final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
+          final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
+          final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
+          final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
+          final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
+          final int _cursorIndexOfCorrectOptionIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "correctOptionIndex");
+          final int _cursorIndexOfLastReviewed = CursorUtil.getColumnIndexOrThrow(_cursor, "lastReviewed");
+          final int _cursorIndexOfNextReviewDate = CursorUtil.getColumnIndexOrThrow(_cursor, "nextReviewDate");
+          final int _cursorIndexOfEaseFactor = CursorUtil.getColumnIndexOrThrow(_cursor, "easeFactor");
+          final int _cursorIndexOfInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "interval");
+          final int _cursorIndexOfRepetitions = CursorUtil.getColumnIndexOrThrow(_cursor, "repetitions");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final List<Flashcard> _result = new ArrayList<Flashcard>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Flashcard _item;
@@ -454,6 +526,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -505,7 +601,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -538,6 +634,10 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
           final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
           final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
           final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
           final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
           final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
@@ -574,6 +674,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -625,7 +749,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -658,6 +782,10 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
           final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
           final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
           final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
           final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
           final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
@@ -694,6 +822,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -745,7 +897,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -783,6 +935,10 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
           final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
           final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
           final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
           final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
           final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
@@ -819,6 +975,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -870,7 +1050,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -910,6 +1090,10 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
           final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
           final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
           final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
           final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
           final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
@@ -946,6 +1130,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -997,7 +1205,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _item = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
             _result.add(_item);
           }
           return _result;
@@ -1031,6 +1239,10 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
           final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
           final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
+          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
+          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
+          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
+          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
           final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
           final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
           final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
@@ -1066,6 +1278,30 @@ public final class FlashcardDao_Impl implements FlashcardDao {
               _tmpBack = null;
             } else {
               _tmpBack = _cursor.getString(_cursorIndexOfBack);
+            }
+            final String _tmpFrontImageUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontImageUrl)) {
+              _tmpFrontImageUrl = null;
+            } else {
+              _tmpFrontImageUrl = _cursor.getString(_cursorIndexOfFrontImageUrl);
+            }
+            final String _tmpFrontAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfFrontAudioUrl)) {
+              _tmpFrontAudioUrl = null;
+            } else {
+              _tmpFrontAudioUrl = _cursor.getString(_cursorIndexOfFrontAudioUrl);
+            }
+            final String _tmpBackImageUrl;
+            if (_cursor.isNull(_cursorIndexOfBackImageUrl)) {
+              _tmpBackImageUrl = null;
+            } else {
+              _tmpBackImageUrl = _cursor.getString(_cursorIndexOfBackImageUrl);
+            }
+            final String _tmpBackAudioUrl;
+            if (_cursor.isNull(_cursorIndexOfBackAudioUrl)) {
+              _tmpBackAudioUrl = null;
+            } else {
+              _tmpBackAudioUrl = _cursor.getString(_cursorIndexOfBackAudioUrl);
             }
             final String _tmpClozeText;
             if (_cursor.isNull(_cursorIndexOfClozeText)) {
@@ -1117,7 +1353,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
             _tmpRepetitions = _cursor.getInt(_cursorIndexOfRepetitions);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _result = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
+            _result = new Flashcard(_tmpId,_tmpDeckId,_tmpType,_tmpFront,_tmpBack,_tmpFrontImageUrl,_tmpFrontAudioUrl,_tmpBackImageUrl,_tmpBackAudioUrl,_tmpClozeText,_tmpClozeAnswer,_tmpOptions,_tmpCorrectOptionIndex,_tmpLastReviewed,_tmpNextReviewDate,_tmpEaseFactor,_tmpInterval,_tmpRepetitions,_tmpCreatedAt);
           } else {
             _result = null;
           }

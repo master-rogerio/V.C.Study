@@ -4,7 +4,7 @@ package com.example.study;
 public final class MainActivity extends androidx.activity.ComponentActivity {
     
     public MainActivity() {
-        super();
+        super(0);
     }
     
     @java.lang.Override()

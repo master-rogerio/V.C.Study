@@ -162,7 +162,7 @@ public final class DeckDao_Impl implements DeckDao {
 
   @Override
   public Flow<List<Deck>> getAllDecks() {
-    final String _sql = "SELECT `decks`.`id` AS `id`, `decks`.`name` AS `name`, `decks`.`theme` AS `theme`, `decks`.`createdAt` AS `createdAt` FROM decks ORDER BY createdAt DESC";
+    final String _sql = "SELECT * FROM decks ORDER BY createdAt DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"decks"}, new Callable<List<Deck>>() {
       @Override
@@ -170,10 +170,10 @@ public final class DeckDao_Impl implements DeckDao {
       public List<Deck> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = 0;
-          final int _cursorIndexOfName = 1;
-          final int _cursorIndexOfTheme = 2;
-          final int _cursorIndexOfCreatedAt = 3;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfTheme = CursorUtil.getColumnIndexOrThrow(_cursor, "theme");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final List<Deck> _result = new ArrayList<Deck>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Deck _item;

@@ -1,4 +1,4 @@
-package com.example.study.ui.view // Certifique-se de que o pacote corresponde ao seu
+package com.example.study.ui.view
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
-
 class FlashcardViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: FlashcardRepository
     private val userLocationDao: UserLocationDao

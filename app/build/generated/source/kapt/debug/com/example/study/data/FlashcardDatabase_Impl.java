@@ -42,12 +42,12 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `decks` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `theme` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `flashcards` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `deckId` INTEGER NOT NULL, `type` TEXT NOT NULL, `front` TEXT NOT NULL, `back` TEXT NOT NULL, `clozeText` TEXT, `clozeAnswer` TEXT, `options` TEXT, `correctOptionIndex` INTEGER, `lastReviewed` INTEGER, `nextReviewDate` INTEGER, `easeFactor` REAL NOT NULL, `interval` INTEGER NOT NULL, `repetitions` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`deckId`) REFERENCES `decks`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `flashcards` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `deckId` INTEGER NOT NULL, `type` TEXT NOT NULL, `front` TEXT NOT NULL, `back` TEXT NOT NULL, `frontImageUrl` TEXT, `frontAudioUrl` TEXT, `backImageUrl` TEXT, `backAudioUrl` TEXT, `clozeText` TEXT, `clozeAnswer` TEXT, `options` TEXT, `correctOptionIndex` INTEGER, `lastReviewed` INTEGER, `nextReviewDate` INTEGER, `easeFactor` REAL NOT NULL, `interval` INTEGER NOT NULL, `repetitions` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`deckId`) REFERENCES `decks`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_flashcards_deckId` ON `flashcards` (`deckId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `user_location` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `timestamp` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_locations` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `radius` INTEGER NOT NULL, `isGeofenceActive` INTEGER NOT NULL, `iconName` TEXT NOT NULL, `preferredCardTypes` TEXT NOT NULL, `studySessionCount` INTEGER NOT NULL, `averagePerformance` REAL NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b282f69337866e4d12933280890157ae')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f504819ace217e8ed45ddf24713faa77')");
       }
 
       @Override
@@ -114,12 +114,16 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
                   + " Expected:\n" + _infoDecks + "\n"
                   + " Found:\n" + _existingDecks);
         }
-        final HashMap<String, TableInfo.Column> _columnsFlashcards = new HashMap<String, TableInfo.Column>(15);
+        final HashMap<String, TableInfo.Column> _columnsFlashcards = new HashMap<String, TableInfo.Column>(19);
         _columnsFlashcards.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("deckId", new TableInfo.Column("deckId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("type", new TableInfo.Column("type", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("front", new TableInfo.Column("front", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("back", new TableInfo.Column("back", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFlashcards.put("frontImageUrl", new TableInfo.Column("frontImageUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFlashcards.put("frontAudioUrl", new TableInfo.Column("frontAudioUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFlashcards.put("backImageUrl", new TableInfo.Column("backImageUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFlashcards.put("backAudioUrl", new TableInfo.Column("backAudioUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("clozeText", new TableInfo.Column("clozeText", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("clozeAnswer", new TableInfo.Column("clozeAnswer", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFlashcards.put("options", new TableInfo.Column("options", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -180,7 +184,7 @@ public final class FlashcardDatabase_Impl extends FlashcardDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "b282f69337866e4d12933280890157ae", "bb342123abca0a8def1073898faeef2b");
+    }, "f504819ace217e8ed45ddf24713faa77", "8ce7fcbf429e7eabdce4b9ab052e5f9d");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

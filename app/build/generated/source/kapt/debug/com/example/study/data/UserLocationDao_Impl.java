@@ -190,7 +190,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
 
   @Override
   public Flow<UserLocation> getLatestLocation() {
-    final String _sql = "SELECT `user_location`.`id` AS `id`, `user_location`.`name` AS `name`, `user_location`.`iconName` AS `iconName`, `user_location`.`latitude` AS `latitude`, `user_location`.`longitude` AS `longitude`, `user_location`.`timestamp` AS `timestamp` FROM user_location ORDER BY timestamp DESC LIMIT 1";
+    final String _sql = "SELECT * FROM user_location ORDER BY timestamp DESC LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"user_location"}, new Callable<UserLocation>() {
       @Override
@@ -198,12 +198,12 @@ public final class UserLocationDao_Impl implements UserLocationDao {
       public UserLocation call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = 0;
-          final int _cursorIndexOfName = 1;
-          final int _cursorIndexOfIconName = 2;
-          final int _cursorIndexOfLatitude = 3;
-          final int _cursorIndexOfLongitude = 4;
-          final int _cursorIndexOfTimestamp = 5;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfIconName = CursorUtil.getColumnIndexOrThrow(_cursor, "iconName");
+          final int _cursorIndexOfLatitude = CursorUtil.getColumnIndexOrThrow(_cursor, "latitude");
+          final int _cursorIndexOfLongitude = CursorUtil.getColumnIndexOrThrow(_cursor, "longitude");
+          final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final UserLocation _result;
           if (_cursor.moveToFirst()) {
             final long _tmpId;
@@ -245,7 +245,7 @@ public final class UserLocationDao_Impl implements UserLocationDao {
 
   @Override
   public LiveData<List<UserLocation>> getAllUserLocations() {
-    final String _sql = "SELECT `user_location`.`id` AS `id`, `user_location`.`name` AS `name`, `user_location`.`iconName` AS `iconName`, `user_location`.`latitude` AS `latitude`, `user_location`.`longitude` AS `longitude`, `user_location`.`timestamp` AS `timestamp` FROM user_location ORDER BY timestamp DESC";
+    final String _sql = "SELECT * FROM user_location ORDER BY timestamp DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return __db.getInvalidationTracker().createLiveData(new String[] {"user_location"}, false, new Callable<List<UserLocation>>() {
       @Override
@@ -253,12 +253,12 @@ public final class UserLocationDao_Impl implements UserLocationDao {
       public List<UserLocation> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = 0;
-          final int _cursorIndexOfName = 1;
-          final int _cursorIndexOfIconName = 2;
-          final int _cursorIndexOfLatitude = 3;
-          final int _cursorIndexOfLongitude = 4;
-          final int _cursorIndexOfTimestamp = 5;
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfIconName = CursorUtil.getColumnIndexOrThrow(_cursor, "iconName");
+          final int _cursorIndexOfLatitude = CursorUtil.getColumnIndexOrThrow(_cursor, "latitude");
+          final int _cursorIndexOfLongitude = CursorUtil.getColumnIndexOrThrow(_cursor, "longitude");
+          final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
           final List<UserLocation> _result = new ArrayList<UserLocation>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final UserLocation _item;
