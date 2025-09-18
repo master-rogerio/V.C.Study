@@ -6,11 +6,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
-<<<<<<< HEAD
     id("com.google.gms.google-services")
-=======
     id("com.google.dagger.hilt.android") version "2.51.1" apply false // Adicionado para Hilt
->>>>>>> origin/UX_UI.v4-FINAL
 }
 
 android {
@@ -29,7 +26,7 @@ android {
             useSupportLibrary = true
         }
 
-        // ADIÇÃO NOSSA: Lendo a chave de API do arquivo local.properties
+        // Lendo a chave de API do arquivo local.properties
         val localProperties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
         if (localPropertiesFile.exists()) {
@@ -69,9 +66,9 @@ android {
     }
     buildFeatures {
         compose = true
-        // ADIÇÃO NOSSA: Habilitando o BuildConfig
+        // Habilitando o BuildConfig
         buildConfig = true
-        // ADIÇÃO NOSSA: Garantindo que o viewBinding (se necessário em outras telas) continue ativo
+        // Garantindo que o viewBinding (se necessário em outras telas) continue ativo
         viewBinding = true
     }
     composeOptions {
@@ -85,19 +82,10 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
     // Firebase BOM (Bill of Materials) - Apenas uma versão, a mais recente
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     // Firebase Firestore - SEM versão, pois o BOM gere-a por nós
     implementation("com.google.firebase:firebase-firestore-ktx")
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-
-    // Room components
-=======
 
     // Core & App Compat
     implementation("androidx.core:core-ktx:1.13.1")
@@ -113,7 +101,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
     // Room components - versão mais recente
->>>>>>> origin/UX_UI.v4-FINAL
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
@@ -121,10 +108,9 @@ dependencies {
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
-<<<<<<< HEAD
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
-=======
+
     // ADIÇÃO NOSSA: Retrofit para chamadas de rede
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -132,8 +118,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Compose BOM (Bill of Materials) - Gerencia as versões do Compose
-    val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
->>>>>>> origin/UX_UI.v4-FINAL
+    //val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
+
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
@@ -160,17 +146,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Lifecycle components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    // Lifecycle components (versões mais recentes já incluídas acima)
 
     // Location services
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Places API
@@ -180,18 +159,11 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("com.airbnb.android:lottie-compose:6.1.0")
 
-<<<<<<< HEAD
-=======
     // Icons extended
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.compose.foundation:foundation") // Removido duplicado e versão manual
+    implementation("androidx.compose.foundation:foundation")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
     implementation("androidx.navigation:navigation-compose")
-
-    // Room (Banco de Dados)
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
 
     // Hilt (Injeção de Dependência, conforme especificação do projeto)
     implementation("com.google.dagger:hilt-android:2.51.1")
@@ -202,14 +174,8 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0") // Versão atualizada
     implementation("androidx.media3:media3-exoplayer:1.3.1") // Versão atualizada
 
-    // Location
-    implementation("com.google.android.gms:play-services-location:21.2.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    // Serialização JSON - já incluído acima
 
-    // Serialização JSON
-    implementation("com.google.code.gson:gson:2.10.1")
-
->>>>>>> origin/UX_UI.v4-FINAL
     // Testes
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
