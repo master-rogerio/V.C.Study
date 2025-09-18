@@ -29,7 +29,7 @@ Repositório para o trabalho da disciplina Programação para Dispositivos Móve
 * [ ✅ Funcionalidades](#-funcionalidades)
 * [ 🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
 * [ 🚀 Como Executar o Projeto](#-como-executar-o-projeto)
-* [ 🔮 Melhorias Futuras](#-melhorias-futuras)
+
 
 <br><br>
 
@@ -56,7 +56,7 @@ graph TD
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
 
-📖 Sobre o Aplicativo
+## 📖 Sobre o Aplicativo
 
 V.C. Study é um aplicativo de flashcards para Android, desenvolvido em Kotlin com Jetpack Compose. O aplicativo oferece uma experiência de estudo completa e inteligente, permitindo a criação de baralhos e flashcards de diferentes tipos. Um dos grandes diferenciais do V.C. Study é a integração com a API do Gemini, que possibilita a geração automática de baralhos com flashcards de temas definidos pelo usuário, tornando o aprendizado mais dinâmico e interativo.
 Além disso, o aplicativo conta com um sistema de geofencing, que permite associar baralhos a locais específicos, incentivando o estudo contextualizado.
@@ -67,7 +67,7 @@ Além disso, o aplicativo conta com um sistema de geofencing, que permite associ
 
 <br>
 
-✅ Funcionalidades
+## ✅ Funcionalidades
 
   - ✅ Criação e Gerenciamento de Baralhos: Crie, edite e exclua baralhos de estudo.
   - ✅ Criação de Flashcards: Adicione flashcards aos seus baralhos.
@@ -82,7 +82,7 @@ Além disso, o aplicativo conta com um sistema de geofencing, que permite associ
 
 <br>
 
-🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 <br>
 
@@ -101,7 +101,7 @@ Além disso, o aplicativo conta com um sistema de geofencing, que permite associ
 
 <br>
 
-🚀 Como Executar o Projeto
+## 🚀 Como Executar o Projeto
 
 <br>
 
