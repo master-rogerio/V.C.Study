@@ -66,36 +66,45 @@ Além disso, o aplicativo conta com um sistema de geofencing, que permite associ
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
 
+<br>
 
 ✅ Funcionalidades
 
-  ✅ Criação e Gerenciamento de Baralhos: Crie, edite e exclua baralhos de estudo.
-  ✅ Criação de Flashcards: Adicione flashcards aos seus baralhos.
-  ✅ Geração de Quizzes com IA: Utilize a API do Gemini para gerar quizzes automaticamente a partir dos seus flashcards.
-  ✅ Geofencing: Associe baralhos a locais específicos e receba notificações para estudar quando estiver no local.
-  ✅ Interface Moderna: Interface de usuário construída com Jetpack Compose, proporcionando uma experiência fluida e agradável.
-  ✅ Persistência de Dados: Todos os seus baralhos e flashcards são salvos localmente utilizando o Room.
+  - ✅ Criação e Gerenciamento de Baralhos: Crie, edite e exclua baralhos de estudo.
+  - ✅ Criação de Flashcards: Adicione flashcards aos seus baralhos.
+  - ✅ Geração de Quizzes com IA: Utilize a API do Gemini para gerar quizzes automaticamente a partir dos seus flashcards.
+  - ✅ Geofencing: Associe baralhos a locais específicos e receba notificações para estudar quando estiver no local.
+  - ✅ Interface Moderna: Interface de usuário construída com Jetpack Compose, proporcionando uma experiência fluida e agradável.
+  - ✅ Persistência de Dados: Todos os seus baralhos e flashcards são salvos localmente utilizando o Room.
   
 <br>
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
 
+<br>
+
 🛠️ Tecnologias Utilizadas
 
-  Kotlin: Linguagem de programação oficial para o desenvolvimento Android.
-  Jetpack Compose: Kit de ferramentas moderno para a criação de interfaces de usuário nativas do Android.
-  Room: Biblioteca de persistência para criar um banco de dados local.
-  ViewModel: Para gerenciar os dados da interface de forma consciente do ciclo de vida.
-  Navigation Compose: Para lidar com a navegação entre as telas do aplicativo.
-  Coroutines & Flow: Para gerenciar tarefas assíncronas e programação reativa.
-  Gemini API: Para a geração de quizzes com inteligência artificial.
-  Geofencing API: Para criar e monitorar áreas geográficas.
+<br>
+
+  - Kotlin: Linguagem de programação oficial para o desenvolvimento Android.
+  - Jetpack Compose: Kit de ferramentas moderno para a criação de interfaces de usuário nativas do Android.
+  - Room: Biblioteca de persistência para criar um banco de dados local.
+  - ViewModel: Para gerenciar os dados da interface de forma consciente do ciclo de vida.
+  - Navigation Compose: Para lidar com a navegação entre as telas do aplicativo.
+  - Coroutines & Flow: Para gerenciar tarefas assíncronas e programação reativa.
+  - Gemini API: Para a geração de quizzes com inteligência artificial.
+  - Geofencing API: Para criar e monitorar áreas geográficas.
 
 <br>
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
 
+<br>
+
 🚀 Como Executar o Projeto
+
+<br>
 
 Para compilar e executar este projeto localmente, siga os passos abaixo:
 
@@ -106,10 +115,11 @@ Para compilar e executar este projeto localmente, siga os passos abaixo:
 git clone [https://www.dio.me/articles/enviando-seu-projeto-para-o-github](https://www.dio.me/articles/enviando-seu-projeto-para-o-github)
 
 Configuração da API do Gemini
+
     Vá até o Google AI Studio.
     Crie uma nova chave de API.
     Abra o arquivo local.properties do projeto e adicione a seguinte linha, substituindo SUA_API_KEY pela chave que você gerou:
-   Properties
+       Properties
         GEMINI_API_KEY="SUA_API_KEY"
     Abra no Android Studio
         Abra o projeto no Android Studio.
