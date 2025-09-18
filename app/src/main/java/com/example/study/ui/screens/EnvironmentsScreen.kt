@@ -81,13 +81,7 @@ fun EnvironmentsScreen(
                     IconButton(onClick = onNavigateToSpatialAnalytics) {
                         Icon(
                             imageVector = Icons.Default.Analytics,
-                            contentDescription = "Analytics Espaciais"
-                        )
-                    }
-                    IconButton(onClick = { /* TODO: Configurações de geofencing */ }) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "Configurações"
+                            contentDescription = "Análises Espaciais"
                         )
                     }
                 }
@@ -177,6 +171,9 @@ fun EnvironmentsScreen(
                     },
                     modifier = Modifier.weight(1f)
                 )
+                
+                // Espaço para o FAB não sobrepor o conteúdo
+                Spacer(modifier = Modifier.height(80.dp))
             }
         }
     }

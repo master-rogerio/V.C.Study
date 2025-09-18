@@ -8,12 +8,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.SuccessColor
 import com.example.study.ui.theme.WarningColor
+import com.example.study.ui.view.FlashcardViewModel
+import com.example.study.util.CurrentLocationDetector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -168,10 +173,63 @@ fun PlaceholderResultsScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToDecks: () -> Unit,
     onRetryExercise: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: FlashcardViewModel = viewModel()
 ) {
     val percentage = if (total > 0) (score.toFloat() / total * 100).toInt() else 0
     val isGoodScore = percentage >= 70
+    
+    // Registrar sessão de estudo quando a tela é carregada
+    LaunchedEffect(Unit) {
+        try {
+            // Obter todas as localizações favoritas salvas pelo usuário
+            val favoriteLocations = viewModel.getAllFavoriteLocationsSync()
+            
+            val currentLocationId = if (favoriteLocations.isNotEmpty()) {
+                // Usar a primeira localização disponível
+                // TODO: Implementar detecção real de GPS e cálculo de distância
+                favoriteLocations.first().id
+            } else {
+                // Criar localização padrão "Casa" se não houver nenhuma
+                viewModel.saveFavoriteLocation(
+                    name = "Casa",
+                    latitude = -18.9186, // Coordenadas de Uberlândia
+                    longitude = -48.2772,
+                    iconName = "ic_home",
+                    preferredTypes = listOf(FlashcardType.FRONT_BACK, FlashcardType.MULTIPLE_CHOICE)
+                )
+                "casa"
+            }
+            
+            // Registrar sessão completa na localização detectada
+            viewModel.recordCompleteStudySession(
+                locationId = currentLocationId,
+                duration = 15L, // 15 minutos
+                cardsStudied = total,
+                correctAnswers = score,
+                averageResponseTime = 5000L, // 5 segundos por card
+                preferredCardTypes = listOf(FlashcardType.FRONT_BACK, FlashcardType.MULTIPLE_CHOICE)
+            )
+            
+            // Também atualizar analytics básicos
+            viewModel.updateLocationAnalytics(currentLocationId, score, total)
+            
+        } catch (e: Exception) {
+            // Em caso de erro, usar localização padrão
+            val fallbackLocationId = "casa"
+            
+            viewModel.recordCompleteStudySession(
+                locationId = fallbackLocationId,
+                duration = 15L,
+                cardsStudied = total,
+                correctAnswers = score,
+                averageResponseTime = 5000L,
+                preferredCardTypes = listOf(FlashcardType.FRONT_BACK, FlashcardType.MULTIPLE_CHOICE)
+            )
+            
+            viewModel.updateLocationAnalytics(fallbackLocationId, score, total)
+        }
+    }
 
     Scaffold(
         modifier = modifier,

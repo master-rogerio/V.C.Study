@@ -219,6 +219,11 @@ private fun StudyNavigation(
                     navController.navigate("ai_assistant") {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToDeckExercise = { deckId, deckName ->
+                    navController.navigate("exercise/$deckId/$deckName") {
+                        launchSingleTop = true
+                    }
                 }
             )
         }

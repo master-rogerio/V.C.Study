@@ -23,7 +23,7 @@ interface DeckDao {
     @Query("SELECT * FROM decks WHERE name = :name LIMIT 1")
     suspend fun getDeckByName(name: String): Deck?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(deck: Deck): Long
 
     @Update

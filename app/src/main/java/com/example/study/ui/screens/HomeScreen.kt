@@ -34,6 +34,7 @@ fun HomeScreen(
     onNavigateToExercise: () -> Unit,
     onNavigateToEnvironments: () -> Unit,
     onNavigateToAI: () -> Unit,
+    onNavigateToDeckExercise: (Long, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
@@ -94,7 +95,10 @@ fun HomeScreen(
                 RecentActivitySection(
                     recentDecks = uiState.recentDecks,
                     onDeckClick = { onNavigateToDecks() }, // Ou navegar direto para o deck
-                    onStartStudyClick = onNavigateToExercise
+                    onStartStudyClick = onNavigateToExercise,
+                    onReviewDeck = { deck -> 
+                        onNavigateToDeckExercise(deck.id, deck.name)
+                    }
                 )
             }
         }
@@ -130,7 +134,7 @@ private fun StudyStatsSection(uiState: HomeUiState) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatCard("Decks", uiState.deckCount.toString(), Icons.Default.Book, Modifier.weight(1f))
             StatCard("Flashcards", uiState.flashcardCount.toString(), Icons.Default.Quiz, Modifier.weight(1f))
-            StatCard("Revisões", "0", Icons.Default.Today, Modifier.weight(1f)) // Placeholder
+            StatCard("Revisões", uiState.dueFlashcardsCount.toString(), Icons.Default.Today, Modifier.weight(1f))
         }
     }
 }
@@ -178,7 +182,8 @@ private fun QuickActionCard(title: String, subtitle: String, icon: ImageVector, 
 private fun RecentActivitySection(
     recentDecks: List<Deck>,
     onDeckClick: (Deck) -> Unit,
-    onStartStudyClick: () -> Unit
+    onStartStudyClick: () -> Unit,
+    onReviewDeck: (Deck) -> Unit
 ) {
     Column {
         Text("Atividade recente", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
@@ -194,7 +199,7 @@ private fun RecentActivitySection(
         } else {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
                 items(recentDecks) { deck ->
-                    RecentDeckCard(deck = deck, onDeckClick = onDeckClick)
+                    RecentDeckCard(deck = deck, onDeckClick = onDeckClick, onReviewClick = { onReviewDeck(deck) })
                 }
             }
         }
@@ -202,7 +207,7 @@ private fun RecentActivitySection(
 }
 
 @Composable
-private fun RecentDeckCard(deck: Deck, onDeckClick: (Deck) -> Unit) {
+private fun RecentDeckCard(deck: Deck, onDeckClick: (Deck) -> Unit, onReviewClick: () -> Unit) {
     val cardColor = Color(ColorUtils.getColorFromString(deck.name))
     Card(
         modifier = Modifier.width(220.dp).clickable { onDeckClick(deck) },
@@ -214,7 +219,7 @@ private fun RecentDeckCard(deck: Deck, onDeckClick: (Deck) -> Unit) {
             Spacer(Modifier.height(4.dp))
             Text(deck.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = Color.White)
             Spacer(Modifier.height(16.dp))
-            StudyButton(onClick = { /* Navegar para exercício deste deck */ }, text = "Revisar")
+            StudyButton(onClick = onReviewClick, text = "Revisar")
         }
     }
 }

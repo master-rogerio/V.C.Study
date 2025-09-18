@@ -194,11 +194,24 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
     fun updateLocationAnalytics(locationId: String, correct: Int, total: Int) = viewModelScope.launch {
         val location = favoriteLocationDao.getFavoriteLocationById(locationId)
         location?.let {
+            // Calcular performance como porcentagem (0-100)
             val sessionPerformance = if (total > 0) (correct.toDouble() / total) * 100 else 0.0
             val newSessionCount = it.studySessionCount + 1
+            
+            // Calcular nova média corretamente
             val newAverage = if (newSessionCount > 1) {
-                ((it.averagePerformance * it.studySessionCount) + sessionPerformance) / newSessionCount
+                // Se já existe performance, verificar se está em formato correto
+                val currentAverage = if (it.averagePerformance > 100) {
+                    // Se está maior que 100, provavelmente está em formato incorreto
+                    // Vamos recalcular baseado apenas na sessão atual
+                    sessionPerformance
+                } else {
+                    // Calcular média ponderada corretamente
+                    ((it.averagePerformance * (newSessionCount - 1)) + sessionPerformance) / newSessionCount
+                }
+                currentAverage
             } else {
+                // Primeira sessão
                 sessionPerformance
             }
 
@@ -207,6 +220,33 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
                 averagePerformance = newAverage
             )
             favoriteLocationDao.update(updatedLocation)
+        }
+    }
+    
+    // Método para obter todas as localizações favoritas
+    fun getAllFavoriteLocations(): Flow<List<FavoriteLocation>> {
+        return favoriteLocationDao.getAllFavoriteLocationsFlow()
+    }
+    
+    // Método para obter localizações síncronamente
+    suspend fun getAllFavoriteLocationsSync(): List<FavoriteLocation> {
+        return favoriteLocationDao.getAllFavoriteLocationsSync()
+    }
+    
+    // Método para corrigir dados de performance incorretos
+    fun fixIncorrectPerformanceData() = viewModelScope.launch {
+        try {
+            val allLocations = favoriteLocationDao.getAllFavoriteLocationsSync()
+            allLocations.forEach { location ->
+                if (location.averagePerformance > 100) {
+                    // Se a performance está maior que 100%, corrigir para um valor razoável
+                    val correctedPerformance = minOf(100.0, location.averagePerformance / 10) // Dividir por 10 como aproximação
+                    val correctedLocation = location.copy(averagePerformance = correctedPerformance)
+                    favoriteLocationDao.update(correctedLocation)
+                }
+            }
+        } catch (e: Exception) {
+            // Log error if needed
         }
     }
     
@@ -286,7 +326,6 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
         favoriteLocationDao.insert(favoriteLocation)
     }
 
-    fun getAllFavoriteLocations() = favoriteLocationDao.getAllFavoriteLocationsFlow()
 
     fun deleteFavoriteLocation(id: String) = viewModelScope.launch {
         favoriteLocationDao.deleteById(id)

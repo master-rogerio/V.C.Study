@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 data class HomeUiState(
     val deckCount: Int = 0,
     val flashcardCount: Int = 0,
+    val dueFlashcardsCount: Int = 0,
     val recentDecks: List<Deck> = emptyList()
 )
 
@@ -33,16 +34,19 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
         val deckCountFlow = deckRepository.getDeckCount()
         val flashcardCountFlow = flashcardRepository.getFlashcardCount()
+        val dueFlashcardsFlow = flashcardRepository.getDueFlashcards()
         val recentDecksFlow = deckRepository.getRecentDecks()
 
         uiState = combine(
             deckCountFlow,
             flashcardCountFlow,
+            dueFlashcardsFlow,
             recentDecksFlow
-        ) { deckCount, flashcardCount, recentDecks ->
+        ) { deckCount, flashcardCount, dueFlashcards, recentDecks ->
             HomeUiState(
                 deckCount = deckCount,
                 flashcardCount = flashcardCount,
+                dueFlashcardsCount = dueFlashcards.size,
                 recentDecks = recentDecks
             )
         }.stateIn(
