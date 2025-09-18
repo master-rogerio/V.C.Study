@@ -46,5 +46,7 @@ data class Flashcard(
     val easeFactor: Float = 2.5f,
     val interval: Int = 0,
     val repetitions: Int = 0,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+
+    var firebaseId: String? = null
 )

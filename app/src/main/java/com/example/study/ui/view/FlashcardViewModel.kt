@@ -8,6 +8,7 @@ import com.example.study.network.ApiQuizQuestion
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -124,17 +125,27 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun update(flashcard: Flashcard) = viewModelScope.launch {
         repository.update(flashcard)
-        // TODO: Adicionar lógica de sincronização de update
+        // TODO: Chamar syncRepository.syncFlashcardUpdate(flashcard)
+        // (Esta função precisaria ser criada no SyncRepository)
     }
 
     fun delete(flashcard: Flashcard) = viewModelScope.launch {
         repository.delete(flashcard)
-        // TODO: Adicionar lógica de sincronização de delete
+        // TODO: Chamar syncRepository.syncFlashcardDelete(flashcard)
+        // (Esta função precisaria ser criada no SyncRepository)
     }
 
     fun deleteAllFlashcardsForDeck(deckId: Long) = viewModelScope.launch {
+        // 1. Obtém a lista de flashcards que serão apagados para ter os firebaseIds
+        val flashcardsToDelete = repository.getFlashcardsForDeckByCreation(deckId).first()
+
+        // 2. Apaga cada um na nuvem
+        flashcardsToDelete.forEach { flashcard ->
+            // TODO: Chamar syncRepository.syncFlashcardDelete(flashcard) para cada um
+        }
+
+        // 3. Apaga todos da base de dados local de uma vez
         repository.deleteAllForDeck(deckId)
-        // TODO: Adicionar lógica de sincronização para delete all
     }
 
     fun calculateNextReview(flashcard: Flashcard, quality: Int): Flashcard {

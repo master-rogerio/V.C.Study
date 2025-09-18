@@ -76,13 +76,17 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun update(deck: Deck) = viewModelScope.launch {
+        // 1. Atualiza o baralho na base de dados local (Room)
         repository.update(deck)
-        // TODO: Adicionar lógica de sincronização para update (syncDeckUpdate)
+        // 2. Chama a sua função para sincronizar a atualização com o Firebase
+        syncRepository.syncDeckUpdate(deck)
     }
 
     fun delete(deck: Deck) = viewModelScope.launch {
+        // 1. Apaga o baralho da base de dados local (Room)
         repository.delete(deck)
-        // TODO: Adicionar lógica de sincronização para delete (syncDeckDelete)
+        // 2. Chama a sua função para sincronizar a exclusão com o Firebase (que também apaga os flashcards)
+        syncRepository.syncDeckDelete(deck)
     }
 
     fun getDeckById(id: Long): Flow<Deck?> { // Não retorna mais um 'viewModelScope.launch'
