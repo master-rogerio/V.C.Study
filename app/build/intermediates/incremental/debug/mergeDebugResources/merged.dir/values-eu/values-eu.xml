@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Desaktibatuta"</string>
     <string msgid="8655164131929253426" name="on">"Aktibatuta"</string>
     <string name="password_toggle_content_description">Erakutsi pasahitza</string>
+    <string name="places_autocomplete_clear_button">Garbitu bilaketa</string>
+    <string name="places_autocomplete_label">Hautatu tokia</string>
+    <string name="places_autocomplete_no_results_for_query">Ez dago %1$s bilaketaren emaitzarik</string>
+    <string name="places_autocomplete_search_hint">Search a place</string>
+    <string name="places_cancel">Utzi</string>
+    <string name="places_powered_by_google">Google-ren teknologiarekin</string>
+    <string name="places_search_error">Ezin dira kargatu bilaketa-emaitzak.</string>
+    <string name="places_try_again">Saiatu berriro</string>
     <string msgid="5941395253238309765" name="range_end">"Barrutiaren amaiera"</string>
     <string msgid="7097486360902471446" name="range_start">"Barrutiaren hasiera"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Bilatu"</string>

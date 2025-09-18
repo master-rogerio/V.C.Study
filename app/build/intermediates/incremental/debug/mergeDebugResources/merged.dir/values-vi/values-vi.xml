@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Đang tắt"</string>
     <string msgid="8655164131929253426" name="on">"Đang bật"</string>
     <string name="password_toggle_content_description">Hiện mật khẩu</string>
+    <string name="places_autocomplete_clear_button">Xóa nội dung tìm kiếm</string>
+    <string name="places_autocomplete_label">Chọn một địa điểm</string>
+    <string name="places_autocomplete_no_results_for_query">Không có kết quả nào cho %1$s</string>
+    <string name="places_autocomplete_search_hint">Tìm địa điểm</string>
+    <string name="places_cancel">Hủy</string>
+    <string name="places_powered_by_google">Công nghệ của Google</string>
+    <string name="places_search_error">Không thể tải kết quả tìm kiếm.</string>
+    <string name="places_try_again">Thử lại</string>
     <string msgid="5941395253238309765" name="range_end">"Điểm kết thúc phạm vi"</string>
     <string msgid="7097486360902471446" name="range_start">"Điểm bắt đầu phạm vi"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Tìm kiếm"</string>

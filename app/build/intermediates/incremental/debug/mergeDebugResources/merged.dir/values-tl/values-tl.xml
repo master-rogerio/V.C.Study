@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Naka-off"</string>
     <string msgid="8655164131929253426" name="on">"Naka-on"</string>
     <string name="password_toggle_content_description">Ipakita ang password</string>
+    <string name="places_autocomplete_clear_button">I-clear ang paghahanap</string>
+    <string name="places_autocomplete_label">Pumili ng lugar</string>
+    <string name="places_autocomplete_no_results_for_query">Walang resulta para sa %1$s</string>
+    <string name="places_autocomplete_search_hint">Maghanap ng lugar</string>
+    <string name="places_cancel">Kanselahin</string>
+    <string name="places_powered_by_google">Pinapagana ng Google</string>
+    <string name="places_search_error">Hindi ma-load ang mga resulta ng paghahanap.</string>
+    <string name="places_try_again">Subukan ulit</string>
     <string msgid="5941395253238309765" name="range_end">"Katapusan ng range"</string>
     <string msgid="7097486360902471446" name="range_start">"Simula ng range"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Maghanap"</string>

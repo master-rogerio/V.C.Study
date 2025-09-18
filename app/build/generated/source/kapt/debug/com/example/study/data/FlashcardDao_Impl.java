@@ -327,7 +327,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
 
   @Override
   public Flow<List<Flashcard>> getAllFlashcardsByReview() {
-    final String _sql = "SELECT * FROM flashcards ORDER BY nextReviewDate ASC";
+    final String _sql = "SELECT `flashcards`.`id` AS `id`, `flashcards`.`deckId` AS `deckId`, `flashcards`.`type` AS `type`, `flashcards`.`front` AS `front`, `flashcards`.`back` AS `back`, `flashcards`.`frontImageUrl` AS `frontImageUrl`, `flashcards`.`frontAudioUrl` AS `frontAudioUrl`, `flashcards`.`backImageUrl` AS `backImageUrl`, `flashcards`.`backAudioUrl` AS `backAudioUrl`, `flashcards`.`clozeText` AS `clozeText`, `flashcards`.`clozeAnswer` AS `clozeAnswer`, `flashcards`.`options` AS `options`, `flashcards`.`correctOptionIndex` AS `correctOptionIndex`, `flashcards`.`lastReviewed` AS `lastReviewed`, `flashcards`.`nextReviewDate` AS `nextReviewDate`, `flashcards`.`easeFactor` AS `easeFactor`, `flashcards`.`interval` AS `interval`, `flashcards`.`repetitions` AS `repetitions`, `flashcards`.`createdAt` AS `createdAt` FROM flashcards ORDER BY nextReviewDate ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"flashcards"}, new Callable<List<Flashcard>>() {
       @Override
@@ -335,25 +335,25 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       public List<Flashcard> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfDeckId = CursorUtil.getColumnIndexOrThrow(_cursor, "deckId");
-          final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
-          final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
-          final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
-          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
-          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
-          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
-          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
-          final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
-          final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
-          final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
-          final int _cursorIndexOfCorrectOptionIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "correctOptionIndex");
-          final int _cursorIndexOfLastReviewed = CursorUtil.getColumnIndexOrThrow(_cursor, "lastReviewed");
-          final int _cursorIndexOfNextReviewDate = CursorUtil.getColumnIndexOrThrow(_cursor, "nextReviewDate");
-          final int _cursorIndexOfEaseFactor = CursorUtil.getColumnIndexOrThrow(_cursor, "easeFactor");
-          final int _cursorIndexOfInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "interval");
-          final int _cursorIndexOfRepetitions = CursorUtil.getColumnIndexOrThrow(_cursor, "repetitions");
-          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfId = 0;
+          final int _cursorIndexOfDeckId = 1;
+          final int _cursorIndexOfType = 2;
+          final int _cursorIndexOfFront = 3;
+          final int _cursorIndexOfBack = 4;
+          final int _cursorIndexOfFrontImageUrl = 5;
+          final int _cursorIndexOfFrontAudioUrl = 6;
+          final int _cursorIndexOfBackImageUrl = 7;
+          final int _cursorIndexOfBackAudioUrl = 8;
+          final int _cursorIndexOfClozeText = 9;
+          final int _cursorIndexOfClozeAnswer = 10;
+          final int _cursorIndexOfOptions = 11;
+          final int _cursorIndexOfCorrectOptionIndex = 12;
+          final int _cursorIndexOfLastReviewed = 13;
+          final int _cursorIndexOfNextReviewDate = 14;
+          final int _cursorIndexOfEaseFactor = 15;
+          final int _cursorIndexOfInterval = 16;
+          final int _cursorIndexOfRepetitions = 17;
+          final int _cursorIndexOfCreatedAt = 18;
           final List<Flashcard> _result = new ArrayList<Flashcard>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Flashcard _item;
@@ -473,7 +473,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
 
   @Override
   public Flow<List<Flashcard>> getAllFlashcardsByCreation() {
-    final String _sql = "SELECT * FROM flashcards ORDER BY createdAt DESC";
+    final String _sql = "SELECT `flashcards`.`id` AS `id`, `flashcards`.`deckId` AS `deckId`, `flashcards`.`type` AS `type`, `flashcards`.`front` AS `front`, `flashcards`.`back` AS `back`, `flashcards`.`frontImageUrl` AS `frontImageUrl`, `flashcards`.`frontAudioUrl` AS `frontAudioUrl`, `flashcards`.`backImageUrl` AS `backImageUrl`, `flashcards`.`backAudioUrl` AS `backAudioUrl`, `flashcards`.`clozeText` AS `clozeText`, `flashcards`.`clozeAnswer` AS `clozeAnswer`, `flashcards`.`options` AS `options`, `flashcards`.`correctOptionIndex` AS `correctOptionIndex`, `flashcards`.`lastReviewed` AS `lastReviewed`, `flashcards`.`nextReviewDate` AS `nextReviewDate`, `flashcards`.`easeFactor` AS `easeFactor`, `flashcards`.`interval` AS `interval`, `flashcards`.`repetitions` AS `repetitions`, `flashcards`.`createdAt` AS `createdAt` FROM flashcards ORDER BY createdAt DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"flashcards"}, new Callable<List<Flashcard>>() {
       @Override
@@ -481,25 +481,25 @@ public final class FlashcardDao_Impl implements FlashcardDao {
       public List<Flashcard> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfDeckId = CursorUtil.getColumnIndexOrThrow(_cursor, "deckId");
-          final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
-          final int _cursorIndexOfFront = CursorUtil.getColumnIndexOrThrow(_cursor, "front");
-          final int _cursorIndexOfBack = CursorUtil.getColumnIndexOrThrow(_cursor, "back");
-          final int _cursorIndexOfFrontImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontImageUrl");
-          final int _cursorIndexOfFrontAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "frontAudioUrl");
-          final int _cursorIndexOfBackImageUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backImageUrl");
-          final int _cursorIndexOfBackAudioUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "backAudioUrl");
-          final int _cursorIndexOfClozeText = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeText");
-          final int _cursorIndexOfClozeAnswer = CursorUtil.getColumnIndexOrThrow(_cursor, "clozeAnswer");
-          final int _cursorIndexOfOptions = CursorUtil.getColumnIndexOrThrow(_cursor, "options");
-          final int _cursorIndexOfCorrectOptionIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "correctOptionIndex");
-          final int _cursorIndexOfLastReviewed = CursorUtil.getColumnIndexOrThrow(_cursor, "lastReviewed");
-          final int _cursorIndexOfNextReviewDate = CursorUtil.getColumnIndexOrThrow(_cursor, "nextReviewDate");
-          final int _cursorIndexOfEaseFactor = CursorUtil.getColumnIndexOrThrow(_cursor, "easeFactor");
-          final int _cursorIndexOfInterval = CursorUtil.getColumnIndexOrThrow(_cursor, "interval");
-          final int _cursorIndexOfRepetitions = CursorUtil.getColumnIndexOrThrow(_cursor, "repetitions");
-          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfId = 0;
+          final int _cursorIndexOfDeckId = 1;
+          final int _cursorIndexOfType = 2;
+          final int _cursorIndexOfFront = 3;
+          final int _cursorIndexOfBack = 4;
+          final int _cursorIndexOfFrontImageUrl = 5;
+          final int _cursorIndexOfFrontAudioUrl = 6;
+          final int _cursorIndexOfBackImageUrl = 7;
+          final int _cursorIndexOfBackAudioUrl = 8;
+          final int _cursorIndexOfClozeText = 9;
+          final int _cursorIndexOfClozeAnswer = 10;
+          final int _cursorIndexOfOptions = 11;
+          final int _cursorIndexOfCorrectOptionIndex = 12;
+          final int _cursorIndexOfLastReviewed = 13;
+          final int _cursorIndexOfNextReviewDate = 14;
+          final int _cursorIndexOfEaseFactor = 15;
+          final int _cursorIndexOfInterval = 16;
+          final int _cursorIndexOfRepetitions = 17;
+          final int _cursorIndexOfCreatedAt = 18;
           final List<Flashcard> _result = new ArrayList<Flashcard>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Flashcard _item;

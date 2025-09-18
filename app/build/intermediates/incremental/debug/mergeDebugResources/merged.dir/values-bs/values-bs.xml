@@ -205,6 +205,14 @@
     <string msgid="875452955155264703" name="off">"Isključeno"</string>
     <string msgid="8655164131929253426" name="on">"Uključeno"</string>
     <string name="password_toggle_content_description">Prikaži lozinku</string>
+    <string name="places_autocomplete_clear_button">Obriši pretraživanje</string>
+    <string name="places_autocomplete_label">Izbor mjesta</string>
+    <string name="places_autocomplete_no_results_for_query">Nije pronađen nijedan rezultat za upit \"%1$s\"</string>
+    <string name="places_autocomplete_search_hint">Pretražite mjesto</string>
+    <string name="places_cancel">Otkaži</string>
+    <string name="places_powered_by_google">Omogućava Google</string>
+    <string name="places_search_error">Nije moguće učitati rezultate pretraživanja.</string>
+    <string name="places_try_again">Pokušaj ponovo</string>
     <string msgid="5941395253238309765" name="range_end">"Kraj raspona"</string>
     <string msgid="7097486360902471446" name="range_start">"Početak raspona"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Pretražite"</string>

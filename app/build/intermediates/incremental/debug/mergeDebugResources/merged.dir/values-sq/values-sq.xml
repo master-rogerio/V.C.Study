@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Joaktiv"</string>
     <string msgid="8655164131929253426" name="on">"Aktiv"</string>
     <string name="password_toggle_content_description">Shfaq fjalëkalimin</string>
+    <string name="places_autocomplete_clear_button">Pastro kërkimin</string>
+    <string name="places_autocomplete_label">Zgjidh një vend</string>
+    <string name="places_autocomplete_no_results_for_query">Asnjë rezultat për %1$s</string>
+    <string name="places_autocomplete_search_hint">Kërko një vend</string>
+    <string name="places_cancel">Anulo</string>
+    <string name="places_powered_by_google">Mundësuar nga Google</string>
+    <string name="places_search_error">Rezultatet e kërkimit nuk mund të ngarkohen.</string>
+    <string name="places_try_again">Provo sërish</string>
     <string msgid="5941395253238309765" name="range_end">"Fundi i diapazonit"</string>
     <string msgid="7097486360902471446" name="range_start">"Fillimi i diapazonit"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Kërko"</string>

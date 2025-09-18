@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Aus"</string>
     <string msgid="8655164131929253426" name="on">"An"</string>
     <string name="password_toggle_content_description">Passwort anzeigen</string>
+    <string name="places_autocomplete_clear_button">Suche löschen</string>
+    <string name="places_autocomplete_label">Ort auswählen</string>
+    <string name="places_autocomplete_no_results_for_query">Keine Ergebnisse für \"%1$s\"</string>
+    <string name="places_autocomplete_search_hint">Ort suchen</string>
+    <string name="places_cancel">Abbrechen</string>
+    <string name="places_powered_by_google">Powered by Google</string>
+    <string name="places_search_error">Suchergebnisse können nicht geladen werden.</string>
+    <string name="places_try_again">Noch einmal</string>
     <string msgid="5941395253238309765" name="range_end">"Bereichsende"</string>
     <string msgid="7097486360902471446" name="range_start">"Bereichsstart"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Suche"</string>

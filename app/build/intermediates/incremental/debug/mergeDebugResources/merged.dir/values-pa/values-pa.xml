@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"ਬੰਦ ਹੈ"</string>
     <string msgid="8655164131929253426" name="on">"ਚਾਲੂ ਹੈ"</string>
     <string name="password_toggle_content_description">ਪਾਸਵਰਡ ਦਿਖਾਓ</string>
+    <string name="places_autocomplete_clear_button">ਖੋਜ ਕਲੀਅਰ ਕਰੋ</string>
+    <string name="places_autocomplete_label">ਕੋਈ ਥਾਂ ਚੁਣੋ</string>
+    <string name="places_autocomplete_no_results_for_query">%1$s ਲਈ ਕੋਈ ਨਤੀਜੇ ਨਹੀਂ ਹਨ</string>
+    <string name="places_autocomplete_search_hint">ਕੋਈ ਥਾਂ ਖੋਜੋ</string>
+    <string name="places_cancel">ਰੱਦ ਕਰੋ</string>
+    <string name="places_powered_by_google">Google ਵੱਲੋਂ ਸੰਚਾਲਿਤ</string>
+    <string name="places_search_error">ਖੋਜ ਨਤੀਜੇ ਲੋਡ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ।</string>
+    <string name="places_try_again">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string msgid="5941395253238309765" name="range_end">"ਰੇਂਜ ਸਮਾਪਤ"</string>
     <string msgid="7097486360902471446" name="range_start">"ਰੇਂਜ ਸ਼ੁਰੂ"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"ਖੋਜ"</string>

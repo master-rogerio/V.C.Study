@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Imezimwa"</string>
     <string msgid="8655164131929253426" name="on">"Imewashwa"</string>
     <string name="password_toggle_content_description">Onyesha nenosiri</string>
+    <string name="places_autocomplete_clear_button">Futa utafutaji</string>
+    <string name="places_autocomplete_label">Chagua eneo</string>
+    <string name="places_autocomplete_no_results_for_query">Hakuna matokeo ya %1$s</string>
+    <string name="places_autocomplete_search_hint">Tafuta mahali</string>
+    <string name="places_cancel">Ghairi</string>
+    <string name="places_powered_by_google">Inaendeshwa na Google</string>
+    <string name="places_search_error">Imeshindwa kupakia matokeo ya utafutaji.</string>
+    <string name="places_try_again">Jaribu tena</string>
     <string msgid="5941395253238309765" name="range_end">"Mwisho wa masafa"</string>
     <string msgid="7097486360902471446" name="range_start">"Mwanzo wa masafa"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Tafuta"</string>

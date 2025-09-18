@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"已关闭"</string>
     <string msgid="8655164131929253426" name="on">"已开启"</string>
     <string name="password_toggle_content_description">显示密码</string>
+    <string name="places_autocomplete_clear_button">清除搜索</string>
+    <string name="places_autocomplete_label">选择地点</string>
+    <string name="places_autocomplete_no_results_for_query">找不到与“%1$s”匹配的结果</string>
+    <string name="places_autocomplete_search_hint">搜索地点</string>
+    <string name="places_cancel">取消</string>
+    <string name="places_powered_by_google">由 Google 提供支持</string>
+    <string name="places_search_error">无法加载搜索结果。</string>
+    <string name="places_try_again">重试</string>
     <string msgid="5941395253238309765" name="range_end">"范围终点"</string>
     <string msgid="7097486360902471446" name="range_start">"范围起点"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"搜索"</string>

@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Изкл."</string>
     <string msgid="8655164131929253426" name="on">"Вкл."</string>
     <string name="password_toggle_content_description">Показване на паролата</string>
+    <string name="places_autocomplete_clear_button">Изчистване на търсенето</string>
+    <string name="places_autocomplete_label">Изберете място</string>
+    <string name="places_autocomplete_no_results_for_query">Няма резултати за „%1$s“</string>
+    <string name="places_autocomplete_search_hint">Потърсете място</string>
+    <string name="places_cancel">Отказ</string>
+    <string name="places_powered_by_google">Предоставено от Google</string>
+    <string name="places_search_error">Резултатите от търсенето не могат да се заредят.</string>
+    <string name="places_try_again">Нов опит</string>
     <string msgid="5941395253238309765" name="range_end">"Край на обхвата"</string>
     <string msgid="7097486360902471446" name="range_start">"Начало на обхвата"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Търсене"</string>

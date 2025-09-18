@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"ປິດ"</string>
     <string msgid="8655164131929253426" name="on">"ເປີດ"</string>
     <string name="password_toggle_content_description">ສະແດງລະຫັດຜ່ານ</string>
+    <string name="places_autocomplete_clear_button">ລຶບການຊອກຫາ</string>
+    <string name="places_autocomplete_label">ເລືອກສະຖານທີ່ໃດໜຶ່ງ</string>
+    <string name="places_autocomplete_no_results_for_query">ບໍ່ມີຜົນການຊອກຫາສຳລັບ %1$s</string>
+    <string name="places_autocomplete_search_hint">ຊອກຫາສະຖານທີ່</string>
+    <string name="places_cancel">ຍົກເລີກ</string>
+    <string name="places_powered_by_google">ຂັບເຄື່ອນໂດຍ Google</string>
+    <string name="places_search_error">ບໍ່ສາມາດໂຫລດຜົນການຊອກຫາໄດ້.</string>
+    <string name="places_try_again">ລອງໃໝ່</string>
     <string msgid="5941395253238309765" name="range_end">"ສິ້ນສຸດໄລຍະ"</string>
     <string msgid="7097486360902471446" name="range_start">"ເລີ່ມຕົ້ນໄລຍະ"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"ຊອກຫາ"</string>

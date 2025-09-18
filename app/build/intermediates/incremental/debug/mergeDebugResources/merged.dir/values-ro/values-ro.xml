@@ -205,6 +205,14 @@
     <string msgid="875452955155264703" name="off">"Dezactivat"</string>
     <string msgid="8655164131929253426" name="on">"Activat"</string>
     <string name="password_toggle_content_description">Afișați parola</string>
+    <string name="places_autocomplete_clear_button">Șterge căutarea</string>
+    <string name="places_autocomplete_label">Alege o locație</string>
+    <string name="places_autocomplete_no_results_for_query">Niciun rezultat pentru %1$s</string>
+    <string name="places_autocomplete_search_hint">Caută o locație</string>
+    <string name="places_cancel">Anulează</string>
+    <string name="places_powered_by_google">Un produs Google</string>
+    <string name="places_search_error">Nu se încarcă rezultatele căutării.</string>
+    <string name="places_try_again">Reîncearcă</string>
     <string msgid="5941395253238309765" name="range_end">"Sfârșit de interval"</string>
     <string msgid="7097486360902471446" name="range_start">"Început de interval"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Caută"</string>

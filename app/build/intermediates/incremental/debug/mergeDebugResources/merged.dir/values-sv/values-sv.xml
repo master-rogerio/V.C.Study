@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Av"</string>
     <string msgid="8655164131929253426" name="on">"På"</string>
     <string name="password_toggle_content_description">Visa lösenord</string>
+    <string name="places_autocomplete_clear_button">Rensa sökning</string>
+    <string name="places_autocomplete_label">Välj en plats</string>
+    <string name="places_autocomplete_no_results_for_query">Inga resultat för %1$s</string>
+    <string name="places_autocomplete_search_hint">Sök efter plats</string>
+    <string name="places_cancel">Avbryt</string>
+    <string name="places_powered_by_google">Tillhandahålls av Google</string>
+    <string name="places_search_error">Det går inte att läsa in sökresultat.</string>
+    <string name="places_try_again">Försök igen</string>
     <string msgid="5941395253238309765" name="range_end">"Intervallets slut"</string>
     <string msgid="7097486360902471446" name="range_start">"Intervallets början"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Sök"</string>

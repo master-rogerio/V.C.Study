@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"বন্ধ আছে"</string>
     <string msgid="8655164131929253426" name="on">"চালু আছে"</string>
     <string name="password_toggle_content_description">পাসওয়ার্ড দেখান</string>
+    <string name="places_autocomplete_clear_button">সার্চ মুছুন</string>
+    <string name="places_autocomplete_label">একটি জায়গা বাছুন</string>
+    <string name="places_autocomplete_no_results_for_query">%1$s-এর জন্য কোনও ফলাফল নেই</string>
+    <string name="places_autocomplete_search_hint">জায়গা খুঁজুন</string>
+    <string name="places_cancel">বাতিল করুন</string>
+    <string name="places_powered_by_google">Google দ্বারা পরিচালিত</string>
+    <string name="places_search_error">সার্চের ফলাফল লোড করা যাচ্ছে না।</string>
+    <string name="places_try_again">আবার করুন</string>
     <string msgid="5941395253238309765" name="range_end">"রেঞ্জ শেষ"</string>
     <string msgid="7097486360902471446" name="range_start">"রেঞ্জ শুরু"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"সার্চ করুন"</string>

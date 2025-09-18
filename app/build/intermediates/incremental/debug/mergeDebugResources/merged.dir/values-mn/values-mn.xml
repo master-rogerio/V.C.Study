@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Унтраалттай"</string>
     <string msgid="8655164131929253426" name="on">"Асаалттай"</string>
     <string name="password_toggle_content_description">Нууц үгийг харуулах</string>
+    <string name="places_autocomplete_clear_button">Хайлтыг цэвэрлэх</string>
+    <string name="places_autocomplete_label">Газар сонгоно уу</string>
+    <string name="places_autocomplete_no_results_for_query">%1$s гэж хайхад илэрц гарч ирсэнгүй</string>
+    <string name="places_autocomplete_search_hint">Газар хайх</string>
+    <string name="places_cancel">Болих</string>
+    <string name="places_powered_by_google">Google-р дэмжигдсэн</string>
+    <string name="places_search_error">Хайлтын илэрцийг ачаалах боломжгүй байна.</string>
+    <string name="places_try_again">Дахин оролдох</string>
     <string msgid="5941395253238309765" name="range_end">"Мужийн төгсгөл"</string>
     <string msgid="7097486360902471446" name="range_start">"Мужийн эхлэл"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Хайх"</string>

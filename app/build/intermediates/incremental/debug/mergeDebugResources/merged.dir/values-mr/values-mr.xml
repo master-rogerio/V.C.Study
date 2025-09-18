@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"बंद आहे"</string>
     <string msgid="8655164131929253426" name="on">"सुरू आहे"</string>
     <string name="password_toggle_content_description">पासवर्ड दाखवा</string>
+    <string name="places_autocomplete_clear_button">शोध साफ करा</string>
+    <string name="places_autocomplete_label">ठिकाण निवडा</string>
+    <string name="places_autocomplete_no_results_for_query">%1$sसाठी कोणतेही परिणाम नाहीत</string>
+    <string name="places_autocomplete_search_hint">ठिकण शोधा</string>
+    <string name="places_cancel">रद्द करा</string>
+    <string name="places_powered_by_google">Google द्वारे प्रायोजित</string>
+    <string name="places_search_error">शोध परिणाम लोड करू शकत नाही.</string>
+    <string name="places_try_again">पुन्हा प्रयत्न करा</string>
     <string msgid="5941395253238309765" name="range_end">"रेंजचा शेवट"</string>
     <string msgid="7097486360902471446" name="range_start">"रेंजची सुरुवात"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"शोध"</string>

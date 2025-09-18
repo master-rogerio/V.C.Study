@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Mati"</string>
     <string msgid="8655164131929253426" name="on">"Hidup"</string>
     <string name="password_toggle_content_description">Tunjukkan kata laluan</string>
+    <string name="places_autocomplete_clear_button">Kosongkan carian</string>
+    <string name="places_autocomplete_label">Pilih tempat</string>
+    <string name="places_autocomplete_no_results_for_query">Tiada hasil carian untuk %1$s</string>
+    <string name="places_autocomplete_search_hint">Cari tempat</string>
+    <string name="places_cancel">Batal</string>
+    <string name="places_powered_by_google">Dikuasakan oleh Google</string>
+    <string name="places_search_error">Tidak dapat memuatkan hasil carian.</string>
+    <string name="places_try_again">Cuba lagi</string>
     <string msgid="5941395253238309765" name="range_end">"Penghujung julat"</string>
     <string msgid="7097486360902471446" name="range_start">"Permulaan julat"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Cari"</string>

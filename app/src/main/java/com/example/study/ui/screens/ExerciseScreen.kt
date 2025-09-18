@@ -518,22 +518,22 @@ private fun resetForNextCard(
     onResetQualityButtons()
 }
 
-@Composable
-fun FlashcardTypeChip(
-    type: FlashcardType,
-    modifier: Modifier = Modifier
-) {
-    val (text, icon) = when (type) {
-        FlashcardType.FRONT_BACK -> "Frente/Verso" to Icons.Default.FlipToFront
-        FlashcardType.CLOZE -> "Lacuna" to Icons.Default.TextFormat
-        FlashcardType.TEXT_INPUT -> "Digitação" to Icons.Default.Edit
-        FlashcardType.MULTIPLE_CHOICE -> "Múltipla Escolha" to Icons.Default.CheckCircle
-    }
-
-    StudyChip(
-        text = text,
-        leadingIcon = icon,
-        selected = false,
-        modifier = modifier
-    )
-}
+//@Composable
+//fun FlashcardTypeChip(
+//    type: FlashcardType,
+//    modifier: Modifier = Modifier
+//) {
+//    val (text, icon) = when (type) {
+//        FlashcardType.FRONT_BACK -> "Frente/Verso" to Icons.Default.FlipToFront
+//        FlashcardType.CLOZE -> "Lacuna" to Icons.Default.TextFormat
+//        FlashcardType.TEXT_INPUT -> "Digitação" to Icons.Default.Edit
+//        FlashcardType.MULTIPLE_CHOICE -> "Múltipla Escolha" to Icons.Default.CheckCircle
+//    }
+//
+//    StudyChip(
+//        text = text,
+//        leadingIcon = icon,
+//        selected = false,
+//        modifier = modifier
+//    )
+//}

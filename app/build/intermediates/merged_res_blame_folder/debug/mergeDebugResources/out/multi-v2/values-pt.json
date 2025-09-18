@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.study.app-mergeDebugResources-76:/values-pt/values-pt.xml",
+            "outputFile": "com.example.study.app-mergeDebugResources-81:/values-pt/values-pt.xml",
             "map": [
                 {
                     "source": "D:\\Android\\Android Studio\\jbr\\caches\\8.10.2\\transforms\\aabbcb60de70ee418d144197c8ac833e\\transformed\\jetified-ui-release\\res\\values-pt\\values-pt.xml",

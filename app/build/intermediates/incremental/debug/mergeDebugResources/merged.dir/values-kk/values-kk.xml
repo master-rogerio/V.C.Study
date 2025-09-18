@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Өшірулі"</string>
     <string msgid="8655164131929253426" name="on">"Қосулы"</string>
     <string name="password_toggle_content_description">Құпия сөзді көрсету</string>
+    <string name="places_autocomplete_clear_button">Іздеу жолын тазарту</string>
+    <string name="places_autocomplete_label">Орынды таңдау</string>
+    <string name="places_autocomplete_no_results_for_query">%1$s бойынша бірде-бір нәтиже жоқ</string>
+    <string name="places_autocomplete_search_hint">Орынды іздеу</string>
+    <string name="places_cancel">Бас тарту</string>
+    <string name="places_powered_by_google">Google технологиясына негізделген</string>
+    <string name="places_search_error">Іздеу нәтижелері жүктелмеді.</string>
+    <string name="places_try_again">Қайталап көру</string>
     <string msgid="5941395253238309765" name="range_end">"Аралықтың соңы"</string>
     <string msgid="7097486360902471446" name="range_start">"Аралықтың басы"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Іздеу"</string>

@@ -206,6 +206,14 @@
     <string msgid="875452955155264703" name="off">"Вимкнено"</string>
     <string msgid="8655164131929253426" name="on">"Увімкнено"</string>
     <string name="password_toggle_content_description">Показувати пароль</string>
+    <string name="places_autocomplete_clear_button">Очистити пошук</string>
+    <string name="places_autocomplete_label">Вибрати місце</string>
+    <string name="places_autocomplete_no_results_for_query">Немає результатів за запитом \"%1$s\"</string>
+    <string name="places_autocomplete_search_hint">Пошук місця</string>
+    <string name="places_cancel">Скасувати</string>
+    <string name="places_powered_by_google">Технологія Google</string>
+    <string name="places_search_error">Результати недоступні.</string>
+    <string name="places_try_again">Повторити</string>
     <string msgid="5941395253238309765" name="range_end">"Кінець діапазону"</string>
     <string msgid="7097486360902471446" name="range_start">"Початок діапазону"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Пошук"</string>

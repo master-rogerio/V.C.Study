@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Slökkt"</string>
     <string msgid="8655164131929253426" name="on">"Kveikt"</string>
     <string name="password_toggle_content_description">Sýna aðgangsorð</string>
+    <string name="places_autocomplete_clear_button">Hreinsa leit</string>
+    <string name="places_autocomplete_label">Velja stað</string>
+    <string name="places_autocomplete_no_results_for_query">Engar niðurstöður fyrir %1$s</string>
+    <string name="places_autocomplete_search_hint">Leita að stað</string>
+    <string name="places_cancel">Hætta við</string>
+    <string name="places_powered_by_google">Keyrt af Google</string>
+    <string name="places_search_error">Ekki er hægt að hlaða leitarniðurstöður.</string>
+    <string name="places_try_again">Reyna aftur</string>
     <string msgid="5941395253238309765" name="range_end">"Lok sviðs"</string>
     <string msgid="7097486360902471446" name="range_start">"Upphaf sviðs"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Leit"</string>

@@ -8,25 +8,27 @@
 8        android:minSdkVersion="26"
 9        android:targetSdkVersion="36" />
 10
-11    <!-- Permissões de localização -->
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:5:5-67
+11-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:5:22-64
 12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:6:5-79
-12-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:6:22-76
+12-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:7:5-79
+12-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:7:22-76
 13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-13-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:7:5-80
-13-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:7:22-78
+13-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:8:5-80
+13-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:8:22-78
 14    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-14-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:8:5-85
-14-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:8:22-82
+14-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:9:5-85
+14-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:9:22-82
 15    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-15-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:9:5-77
-15-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:9:22-74
-16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-16-->[androidx.media3:media3-common:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ac759fb1abebaa8be30e97dc95bc96a0\transformed\jetified-media3-common-1.3.1\AndroidManifest.xml:22:5-79
-16-->[androidx.media3:media3-common:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ac759fb1abebaa8be30e97dc95bc96a0\transformed\jetified-media3-common-1.3.1\AndroidManifest.xml:22:22-76
-17    <uses-permission android:name="android.permission.INTERNET" />
-17-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:24:5-67
-17-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:24:22-64
+15-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:10:5-77
+15-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:10:22-74
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:11:5-76
+16-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:11:22-73
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+17-->[androidx.media3:media3-common:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ac759fb1abebaa8be30e97dc95bc96a0\transformed\jetified-media3-common-1.3.1\AndroidManifest.xml:22:5-79
+17-->[androidx.media3:media3-common:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ac759fb1abebaa8be30e97dc95bc96a0\transformed\jetified-media3-common-1.3.1\AndroidManifest.xml:22:22-76
 18
 19    <uses-feature
 19-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:26:5-28:35
@@ -56,162 +58,224 @@
 33-->[androidx.core:core:1.13.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\c17e938958cd2f54bac15e7cee409b41\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
 34
 35    <application
-35-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:11:5-31:19
+35-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:12:5-38:19
 36        android:allowBackup="true"
-36-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:12:9-35
+36-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:13:9-35
 37        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 37-->[androidx.core:core:1.13.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\c17e938958cd2f54bac15e7cee409b41\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
 38        android:debuggable="true"
 39        android:extractNativeLibs="false"
 40        android:icon="@android:drawable/sym_def_app_icon"
-40-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:13:9-58
+40-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:14:9-58
 41        android:label="@string/app_name"
-41-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:14:9-41
+41-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:15:9-41
 42        android:roundIcon="@android:drawable/sym_def_app_icon"
-42-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:15:9-63
+42-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:16:9-63
 43        android:supportsRtl="true"
-43-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:16:9-35
+43-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:17:9-35
 44        android:testOnly="true"
 45        android:theme="@style/Theme.VCStudy" >
-45-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:17:9-45
+45-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:18:9-45
 46        <activity
-46-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:18:9-26:20
+46-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:20:9-28:20
 47            android:name="com.example.study.MainActivity"
-47-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:19:13-41
+47-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:21:13-41
 48            android:exported="true"
-48-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:20:13-36
+48-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:22:13-36
 49            android:theme="@style/Theme.VCStudy" >
-49-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:21:13-49
+49-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:23:13-49
 50            <intent-filter>
-50-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:22:13-25:29
+50-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:24:13-27:29
 51                <action android:name="android.intent.action.MAIN" />
-51-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:23:17-69
-51-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:23:25-66
+51-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:25:17-69
+51-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:25:25-66
 52
 53                <category android:name="android.intent.category.LAUNCHER" />
-53-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:24:17-77
-53-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:24:27-74
+53-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:26:17-77
+53-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:26:27-74
 54            </intent-filter>
 55        </activity>
-56
-57        <receiver
-57-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:27:9-30:39
-58            android:name="com.example.study.GeofenceBroadcastReceiver"
-58-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:28:13-54
-59            android:enabled="true"
-59-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:29:13-35
-60            android:exported="true" />
-60-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:30:13-36
-61
-62        <activity
-62-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:23:9-25:39
-63            android:name="androidx.compose.ui.tooling.PreviewActivity"
-63-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:24:13-71
-64            android:exported="true" />
-64-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:25:13-36
+56        <activity
+56-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:30:9-32:40
+57            android:name="com.example.study.AIQuizActivity"
+57-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:31:13-43
+58            android:exported="false" />
+58-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:32:13-37
+59
+60        <receiver
+60-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:34:9-37:39
+61            android:name="com.example.study.GeofenceBroadcastReceiver"
+61-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:35:13-54
+62            android:enabled="true"
+62-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:36:13-35
+63            android:exported="true" />
+63-->D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\AndroidManifest.xml:37:13-36
+64
 65        <activity
-65-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:23:9-25:39
-66            android:name="androidx.activity.ComponentActivity"
-66-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:24:13-63
-67            android:exported="true" /> <!-- Needs to be explicitly declared on P+ -->
-67-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:25:13-36
-68        <uses-library
-68-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:39:9-41:40
-69            android:name="org.apache.http.legacy"
-69-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:40:13-50
-70            android:required="false" />
-70-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:41:13-37
-71
+65-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:15:9-21:20
+66            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
+66-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:16:13-91
+67            android:exported="false"
+67-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:17:13-37
+68            android:label="@string/places_autocomplete_label"
+68-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:18:13-62
+69            android:theme="@style/PlacesAutocompleteOverlay"
+69-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:19:13-61
+70            android:windowSoftInputMode="adjustResize" >
+70-->[com.google.android.libraries.places:places:3.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\AndroidManifest.xml:20:13-55
+71        </activity>
 72        <activity
-72-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:9-22:45
-73            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-73-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:19-85
-74            android:exported="false"
-74-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:22:19-43
-75            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-75-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:21:19-78
-76
-77        <meta-data
-77-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
-78            android:name="com.google.android.gms.version"
-78-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
-79            android:value="@integer/google_play_services_version" />
-79-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
-80
-81        <provider
-81-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:24:9-32:20
-82            android:name="androidx.startup.InitializationProvider"
-82-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:25:13-67
-83            android:authorities="com.example.study.androidx-startup"
-83-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:26:13-68
-84            android:exported="false" >
-84-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:27:13-37
-85            <meta-data
-85-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:29:13-31:52
-86                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-86-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:30:17-78
-87                android:value="androidx.startup" />
-87-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:31:17-49
-88            <meta-data
-88-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-89                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-89-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
-90                android:value="androidx.startup" />
-90-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
-91            <meta-data
-91-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-92                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-93                android:value="androidx.startup" />
-93-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-94        </provider>
-95
-96        <service
-96-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
-97            android:name="androidx.room.MultiInstanceInvalidationService"
-97-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
-98            android:directBootAware="true"
-98-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
-99            android:exported="false" />
-99-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
-100
-101        <receiver
-101-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-102            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-102-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-103            android:directBootAware="false"
-103-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-104            android:enabled="true"
-104-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-105            android:exported="true"
-105-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-106            android:permission="android.permission.DUMP" >
-106-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-107            <intent-filter>
-107-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-108                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-108-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-108-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-109            </intent-filter>
-110            <intent-filter>
-110-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-111                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-111-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-111-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-112            </intent-filter>
-113            <intent-filter>
-113-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-114                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-114-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-114-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-115            </intent-filter>
-116            <intent-filter>
-116-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-117                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-117-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-117-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-118            </intent-filter>
-119        </receiver>
-120    </application>
-121
-122</manifest>
+72-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:23:9-25:39
+73            android:name="androidx.compose.ui.tooling.PreviewActivity"
+73-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:24:13-71
+74            android:exported="true" />
+74-->[androidx.compose.ui:ui-tooling-android:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\AndroidManifest.xml:25:13-36
+75        <activity
+75-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:23:9-25:39
+76            android:name="androidx.activity.ComponentActivity"
+76-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:24:13-63
+77            android:exported="true" /> <!-- Needs to be explicitly declared on P+ -->
+77-->[androidx.compose.ui:ui-test-manifest:1.6.7] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\AndroidManifest.xml:25:13-36
+78        <uses-library
+78-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:39:9-41:40
+79            android:name="org.apache.http.legacy"
+79-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:40:13-50
+80            android:required="false" />
+80-->[com.google.android.gms:play-services-maps:18.2.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:41:13-37
+81
+82        <activity
+82-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:9-22:45
+83            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+83-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:20:19-85
+84            android:exported="false"
+84-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:22:19-43
+85            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+85-->[com.google.android.gms:play-services-base:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\AndroidManifest.xml:21:19-78
+86
+87        <meta-data
+87-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+88            android:name="com.google.android.gms.version"
+88-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+89            android:value="@integer/google_play_services_version" />
+89-->[com.google.android.gms:play-services-basement:18.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
+90
+91        <provider
+91-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:24:9-32:20
+92            android:name="androidx.startup.InitializationProvider"
+92-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:25:13-67
+93            android:authorities="com.example.study.androidx-startup"
+93-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:26:13-68
+94            android:exported="false" >
+94-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:27:13-37
+95            <meta-data
+95-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:29:13-31:52
+96                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+96-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:30:17-78
+97                android:value="androidx.startup" />
+97-->[androidx.lifecycle:lifecycle-process:2.8.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\AndroidManifest.xml:31:17-49
+98            <meta-data
+98-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+99                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+99-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
+100                android:value="androidx.startup" />
+100-->[androidx.emoji2:emoji2:1.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+101            <meta-data
+101-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+102                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+103                android:value="androidx.startup" />
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+104        </provider>
+105
+106        <uses-library
+106-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:25:9-27:40
+107            android:name="androidx.window.extensions"
+107-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:26:13-54
+108            android:required="false" />
+108-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:27:13-37
+109        <uses-library
+109-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:28:9-30:40
+110            android:name="androidx.window.sidecar"
+110-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:29:13-51
+111            android:required="false" />
+111-->[androidx.window:window:1.0.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
+112
+113        <service
+113-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+114            android:name="androidx.room.MultiInstanceInvalidationService"
+114-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+115            android:directBootAware="true"
+115-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+116            android:exported="false" />
+116-->[androidx.room:room-runtime:2.6.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+117
+118        <receiver
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+119            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+120            android:directBootAware="false"
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+121            android:enabled="true"
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+122            android:exported="true"
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+123            android:permission="android.permission.DUMP" >
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+124            <intent-filter>
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+125                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+126            </intent-filter>
+127            <intent-filter>
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+128                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+129            </intent-filter>
+130            <intent-filter>
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+131                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+132            </intent-filter>
+133            <intent-filter>
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+134                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+135            </intent-filter>
+136        </receiver>
+137
+138        <service
+138-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:29:9-35:19
+139            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+139-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:30:13-103
+140            android:exported="false" >
+140-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:31:13-37
+141            <meta-data
+141-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:32:13-34:39
+142                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+142-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:33:17-94
+143                android:value="cct" />
+143-->[com.google.android.datatransport:transport-backend-cct:2.3.0] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\627ccd0bf8d4ef3453aeca0613a4a3a4\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:34:17-36
+144        </service>
+145        <service
+145-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:26:9-30:19
+146            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+146-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:27:13-117
+147            android:exported="false"
+147-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:28:13-37
+148            android:permission="android.permission.BIND_JOB_SERVICE" >
+148-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:29:13-69
+149        </service>
+150
+151        <receiver
+151-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:32:9-34:40
+152            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+152-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:33:13-132
+153            android:exported="false" />
+153-->[com.google.android.datatransport:transport-runtime:2.2.3] D:\Android\Android Studio\jbr\caches\8.10.2\transforms\10c27d8c6b340d27ce453cbd449045c8\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:34:13-37
+154    </application>
+155
+156</manifest>

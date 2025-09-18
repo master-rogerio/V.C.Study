@@ -195,6 +195,14 @@
     <string msgid="875452955155264703" name="off">"অফ আছে"</string>
     <string msgid="8655164131929253426" name="on">"অন কৰা আছে"</string>
     <string name="password_toggle_content_description">পাছৱৰ্ড দেখুৱাওক</string>
+    <string name="places_autocomplete_clear_button">সন্ধানৰ কৰা সমল মচক</string>
+    <string name="places_autocomplete_label">এখন ঠাই বাছনি কৰক</string>
+    <string name="places_autocomplete_no_results_for_query">%1$sৰ কোনো ফলাফল নাই</string>
+    <string name="places_autocomplete_search_hint">Search a place</string>
+    <string name="places_cancel">বাতিল কৰক</string>
+    <string name="places_powered_by_google">Googleৰ দ্বাৰা সঞ্চালিত</string>
+    <string name="places_search_error">সন্ধানৰ ফলাফল ল’ড কৰিব নোৱাৰি।</string>
+    <string name="places_try_again">আকৌ চেষ্টা কৰক</string>
     <string msgid="5941395253238309765" name="range_end">"পৰিসৰৰ সমাপ্তি"</string>
     <string msgid="7097486360902471446" name="range_start">"পৰিসৰৰ আৰম্ভণি"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"সন্ধান"</string>

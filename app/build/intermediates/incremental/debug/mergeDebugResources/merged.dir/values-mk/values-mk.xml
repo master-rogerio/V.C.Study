@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Исклучено"</string>
     <string msgid="8655164131929253426" name="on">"Вклучено"</string>
     <string name="password_toggle_content_description">Прикажи ја лозинката</string>
+    <string name="places_autocomplete_clear_button">Исчисти го пребарувањето</string>
+    <string name="places_autocomplete_label">Одберете место</string>
+    <string name="places_autocomplete_no_results_for_query">Нема резултати за %1$s</string>
+    <string name="places_autocomplete_search_hint">Пребарај место</string>
+    <string name="places_cancel">Откажи</string>
+    <string name="places_powered_by_google">Овозможено од Google</string>
+    <string name="places_search_error">Не може да се вчитаат резултати од пребарувањето.</string>
+    <string name="places_try_again">Пробај пак</string>
     <string msgid="5941395253238309765" name="range_end">"Крај на опсегот"</string>
     <string msgid="7097486360902471446" name="range_start">"Почеток на опсегот"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Пребарување"</string>

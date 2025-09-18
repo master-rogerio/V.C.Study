@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Fra"</string>
     <string msgid="8655164131929253426" name="on">"Til"</string>
     <string name="password_toggle_content_description">Vis adgangskode</string>
+    <string name="places_autocomplete_clear_button">Ryd søgning</string>
+    <string name="places_autocomplete_label">Vælg et sted</string>
+    <string name="places_autocomplete_no_results_for_query">Ingen resultater for %1$s</string>
+    <string name="places_autocomplete_search_hint">Søg efter et sted</string>
+    <string name="places_cancel">Annuller</string>
+    <string name="places_powered_by_google">Leveret af Google</string>
+    <string name="places_search_error">Søgeresultaterne kunne ikke indlæses.</string>
+    <string name="places_try_again">Prøv igen</string>
     <string msgid="5941395253238309765" name="range_end">"Slutinterval"</string>
     <string msgid="7097486360902471446" name="range_start">"Startinterval"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Søg"</string>

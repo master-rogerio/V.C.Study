@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Ki"</string>
     <string msgid="8655164131929253426" name="on">"Be"</string>
     <string name="password_toggle_content_description">Jelszó megjelenítése</string>
+    <string name="places_autocomplete_clear_button">Keresés törlése</string>
+    <string name="places_autocomplete_label">Válasszon egy helyet</string>
+    <string name="places_autocomplete_no_results_for_query">Nincsenek eredmények a következőnél: %1$s</string>
+    <string name="places_autocomplete_search_hint">Hely keresése</string>
+    <string name="places_cancel">Mégse</string>
+    <string name="places_powered_by_google">Üzemeltető: Google</string>
+    <string name="places_search_error">Nem lehet betölteni a keresési találatokat.</string>
+    <string name="places_try_again">Újra</string>
     <string msgid="5941395253238309765" name="range_end">"Tartomány vége"</string>
     <string msgid="7097486360902471446" name="range_start">"Tartomány kezdete"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Keresés"</string>

@@ -205,6 +205,14 @@
     <string msgid="875452955155264703" name="off">"Искључено"</string>
     <string msgid="8655164131929253426" name="on">"Укључено"</string>
     <string name="password_toggle_content_description">Прикажи лозинку</string>
+    <string name="places_autocomplete_clear_button">Обришите претрагу</string>
+    <string name="places_autocomplete_label">Изаберите место</string>
+    <string name="places_autocomplete_no_results_for_query">Нема резултата за упит %1$s</string>
+    <string name="places_autocomplete_search_hint">Претражите место</string>
+    <string name="places_cancel">Откажи</string>
+    <string name="places_powered_by_google">Омогућава Google</string>
+    <string name="places_search_error">Учитавање резултата претраге није успело.</string>
+    <string name="places_try_again">Пробај поново</string>
     <string msgid="5941395253238309765" name="range_end">"Крај опсега"</string>
     <string msgid="7097486360902471446" name="range_start">"Почетак опсега"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Претражите"</string>

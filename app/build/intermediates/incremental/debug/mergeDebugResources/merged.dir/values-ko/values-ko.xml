@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"꺼짐"</string>
     <string msgid="8655164131929253426" name="on">"켜짐"</string>
     <string name="password_toggle_content_description">비밀번호 표시</string>
+    <string name="places_autocomplete_clear_button">검색어 지우기</string>
+    <string name="places_autocomplete_label">장소 선택</string>
+    <string name="places_autocomplete_no_results_for_query">%1$s 검색결과 없음</string>
+    <string name="places_autocomplete_search_hint">장소 검색</string>
+    <string name="places_cancel">취소</string>
+    <string name="places_powered_by_google">Google 제공</string>
+    <string name="places_search_error">검색결과를 로드할 수 없습니다.</string>
+    <string name="places_try_again">다시 시도</string>
     <string msgid="5941395253238309765" name="range_end">"범위 끝"</string>
     <string msgid="7097486360902471446" name="range_start">"범위 시작"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"검색"</string>

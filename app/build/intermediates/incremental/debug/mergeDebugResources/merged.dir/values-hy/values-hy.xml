@@ -204,6 +204,14 @@
     <string msgid="875452955155264703" name="off">"Անջատված է"</string>
     <string msgid="8655164131929253426" name="on">"Միացված է"</string>
     <string name="password_toggle_content_description">Ցուցադրել գաղտնաբառը</string>
+    <string name="places_autocomplete_clear_button">Ջնջել հարցումը</string>
+    <string name="places_autocomplete_label">Ընտրեք վայր</string>
+    <string name="places_autocomplete_no_results_for_query">«%1$s»՝ արդյունք չի գտնվել</string>
+    <string name="places_autocomplete_search_hint">Որոնեք վայր</string>
+    <string name="places_cancel">Չեղարկել</string>
+    <string name="places_powered_by_google">Google-ի կողմից</string>
+    <string name="places_search_error">Չհաջողվեց բեռնել:</string>
+    <string name="places_try_again">Կրկնել</string>
     <string msgid="5941395253238309765" name="range_end">"Ընդգրկույթի վերջ"</string>
     <string msgid="7097486360902471446" name="range_start">"Ընդգրկույթի սկիզբ"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Որոնել"</string>
