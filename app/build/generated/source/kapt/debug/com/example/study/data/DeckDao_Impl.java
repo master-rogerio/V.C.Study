@@ -107,7 +107,7 @@ public final class DeckDao_Impl implements DeckDao {
   }
 
   @Override
-  public Object insert(final Deck deck, final Continuation<? super Long> $completion) {
+  public Object insert(final Deck deck, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -121,11 +121,11 @@ public final class DeckDao_Impl implements DeckDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final Deck deck, final Continuation<? super Unit> $completion) {
+  public Object delete(final Deck deck, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -139,11 +139,11 @@ public final class DeckDao_Impl implements DeckDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object update(final Deck deck, final Continuation<? super Unit> $completion) {
+  public Object update(final Deck deck, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -157,7 +157,7 @@ public final class DeckDao_Impl implements DeckDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
@@ -210,7 +210,7 @@ public final class DeckDao_Impl implements DeckDao {
   }
 
   @Override
-  public Object getDeckById(final long id, final Continuation<? super Deck> $completion) {
+  public Object getDeckById(final long id, final Continuation<? super Deck> arg1) {
     final String _sql = "SELECT * FROM decks WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -254,11 +254,11 @@ public final class DeckDao_Impl implements DeckDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object getDeckByName(final String name, final Continuation<? super Deck> $completion) {
+  public Object getDeckByName(final String name, final Continuation<? super Deck> arg1) {
     final String _sql = "SELECT * FROM decks WHERE name = ? LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -306,12 +306,12 @@ public final class DeckDao_Impl implements DeckDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
   public Object getFlashcardCountForDeck(final long deckId,
-      final Continuation<? super Integer> $completion) {
+      final Continuation<? super Integer> arg1) {
     final String _sql = "SELECT COUNT(*) FROM flashcards WHERE deckId = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -341,7 +341,7 @@ public final class DeckDao_Impl implements DeckDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override

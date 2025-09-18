@@ -247,7 +247,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
   }
 
   @Override
-  public Object insert(final Flashcard flashcard, final Continuation<? super Unit> $completion) {
+  public Object insert(final Flashcard flashcard, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -261,11 +261,11 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final Flashcard flashcard, final Continuation<? super Unit> $completion) {
+  public Object delete(final Flashcard flashcard, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -279,11 +279,11 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object update(final Flashcard flashcard, final Continuation<? super Unit> $completion) {
+  public Object update(final Flashcard flashcard, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -297,11 +297,11 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAllForDeck(final long deckId, final Continuation<? super Unit> $completion) {
+  public Object deleteAllForDeck(final long deckId, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -322,7 +322,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           __preparedStmtOfDeleteAllForDeck.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
@@ -1222,7 +1222,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
   }
 
   @Override
-  public Object getById(final long id, final Continuation<? super Flashcard> $completion) {
+  public Object getById(final long id, final Continuation<? super Flashcard> arg1) {
     final String _sql = "SELECT * FROM flashcards WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -1363,7 +1363,7 @@ public final class FlashcardDao_Impl implements FlashcardDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
