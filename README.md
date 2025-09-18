@@ -33,7 +33,6 @@ Repositório para o trabalho da disciplina Programação para Dispositivos Móve
 
 <br><br>
 
-
 ## 📊 Diagrama de Arquitetura do Sistema
 
 ```mermaid
