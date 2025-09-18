@@ -319,8 +319,8 @@ private fun OptionCard(
         modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = when {
-                isCorrect == true -> SuccessColor.copy(alpha = 0.2f)
-                isCorrect == false && isSelected -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                isCorrect == true -> SuccessColor
+                isCorrect == false && isSelected -> MaterialTheme.colorScheme.errorContainer
                 isSelected -> MaterialTheme.colorScheme.primaryContainer
                 else -> MaterialTheme.colorScheme.surface
             }
@@ -450,7 +450,7 @@ private fun QualityButton(
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = null,
-                tint = contentColor.copy(alpha = 0.7f),
+                tint = contentColor,
                 modifier = Modifier.size(20.dp)
             )
         }

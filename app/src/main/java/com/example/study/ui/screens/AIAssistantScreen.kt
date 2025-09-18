@@ -313,7 +313,7 @@ private fun TypingIndicator() {
                         modifier = Modifier
                             .size((6 * scale).dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f))
+                            .background(MaterialTheme.colorScheme.onSurfaceVariant)
                     )
                 }
             }

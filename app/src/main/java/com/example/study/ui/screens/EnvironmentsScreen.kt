@@ -586,7 +586,7 @@ private fun AddEditLocationDialog(
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         )
                     )
 
@@ -690,7 +690,7 @@ private fun AddEditLocationDialog(
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         ),
                         trailingIcon = {
                             Surface(
@@ -713,7 +713,7 @@ private fun AddEditLocationDialog(
                     if (selectedLocation != null) {
                         Card(
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f)
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
                             ),
                             shape = RoundedCornerShape(16.dp)
                         ) {
@@ -743,7 +743,7 @@ private fun AddEditLocationDialog(
                                     text = "Lat: ${String.format("%.6f", selectedLocation!!.latitude)}, " +
                                             "Lng: ${String.format("%.6f", selectedLocation!!.longitude)}",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
                         }
@@ -752,10 +752,10 @@ private fun AddEditLocationDialog(
                             onClick = { showLocationPicker = true },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             border = BorderStroke(
                                 1.dp,
-                                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                                MaterialTheme.colorScheme.outline
                             )
                         ) {
                             Row(

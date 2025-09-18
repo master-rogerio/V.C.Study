@@ -1,6 +1,5 @@
 package com.example.study.ui.screens
 
-import android.content.Intent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
@@ -15,13 +14,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.study.AIQuizActivity
 import coil.compose.AsyncImage
 import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
@@ -39,7 +36,6 @@ fun FlashcardsScreen(
     modifier: Modifier = Modifier,
     viewModel: FlashcardViewModel = viewModel()
 ) {
-    val context = LocalContext.current // Obter o contexto para iniciar a Activity
     val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
     var showAddFlashcardDialog by remember { mutableStateOf(false) }
     var flashcardToEdit by remember { mutableStateOf<Flashcard?>(null) }
@@ -86,16 +82,11 @@ fun FlashcardsScreen(
                 },
                 actions = {
                     if (flashcards.isNotEmpty()) {
-                        // BOTÃO MODIFICADO PARA INICIAR O QUIZ COM IA
-                        IconButton(onClick = {
-                            val intent = Intent(context, AIQuizActivity::class.java).apply {
-                                putExtra("quizTheme", deckName) // Usa o nome do deck como tema
-                            }
-                            context.startActivity(intent)
-                        }) {
+                        // BOTÃO CORRIGIDO PARA NAVEGAR PARA A TELA DE EXERCÍCIOS
+                        IconButton(onClick = onNavigateToExercise) {
                             Icon(
                                 imageVector = Icons.Default.PlayArrow,
-                                contentDescription = "Iniciar Quiz com IA"
+                                contentDescription = "Iniciar Exercício"
                             )
                         }
                     }
@@ -132,12 +123,7 @@ fun FlashcardsScreen(
 
                 StudyProgressCard(
                     flashcards = flashcards,
-                    onStartStudy = { // Ação do botão de estudo também foi atualizada
-                        val intent = Intent(context, AIQuizActivity::class.java).apply {
-                            putExtra("quizTheme", deckName)
-                        }
-                        context.startActivity(intent)
-                    },
+                    onStartStudy = onNavigateToExercise, // Corrigido para usar navegação interna
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
@@ -588,7 +574,7 @@ private fun QualityDialog(
                 QualityButton(
                     text = "Difícil",
                     subtitle = "Lembrei com dificuldade",
-                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.error,
                     onClick = { onQualitySelected(2) }
                 )
                 QualityButton(
@@ -600,7 +586,7 @@ private fun QualityDialog(
                 QualityButton(
                     text = "Fácil",
                     subtitle = "Lembrei facilmente",
-                    color = SuccessColor.copy(alpha = 0.7f),
+                    color = SuccessColor,
                     onClick = { onQualitySelected(4) }
                 )
                 QualityButton(
@@ -633,8 +619,8 @@ private fun QualityButton(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = StudyShapes.buttonShape,
-        color = color.copy(alpha = 0.1f),
-        border = androidx.compose.foundation.BorderStroke(1.dp, color.copy(alpha = 0.3f))
+        color = color,
+        border = androidx.compose.foundation.BorderStroke(1.dp, color)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

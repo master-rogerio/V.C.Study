@@ -115,7 +115,7 @@ private fun WelcomeHeroSection(onStartStudyClick: () -> Unit) {
                 Icon(Icons.Default.School, null, modifier = Modifier.size(48.dp), tint = Color.White)
                 Spacer(Modifier.height(16.dp))
                 Text("V.C.Study", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold, color = Color.White)
-                Text("Estude de forma inteligente com flashcards adaptativos", style = MaterialTheme.typography.bodyLarge, color = Color.White.copy(alpha = 0.9f))
+                Text("Estude de forma inteligente com flashcards adaptativos", style = MaterialTheme.typography.bodyLarge, color = Color.White)
                 Spacer(Modifier.height(16.dp))
                 StudyButton(onClick = onStartStudyClick, text = "Começar a estudar", icon = Icons.Default.PlayArrow)
             }
@@ -210,7 +210,7 @@ private fun RecentDeckCard(deck: Deck, onDeckClick: (Deck) -> Unit) {
         colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
         Column(Modifier.padding(16.dp)) {
-            Text(deck.theme, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.8f))
+            Text(deck.theme, style = MaterialTheme.typography.labelMedium, color = Color.White)
             Spacer(Modifier.height(4.dp))
             Text(deck.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = Color.White)
             Spacer(Modifier.height(16.dp))

@@ -303,34 +303,6 @@ private fun StudyNavigation(
             )
         }
 
-        composable("exercise_selection") {
-            ExerciseSelectionScreen(
-                onNavigateToHome = {
-                    navController.navigate("home") {
-                        popUpTo("home") { inclusive = true }
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToDecks = {
-                    navController.navigate("decks") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToEnvironments = {
-                    navController.navigate("environments") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToAI = {
-                    navController.navigate("ai_assistant") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToExercise = { deckId, deckName ->
-                    navController.navigate("exercise/$deckId/$deckName")
-                }
-            )
-        }
 
         composable("exercise/{deckId}/{deckName}") { backStackEntry ->
             val deckId = backStackEntry.arguments?.getString("deckId")?.toLongOrNull() ?: -1L
