@@ -764,7 +764,9 @@ private fun GenerateFlashcardsDialog(
     var isDropdownExpanded by remember { mutableStateOf(false) }
     val cardTypes = mapOf(
         FlashcardType.FRONT_BACK to "Frente e Verso",
-        FlashcardType.MULTIPLE_CHOICE to "Múltipla Escolha"
+        FlashcardType.MULTIPLE_CHOICE to "Múltipla Escolha",
+        FlashcardType.CLOZE to "Cloze (Omissão)",
+        FlashcardType.TEXT_INPUT to "Digite a Resposta"
     )
 
     AlertDialog(

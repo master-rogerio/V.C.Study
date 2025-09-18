@@ -48,4 +48,8 @@ interface FlashcardDao {
 
     @Query("SELECT COUNT(*) FROM flashcards")
     fun getFlashcardCount():Flow<Int>
+    
+    // Método síncrono para obter todos os flashcards ordenados por revisão
+    @Query("SELECT * FROM flashcards ORDER BY nextReviewDate ASC")
+    suspend fun getAllFlashcardsByReviewSync(): List<Flashcard>
 }

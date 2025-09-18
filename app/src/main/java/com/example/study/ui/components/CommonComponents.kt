@@ -1,5 +1,7 @@
 package com.example.study.ui.components
 
+import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +14,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Alignment
+
 
 // Componente para selecionar o tipo de flashcard
 @Composable
@@ -66,35 +75,91 @@ fun FlashcardTypeChip(type: FlashcardType, isSelected: Boolean, onClick: () -> U
     )
 }
 
-// Player de áudio
+// Player de áudio CORRIGIDO
 @Composable
 fun AudioPlayer(audioUrl: String) {
     val context = LocalContext.current
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(audioUrl))
-            prepare()
-        }
-    }
     var isPlaying by remember { mutableStateOf(false) }
+    var hasError by remember { mutableStateOf(false) }
 
-    OutlinedButton(
-        onClick = {
-            if (isPlaying) exoPlayer.pause() else exoPlayer.play()
-            isPlaying = !isPlaying
-        },
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow, contentDescription = "Tocar Áudio")
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Tocar áudio")
+    val exoPlayer = remember(audioUrl) {
+        try {
+            if (audioUrl.isBlank()) {
+                hasError = true
+                null
+            } else {
+                val uri = Uri.parse(audioUrl)
+                if (uri == null || uri.scheme == null) {
+                    Log.e("AudioPlayer", "URI inválida: $audioUrl")
+                    hasError = true
+                    null
+                } else {
+                    ExoPlayer.Builder(context).build().apply {
+                        try {
+                            setMediaItem(MediaItem.fromUri(uri))
+                            // Não chamar prepare() aqui - será chamado quando necessário
+                        } catch (e: Exception) {
+                            Log.e("AudioPlayer", "Erro ao configurar MediaItem", e)
+                            hasError = true
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("AudioPlayer", "Erro ao criar ExoPlayer", e)
+            hasError = true
+            null
         }
     }
 
-    DisposableEffect(Unit) {
+    if (hasError) {
+        OutlinedButton(
+            onClick = { /* Não fazer nada */ },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = false
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Error, contentDescription = "Erro no áudio")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Erro no áudio")
+            }
+        }
+    } else {
+        OutlinedButton(
+            onClick = {
+                exoPlayer?.let { player ->
+                    try {
+                        if (isPlaying) {
+                            player.pause()
+                        } else {
+                            if (player.playbackState == ExoPlayer.STATE_IDLE) {
+                                player.prepare()
+                            }
+                            player.play()
+                        }
+                        isPlaying = !isPlaying
+                    } catch (e: Exception) {
+                        Log.e("AudioPlayer", "Erro ao controlar reprodução", e)
+                        hasError = true
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                    contentDescription = "Tocar Áudio"
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(if (isPlaying) "Pausar" else "Tocar áudio")
+            }
+        }
+    }
+
+    DisposableEffect(audioUrl) {
         onDispose {
-            exoPlayer.release()
+            exoPlayer?.release()
         }
     }
 }
