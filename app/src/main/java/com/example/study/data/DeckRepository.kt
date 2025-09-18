@@ -29,4 +29,8 @@ class DeckRepository(private val deckDao: DeckDao) {
     suspend fun getFlashcardCountForDeck(deckId: Long): Int {
         return deckDao.getFlashcardCountForDeck(deckId)
     }
+
+    fun getDeckCount(): Flow<Int> = deckDao.getDeckCount()
+    fun getRecentDecks(): Flow<List<Deck>> = deckDao.getRecentDecks()
+
 }

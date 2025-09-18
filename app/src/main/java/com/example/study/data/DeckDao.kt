@@ -31,4 +31,11 @@ interface DeckDao {
 
     @Query("SELECT COUNT(*) FROM flashcards WHERE deckId = :deckId")
     suspend fun getFlashcardCountForDeck(deckId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM decks")
+    fun getDeckCount(): Flow<Int>
+
+    @Query("SELECT * FROM decks ORDER BY createdAt DESC LIMIT 5")
+    fun getRecentDecks(): Flow<List<Deck>>
+
 }

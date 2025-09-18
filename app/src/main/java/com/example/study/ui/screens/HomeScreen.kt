@@ -1,8 +1,7 @@
 package com.example.study.ui.screens
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,7 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,8 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.study.data.Deck
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
+import com.example.study.ui.view.HomeUiState
+import com.example.study.ui.view.HomeViewModel
+import com.example.study.util.ColorUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,40 +34,30 @@ fun HomeScreen(
     onNavigateToExercise: () -> Unit,
     onNavigateToEnvironments: () -> Unit,
     onNavigateToAI: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel()
 ) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
-        modifier = modifier.padding(top = 20.dp),
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
                     Column {
-                        Text(
-                            text = "Bem-vindo de volta!",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Continue seus estudos",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        Text("Bem-vindo de volta!", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                        Text("Continue seus estudos", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO: Configurações */ }) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "Configurações"
-                        )
+                    IconButton(onClick = { /* TODO: Navegar para configurações */ }) {
+                        Icon(Icons.Default.Settings, "Configurações")
                     }
-                },
-                scrollBehavior = scrollBehavior
+                }
             )
         },
         bottomBar = {
+            // A CORREÇÃO ESTÁ AQUI
             StudyBottomNavigation(
                 selectedItem = 0,
                 onItemSelected = { index ->
@@ -77,32 +69,19 @@ fun HomeScreen(
                     }
                 }
             )
-        },
-        floatingActionButton = {
-            StudyFAB(
-                onClick = onNavigateToDecks,
-                icon = Icons.Default.Add,
-                expanded = true,
-                text = "Novo Deck",
-                contentDescription = "Criar novo deck"
-            )
         }
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             item {
-                WelcomeHeroSection()
+                WelcomeHeroSection(onStartStudyClick = onNavigateToExercise)
             }
-            
             item {
-                StudyStatsSection()
+                StudyStatsSection(uiState = uiState)
             }
-            
             item {
                 QuickActionsSection(
                     onNavigateToDecks = onNavigateToDecks,
@@ -111,301 +90,131 @@ fun HomeScreen(
                     onNavigateToAI = onNavigateToAI
                 )
             }
-            
             item {
-                RecentActivitySection()
+                RecentActivitySection(
+                    recentDecks = uiState.recentDecks,
+                    onDeckClick = { onNavigateToDecks() }, // Ou navegar direto para o deck
+                    onStartStudyClick = onNavigateToExercise
+                )
             }
         }
     }
 }
 
 @Composable
-private fun WelcomeHeroSection() {
-    StudyCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+private fun WelcomeHeroSection(onStartStudyClick: () -> Unit) {
+    StudyCard(modifier = Modifier.padding(horizontal = 16.dp)) {
         Box {
-            // Gradient background
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                GradientStart.copy(alpha = 0.8f),
-                                GradientEnd.copy(alpha = 0.6f)
-                            )
-                        )
-                    )
+                    .background(Brush.horizontalGradient(colors = listOf(GradientStart, GradientEnd)))
             )
-            
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.School,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    tint = Color.White
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                Text(
-                    text = "V.C.Study",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                
-                Text(
-                    text = "Estude de forma inteligente com flashcards adaptativos",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.9f)
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                StudyButton(
-                    onClick = { /* TODO: Navegar para estudos */ },
-                    text = "Começar a estudar",
-                    icon = Icons.Default.PlayArrow,
-                    variant = ButtonVariant.Secondary
-                )
+            Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.Center) {
+                Icon(Icons.Default.School, null, modifier = Modifier.size(48.dp), tint = Color.White)
+                Spacer(Modifier.height(16.dp))
+                Text("V.C.Study", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold, color = Color.White)
+                Text("Estude de forma inteligente com flashcards adaptativos", style = MaterialTheme.typography.bodyLarge, color = Color.White.copy(alpha = 0.9f))
+                Spacer(Modifier.height(16.dp))
+                StudyButton(onClick = onStartStudyClick, text = "Começar a estudar", icon = Icons.Default.PlayArrow)
             }
         }
     }
 }
 
 @Composable
-private fun StudyStatsSection() {
+private fun StudyStatsSection(uiState: HomeUiState) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text("Seu progresso", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 16.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            StatCard("Decks", uiState.deckCount.toString(), Icons.Default.Book, Modifier.weight(1f))
+            StatCard("Flashcards", uiState.flashcardCount.toString(), Icons.Default.Quiz, Modifier.weight(1f))
+            StatCard("Revisões", "0", Icons.Default.Today, Modifier.weight(1f)) // Placeholder
+        }
+    }
+}
+
+@Composable
+private fun StatCard(title: String, value: String, icon: ImageVector, modifier: Modifier = Modifier) {
+    StudyCard(modifier = modifier) {
+        Column(Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(icon, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.height(8.dp))
+            Text(value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+            Text(title, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+        }
+    }
+}
+
+@Composable
+private fun QuickActionsSection(onNavigateToDecks: () -> Unit, onNavigateToExercise: () -> Unit, onNavigateToEnvironments: () -> Unit, onNavigateToAI: () -> Unit) {
     Column {
-        Text(
-            text = "Seu progresso",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            StatCard(
-                title = "Decks",
-                value = "12",
-                icon = Icons.Default.Book,
-                modifier = Modifier.weight(1f)
-            )
-            
-            StatCard(
-                title = "Flashcards",
-                value = "156",
-                icon = Icons.Default.Quiz,
-                modifier = Modifier.weight(1f)
-            )
-            
-            StatCard(
-                title = "Estudados hoje",
-                value = "24",
-                icon = Icons.Default.Today,
-                modifier = Modifier.weight(1f)
-            )
+        Text("Ações rápidas", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+            item { QuickActionCard("Meus Decks", "Gerenciar flashcards", Icons.Default.Book, onNavigateToDecks) }
+            item { QuickActionCard("Exercícios", "Praticar conhecimento", Icons.Default.Quiz, onNavigateToExercise) }
+            item { QuickActionCard("Ambientes", "Estudo por localização", Icons.Default.LocationOn, onNavigateToEnvironments) }
+            item { QuickActionCard("Viber.AI", "Assistente inteligente", Icons.Default.Psychology, onNavigateToAI) }
         }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        StudyCard {
-            Column(
-                modifier = Modifier.padding(20.dp)
-            ) {
-                Text(
-                    text = "Progresso semanal",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                StudyProgressBar(
-                    progress = 0.68f,
-                    showPercentage = true
-                )
+    }
+}
+
+@Composable
+private fun QuickActionCard(title: String, subtitle: String, icon: ImageVector, onClick: () -> Unit) {
+    StudyCard(onClick = onClick, modifier = Modifier.width(160.dp)) {
+        Column(Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            Box(Modifier.size(48.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape), Alignment.Center) {
+                Icon(icon, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
+            }
+            Spacer(Modifier.height(12.dp))
+            Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
+            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+        }
+    }
+}
+
+@Composable
+private fun RecentActivitySection(
+    recentDecks: List<Deck>,
+    onDeckClick: (Deck) -> Unit,
+    onStartStudyClick: () -> Unit
+) {
+    Column {
+        Text("Atividade recente", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+        if (recentDecks.isEmpty()) {
+            StudyEmptyState(
+                title = "Nenhuma atividade ainda",
+                subtitle = "Comece estudando para ver sua atividade recente aqui",
+                icon = Icons.Default.History,
+                actionText = "Começar a estudar",
+                onActionClick = onStartStudyClick,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        } else {
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+                items(recentDecks) { deck ->
+                    RecentDeckCard(deck = deck, onDeckClick = onDeckClick)
+                }
             }
         }
     }
 }
 
 @Composable
-private fun StatCard(
-    title: String,
-    value: String,
-    icon: ImageVector,
-    modifier: Modifier = Modifier
-) {
-    StudyCard(
-        modifier = modifier
+private fun RecentDeckCard(deck: Deck, onDeckClick: (Deck) -> Unit) {
+    val cardColor = Color(ColorUtils.getColorFromString(deck.name))
+    Card(
+        modifier = Modifier.width(220.dp).clickable { onDeckClick(deck) },
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = value,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
-            )
+        Column(Modifier.padding(16.dp)) {
+            Text(deck.theme, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.8f))
+            Spacer(Modifier.height(4.dp))
+            Text(deck.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = Color.White)
+            Spacer(Modifier.height(16.dp))
+            StudyButton(onClick = { /* Navegar para exercício deste deck */ }, text = "Revisar")
         }
-    }
-}
-
-@Composable
-private fun QuickActionsSection(
-    onNavigateToDecks: () -> Unit,
-    onNavigateToExercise: () -> Unit,
-    onNavigateToEnvironments: () -> Unit,
-    onNavigateToAI: () -> Unit
-) {
-    Column {
-        Text(
-            text = "Ações rápidas",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 4.dp)
-        ) {
-            item {
-                QuickActionCard(
-                    title = "Meus Decks",
-                    subtitle = "Gerenciar flashcards",
-                    icon = Icons.Default.Book,
-                    onClick = onNavigateToDecks
-                )
-            }
-            
-            item {
-                QuickActionCard(
-                    title = "Exercícios",
-                    subtitle = "Praticar conhecimento",
-                    icon = Icons.Default.Quiz,
-                    onClick = onNavigateToExercise
-                )
-            }
-            
-            item {
-                QuickActionCard(
-                    title = "Ambientes",
-                    subtitle = "Estudar por localização",
-                    icon = Icons.Default.LocationOn,
-                    onClick = onNavigateToEnvironments
-                )
-            }
-            
-            item {
-                QuickActionCard(
-                    title = "Viber.AI",
-                    subtitle = "Assistente inteligente",
-                    icon = Icons.Default.Psychology,
-                    onClick = onNavigateToAI
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun QuickActionCard(
-    title: String,
-    subtitle: String,
-    icon: ImageVector,
-    onClick: () -> Unit
-) {
-    StudyCard(
-        onClick = onClick,
-        modifier = Modifier.width(160.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Center
-            )
-            
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
-
-@Composable
-private fun RecentActivitySection() {
-    Column {
-        Text(
-            text = "Atividade recente",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        
-        // TODO: Implementar lista de atividades recentes
-        StudyEmptyState(
-            title = "Nenhuma atividade ainda",
-            subtitle = "Comece estudando para ver sua atividade recente aqui",
-            icon = Icons.Default.History,
-            actionText = "Começar a estudar",
-            onActionClick = { /* TODO: Navegar para estudos */ }
-        )
     }
 }

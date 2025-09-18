@@ -344,6 +344,90 @@ public final class DeckDao_Impl implements DeckDao {
     }, $completion);
   }
 
+  @Override
+  public Flow<Integer> getDeckCount() {
+    final String _sql = "SELECT COUNT(*) FROM decks";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"decks"}, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final Integer _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getInt(0);
+            }
+            _result = _tmp;
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Flow<List<Deck>> getRecentDecks() {
+    final String _sql = "SELECT `decks`.`id` AS `id`, `decks`.`name` AS `name`, `decks`.`theme` AS `theme`, `decks`.`createdAt` AS `createdAt` FROM decks ORDER BY createdAt DESC LIMIT 5";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"decks"}, new Callable<List<Deck>>() {
+      @Override
+      @NonNull
+      public List<Deck> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = 0;
+          final int _cursorIndexOfName = 1;
+          final int _cursorIndexOfTheme = 2;
+          final int _cursorIndexOfCreatedAt = 3;
+          final List<Deck> _result = new ArrayList<Deck>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final Deck _item;
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final String _tmpName;
+            if (_cursor.isNull(_cursorIndexOfName)) {
+              _tmpName = null;
+            } else {
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+            }
+            final String _tmpTheme;
+            if (_cursor.isNull(_cursorIndexOfTheme)) {
+              _tmpTheme = null;
+            } else {
+              _tmpTheme = _cursor.getString(_cursorIndexOfTheme);
+            }
+            final long _tmpCreatedAt;
+            _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
+            _item = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();
