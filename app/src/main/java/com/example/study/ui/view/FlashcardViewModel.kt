@@ -18,6 +18,7 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
     private val favoriteLocationDao: FavoriteLocationDao
     private val flashcardDao: FlashcardDao
     private val quizApiRepository: QuizApiRepository
+    private val database: FlashcardDatabase
 
     val allFlashcardsByReview: Flow<List<Flashcard>>
     val allFlashcardsByCreation: Flow<List<Flashcard>>
@@ -37,7 +38,7 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     init {
-        val database = FlashcardDatabase.getDatabase(application)
+        database = FlashcardDatabase.getDatabase(application)
         flashcardDao = database.flashcardDao()
         val deckDao = database.deckDao()
         deckRepository = DeckRepository(deckDao)
@@ -185,6 +186,71 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
             )
             favoriteLocationDao.update(updatedLocation)
         }
+    }
+    
+    // Nova função para registrar sessão completa com analytics avançados
+    fun recordCompleteStudySession(
+        locationId: String,
+        duration: Long,
+        cardsStudied: Int,
+        correctAnswers: Int,
+        averageResponseTime: Long,
+        preferredCardTypes: List<FlashcardType>
+    ) = viewModelScope.launch {
+        val analyticsDao = database.locationAnalyticsDao()
+        val spatialAnalyticsService = SpatialAnalyticsService(
+            analyticsDao, 
+            database.locationRotationMemoryDao(), 
+            favoriteLocationDao
+        )
+        
+        spatialAnalyticsService.recordStudySession(
+            locationId, duration, cardsStudied, correctAnswers,
+            averageResponseTime, preferredCardTypes
+        )
+    }
+    
+    // Nova função para rotação inteligente aprimorada
+    suspend fun getFlashcardsWithIntelligentRotation(
+        locationId: String,
+        limit: Int = 10
+    ): List<Flashcard> {
+        val intelligentRotationService = IntelligentRotationService(
+            flashcardDao,
+            database.locationRotationMemoryDao(),
+            favoriteLocationDao,
+            SpatialAnalyticsService(
+                database.locationAnalyticsDao(),
+                database.locationRotationMemoryDao(),
+                favoriteLocationDao
+            )
+        )
+        
+        return intelligentRotationService.getFlashcardsForLocationWithIntelligentRotation(
+            locationId, limit
+        )
+    }
+    
+    // Nova função para registrar interação com flashcard
+    fun recordFlashcardInteraction(
+        locationId: String,
+        flashcardId: Long,
+        performanceScore: Double
+    ) = viewModelScope.launch {
+        val intelligentRotationService = IntelligentRotationService(
+            flashcardDao,
+            database.locationRotationMemoryDao(),
+            favoriteLocationDao,
+            SpatialAnalyticsService(
+                database.locationAnalyticsDao(),
+                database.locationRotationMemoryDao(),
+                favoriteLocationDao
+            )
+        )
+        
+        intelligentRotationService.recordFlashcardInteraction(
+            locationId, flashcardId, performanceScore
+        )
     }
 
     fun saveFavoriteLocation(name: String, latitude: Double, longitude: Double, iconName: String, preferredTypes: List<FlashcardType>) = viewModelScope.launch {

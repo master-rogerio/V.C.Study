@@ -6,13 +6,22 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Deck::class, Flashcard::class, UserLocation::class, FavoriteLocation::class], version = 9, exportSchema = false)
+@Database(entities = [
+    Deck::class, 
+    Flashcard::class, 
+    UserLocation::class, 
+    FavoriteLocation::class,
+    LocationAnalytics::class,
+    LocationRotationMemory::class
+], version = 10, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class FlashcardDatabase : RoomDatabase() {
     abstract fun flashcardDao(): FlashcardDao
     abstract fun deckDao(): DeckDao
     abstract fun userLocationDao(): UserLocationDao
     abstract fun favoriteLocationDao(): FavoriteLocationDao
+    abstract fun locationAnalyticsDao(): LocationAnalyticsDao
+    abstract fun locationRotationMemoryDao(): LocationRotationMemoryDao
 
     companion object {
         @Volatile

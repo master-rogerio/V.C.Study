@@ -32,22 +32,66 @@ fun ExerciseScreen(
     modifier: Modifier = Modifier,
     viewModel: FlashcardViewModel = viewModel()
 ) {
-    val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
+    // Estado para rastrear respostas corretas de forma mais confiável
+    var correctAnswers by remember { mutableStateOf(0) }
+    
+    // Para Exercício Misto (deckId = -1L), buscar flashcards de todos os decks
+    val flashcards by if (deckId == -1L) {
+        println("DEBUG: Exercício Misto - buscando flashcards de todos os decks")
+        viewModel.allFlashcardsByReview.collectAsState(initial = emptyList())
+    } else {
+        println("DEBUG: Exercício normal - buscando flashcards do deck $deckId")
+        viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
+    }
     val dueFlashcards = remember(flashcards) {
+        println("DEBUG: Total de flashcards encontrados: ${flashcards.size}")
         val currentTime = System.currentTimeMillis()
+        
+        // Lógica melhorada para flashcards pendentes
         val filtered = flashcards.filter { flashcard ->
-            flashcard.nextReviewDate == null ||
-                    flashcard.nextReviewDate.time <= currentTime
+            val isPending = flashcard.nextReviewDate == null || 
+                           flashcard.nextReviewDate.time <= currentTime
+            if (isPending) {
+                println("DEBUG: Flashcard ${flashcard.id} está pendente - nextReview: ${flashcard.nextReviewDate?.time}, current: $currentTime")
+            }
+            isPending
         }
-        if (filtered.isEmpty() && flashcards.isNotEmpty()) {
-            flashcards
+        println("DEBUG: Flashcards pendentes após filtro: ${filtered.size}")
+        
+        // Para Exercício Misto, usar todos os flashcards disponíveis
+        val result = if (deckId == -1L) {
+            // Exercício Misto: usar todos os flashcards disponíveis
+            if (flashcards.isNotEmpty()) {
+                println("DEBUG: Exercício Misto - usando todos os flashcards: ${flashcards.size}")
+                flashcards.shuffled()
+            } else {
+                println("DEBUG: Exercício Misto - nenhum flashcard encontrado")
+                emptyList()
+            }
         } else {
-            filtered
+            // Exercício normal: usar flashcards pendentes ou todos se não há pendentes
+            if (filtered.isNotEmpty()) {
+                println("DEBUG: Exercício normal - usando flashcards pendentes: ${filtered.size}")
+                filtered.shuffled()
+            } else if (flashcards.isNotEmpty()) {
+                println("DEBUG: Exercício normal - nenhum pendente, usando todos: ${flashcards.size}")
+                flashcards.shuffled()
+            } else {
+                println("DEBUG: Exercício normal - nenhum flashcard encontrado")
+                emptyList()
+            }
         }
+        println("DEBUG: Flashcards finais para exercício: ${result.size}")
+        result
     }
 
     var currentIndex by remember { mutableIntStateOf(0) }
     var score by remember { mutableIntStateOf(0) }
+    
+    // Debug: Log inicial do score
+    LaunchedEffect(Unit) {
+        println("DEBUG: Score inicializado em: $score")
+    }
     var isShowingAnswer by remember { mutableStateOf(false) }
     var exerciseCompleted by remember { mutableStateOf(false) }
     var userAnswer by remember { mutableStateOf("") }
@@ -60,7 +104,19 @@ fun ExerciseScreen(
 
     // Função centralizada para processar a resposta e avançar
     fun handleNextCard(flashcard: Flashcard, quality: Int, isCorrect: Boolean) {
-        if (isCorrect) score++
+        // Debug: Log da resposta
+        println("DEBUG: Flashcard ${currentIndex + 1}/${dueFlashcards.size}")
+        println("DEBUG: Tipo: ${flashcard.type}")
+        println("DEBUG: isCorrect: $isCorrect")
+        println("DEBUG: Score antes: $score, CorrectAnswers antes: $correctAnswers")
+        
+        if (isCorrect) {
+            score++
+            correctAnswers++
+            println("DEBUG: Acerto! Score: $score, CorrectAnswers: $correctAnswers")
+        } else {
+            println("DEBUG: Erro! Score: $score, CorrectAnswers: $correctAnswers")
+        }
 
         val updatedFlashcard = viewModel.calculateNextReview(flashcard, quality)
         viewModel.update(updatedFlashcard)
@@ -74,6 +130,7 @@ fun ExerciseScreen(
                 onResetQualityButtons = { showQualityButtons = false }
             )
         } else {
+            println("DEBUG: Exercício concluído! Score final: $score, CorrectAnswers: $correctAnswers de ${dueFlashcards.size}")
             exerciseCompleted = true
         }
     }
@@ -124,9 +181,9 @@ fun ExerciseScreen(
             when {
                 exerciseCompleted -> {
                     ExerciseCompletedScreen(
-                        score = score,
+                        score = correctAnswers,
                         total = dueFlashcards.size,
-                        onNavigateToResults = { onNavigateToResults(score, dueFlashcards.size) }
+                        onNavigateToResults = { onNavigateToResults(correctAnswers, dueFlashcards.size) }
                     )
                 }
 
@@ -164,18 +221,33 @@ fun ExerciseScreen(
                                 // Chamado pelo botão "Continuar" para outros tipos de card
                                 val isCorrect = when (currentFlashcard.type) {
                                     FlashcardType.TEXT_INPUT -> {
-                                        userAnswer.trim().equals(currentFlashcard.back.trim(), ignoreCase = true)
+                                        val userAnswerTrimmed = userAnswer.trim()
+                                        val correctAnswerTrimmed = currentFlashcard.back?.trim() ?: ""
+                                        val result = userAnswerTrimmed.isNotEmpty() && 
+                                                   correctAnswerTrimmed.isNotEmpty() && 
+                                                   userAnswerTrimmed.equals(correctAnswerTrimmed, ignoreCase = true)
+                                        println("DEBUG TEXT_INPUT: User='$userAnswerTrimmed', Correct='$correctAnswerTrimmed', Result=$result")
+                                        result
                                     }
                                     FlashcardType.MULTIPLE_CHOICE -> {
-                                        selectedOption == currentFlashcard.correctOptionIndex
+                                        val result = selectedOption != -1 && selectedOption == currentFlashcard.correctOptionIndex
+                                        println("DEBUG MULTIPLE_CHOICE: Selected=$selectedOption, Correct=${currentFlashcard.correctOptionIndex}, Result=$result")
+                                        result
                                     }
                                     FlashcardType.CLOZE -> {
-                                        userAnswer.trim().equals(currentFlashcard.clozeAnswer?.trim() ?: "", ignoreCase = true)
+                                        val userAnswerTrimmed = userAnswer.trim()
+                                        val correctAnswerTrimmed = currentFlashcard.clozeAnswer?.trim() ?: ""
+                                        val result = userAnswerTrimmed.isNotEmpty() && 
+                                                   correctAnswerTrimmed.isNotEmpty() && 
+                                                   userAnswerTrimmed.equals(correctAnswerTrimmed, ignoreCase = true)
+                                        println("DEBUG CLOZE: User='$userAnswerTrimmed', Correct='$correctAnswerTrimmed', Result=$result")
+                                        result
                                     }
                                     else -> false // Não deve acontecer
                                 }
                                 // Qualidade automática: 4 (Fácil) se acertou, 1 (Muito Difícil) se errou.
                                 val quality = if (isCorrect) 4 else 1
+                                println("DEBUG: Qualidade calculada: $quality")
                                 handleNextCard(currentFlashcard, quality, isCorrect)
                             },
                             modifier = Modifier.weight(1f)

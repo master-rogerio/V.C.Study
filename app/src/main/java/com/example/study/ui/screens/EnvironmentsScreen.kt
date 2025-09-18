@@ -35,6 +35,7 @@ fun EnvironmentsScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToDecks: () -> Unit,
     onNavigateToExercise: () -> Unit,
+    onNavigateToSpatialAnalytics: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: EnvironmentViewModel = viewModel()
 ) {
@@ -77,6 +78,12 @@ fun EnvironmentsScreen(
                     )
                 },
                 actions = {
+                    IconButton(onClick = onNavigateToSpatialAnalytics) {
+                        Icon(
+                            imageVector = Icons.Default.Analytics,
+                            contentDescription = "Analytics Espaciais"
+                        )
+                    }
                     IconButton(onClick = { /* TODO: Configurações de geofencing */ }) {
                         Icon(
                             imageVector = Icons.Default.Settings,

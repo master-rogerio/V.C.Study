@@ -362,6 +362,19 @@ private fun StudyNavigation(
                     navController.navigate("exercise_selection") {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToSpatialAnalytics = {
+                    navController.navigate("spatial_analytics") {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable("spatial_analytics") {
+            SpatialAnalyticsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }

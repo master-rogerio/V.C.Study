@@ -192,6 +192,7 @@ fun PlaceholderResultsScreen(
             Text(if (isGoodScore) "Parabéns!" else "Continue praticando!", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
             Text("Você acertou $score de $total questões", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Taxa de acerto: $percentage%", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
 
             Column(
