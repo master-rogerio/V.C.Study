@@ -1,19 +1,35 @@
 package com.example.study.data
 
+import java.util.concurrent.TimeUnit
 import com.example.study.BuildConfig
 import com.example.study.network.*
 import com.google.gson.Gson
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class QuizApiRepository {
+
+    // Configuração no QuizApiRepository
+    private val okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .build()
+
     private val geminiApiService: GeminiApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://generativelanguage.googleapis.com/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GeminiApiService::class.java)
     }
+
 
     // A função de gerar quiz continua aqui, sem alterações
     suspend fun generateQuizQuestion(theme: String): Result<ApiQuizQuestion> {
