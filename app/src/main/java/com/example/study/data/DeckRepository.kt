@@ -5,8 +5,13 @@ import kotlinx.coroutines.flow.Flow
 class DeckRepository(private val deckDao: DeckDao) {
     val allDecks: Flow<List<Deck>> = deckDao.getAllDecks()
 
-    suspend fun getDeckById(id: Long): Deck? {
+    fun getDeckById(id: Long): Flow<Deck?> { // Não é mais 'suspend'
         return deckDao.getDeckById(id)
+    }
+
+    // Tornando a nova função acessível
+    suspend fun getDeckByName(name: String): Deck? {
+        return deckDao.getDeckByName(name)
     }
 
     suspend fun insert(deck: Deck): Long {
@@ -24,4 +29,10 @@ class DeckRepository(private val deckDao: DeckDao) {
     suspend fun getFlashcardCountForDeck(deckId: Long): Int {
         return deckDao.getFlashcardCountForDeck(deckId)
     }
-} 
+
+    suspend fun getDeckByFirebaseId(firebaseId: String): Deck? {
+        return deckDao.getDeckByFirebaseId(firebaseId)
+    }
+    fun getDeckCount(): Flow<Int> = deckDao.getDeckCount()
+    fun getRecentDecks(): Flow<List<Deck>> = deckDao.getRecentDecks()
+}

@@ -1,21 +1,21 @@
-*.iml
-/.gradle/
-/app/build/
-/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/
-/.idea/
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
+# Arquivos gerados pelo sistema de build
 /build
+/app/build
 /captures
-.externalNativeBuild
-.cxx
+
+# Arquivos locais de configuração
 local.properties
-/.idea/studiobot.xml
-/.idea/appInsightsSettings.xml
-/acli.exe
+/.idea/
+.gradle/
+
+# Logs e arquivos de sistema
+*.log
+.DS_Store
+
+# Arquivos do Android Studio
+*.iml
+.idea/workspace.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml

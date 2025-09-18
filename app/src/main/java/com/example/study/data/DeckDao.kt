@@ -14,9 +14,16 @@ interface DeckDao {
     fun getAllDecks(): Flow<List<Deck>>
 
     @Query("SELECT * FROM decks WHERE id = :id")
-    suspend fun getDeckById(id: Long): Deck?
+    fun getDeckById(id: Long): Flow<Deck?>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Query("SELECT * FROM decks WHERE firebaseId = :firebaseId LIMIT 1")
+    suspend fun getDeckByFirebaseId(firebaseId: String): Deck?
+
+    // Função para encontrar um deck pelo nome
+    @Query("SELECT * FROM decks WHERE name = :name LIMIT 1")
+    suspend fun getDeckByName(name: String): Deck?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(deck: Deck): Long
 
     @Update
@@ -27,4 +34,13 @@ interface DeckDao {
 
     @Query("SELECT COUNT(*) FROM flashcards WHERE deckId = :deckId")
     suspend fun getFlashcardCountForDeck(deckId: Long): Int
-} 
+
+
+    @Query("SELECT COUNT(*) FROM decks")
+    fun getDeckCount(): Flow<Int>
+
+    @Query("SELECT * FROM decks ORDER BY createdAt DESC LIMIT 5")
+    fun getRecentDecks(): Flow<List<Deck>>
+
+
+}

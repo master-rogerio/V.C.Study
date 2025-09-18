@@ -9,10 +9,12 @@ data class FavoriteLocation(
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
     val name: String,
+    val address: String = "",
     val latitude: Double,
     val longitude: Double,
     val radius: Int = 100,
-    val iconName: String = "ic_location", // CAMPO ADICIONADO
+    val isGeofenceActive: Boolean = false,
+    val iconName: String = "ic_location",
     val preferredCardTypes: List<FlashcardType> = emptyList(),
     val studySessionCount: Int = 0,
     val averagePerformance: Double = 0.0

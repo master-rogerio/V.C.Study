@@ -45,4 +45,7 @@ class FlashcardRepository(private val dao: FlashcardDao) {
     suspend fun deleteAllForDeck(deckId: Long) {
         dao.deleteAllForDeck(deckId)
     }
+
+    fun getFlashcardCount(): Flow<Int> = dao.getFlashcardCount()
+
 }

@@ -1,11 +1,10 @@
-// File: app/src/main/java/com/example/flashcards/data/Flashcard.kt
 package com.example.study.data
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.Date // Mantenha este import se usar Date em outros lugares
+import java.util.Date
 
 @Entity(
     tableName = "flashcards",
@@ -24,18 +23,30 @@ data class Flashcard(
     val id: Long = 0,
     val deckId: Long,
     val type: FlashcardType = FlashcardType.FRONT_BACK,
+
+    // Conteúdo Principal
     val front: String,
     val back: String,
+
+    // Suporte a Multimídia
+    val frontImageUrl: String? = null,
+    val frontAudioUrl: String? = null,
+    val backImageUrl: String? = null,
+    val backAudioUrl: String? = null,
+
+    // Campos para tipos específicos
     val clozeText: String? = null,
     val clozeAnswer: String? = null,
     val options: List<String>? = null,
     val correctOptionIndex: Int? = null,
+
+    // Campos de Repetição Espaçada
     val lastReviewed: Date? = null,
     val nextReviewDate: Date? = null,
     val easeFactor: Float = 2.5f,
     val interval: Int = 0,
     val repetitions: Int = 0,
-    // --- ADICIONADO ---
-    val createdAt: Long = System.currentTimeMillis() // Adiciona o timestamp de criação
-    // --- FIM DA ADIÇÃO ---
+    val createdAt: Long = System.currentTimeMillis(),
+
+    var firebaseId: String? = null
 )
