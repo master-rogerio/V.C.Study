@@ -53,7 +53,7 @@ private fun StudyNavigation(
     var previousRoute by remember { mutableStateOf("home") }
     
     val currentRoute = currentBackStackEntry?.destination?.route?.split("/")?.firstOrNull() ?: "home"
-    
+
     // Navegação inteligente baseada em geofencing
     LaunchedEffect(intelligentRotation, source, locationId) {
         if (intelligentRotation && source != null && locationId != null) {
@@ -68,7 +68,6 @@ private fun StudyNavigation(
             }
         }
     }
-    
     // Determine animation direction based on tab indices
     val isMovingForward = remember(currentRoute) {
         val currentIndex = tabRoutes.indexOf(currentRoute)
@@ -198,7 +197,7 @@ private fun StudyNavigation(
             ) + fadeOut(animationSpec = tween(200))
         }
     ) {
-        */
+     */
         composable("home") {
             HomeScreen(
                 onNavigateToDecks = {
@@ -304,40 +303,11 @@ private fun StudyNavigation(
             )
         }
 
-        composable("exercise_selection") {
-            com.example.study.ui.screens.ExerciseSelectionScreen(
-                onNavigateToHome = {
-                    navController.navigate("home") {
-                        popUpTo("home") { inclusive = true }
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToDecks = {
-                    navController.navigate("decks") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToEnvironments = {
-                    navController.navigate("environments") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToAI = {
-                    navController.navigate("ai_assistant") {
-                        launchSingleTop = true
-                    }
-                },
-                onNavigateToExercise = { deckId, deckName ->
-                    navController.navigate("exercise/$deckId/$deckName")
-                }
-            )
-        }
 
         composable("exercise/{deckId}/{deckName}") { backStackEntry ->
             val deckId = backStackEntry.arguments?.getString("deckId")?.toLongOrNull() ?: -1L
             val deckName = backStackEntry.arguments?.getString("deckName") ?: ""
-            
-            com.example.study.ui.screens.ExerciseScreen(
+            ExerciseScreen(
                 deckId = deckId,
                 deckName = deckName,
                 onNavigateBack = {
@@ -354,8 +324,7 @@ private fun StudyNavigation(
         composable("exercise_results/{score}/{total}") { backStackEntry ->
             val score = backStackEntry.arguments?.getString("score")?.toIntOrNull() ?: 0
             val total = backStackEntry.arguments?.getString("total")?.toIntOrNull() ?: 0
-            
-            ExerciseResultsScreen(
+            PlaceholderResultsScreen(
                 score = score,
                 total = total,
                 onNavigateToHome = {
@@ -377,7 +346,7 @@ private fun StudyNavigation(
         }
 
         composable("environments") {
-            com.example.study.ui.screens.EnvironmentsScreen(
+            EnvironmentsScreen(
                 onNavigateToHome = {
                     navController.navigate("home") {
                         popUpTo("home") { inclusive = true }
@@ -398,7 +367,9 @@ private fun StudyNavigation(
         }
 
         composable("ai_assistant") {
-            com.example.study.ui.screens.AIAssistantScreen(
+            PlaceholderScreen(
+                title = "Assistente IA",
+                subtitle = "O assistente de IA para seus estudos.",
                 onNavigateToHome = {
                     navController.navigate("home") {
                         popUpTo("home") { inclusive = true }
@@ -419,7 +390,8 @@ private fun StudyNavigation(
                     navController.navigate("environments") {
                         launchSingleTop = true
                     }
-                }
+                },
+                selectedTab = 4
             )
         }
     }

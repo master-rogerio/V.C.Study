@@ -25,9 +25,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.study.data.Deck
+import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
 import com.example.study.ui.view.DeckViewModel
+import com.example.study.ui.view.FlashcardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -38,10 +40,12 @@ fun DecksScreen(
     onNavigateToEnvironments: () -> Unit,
     onNavigateToAI: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DeckViewModel = viewModel()
+    deckViewModel: DeckViewModel = viewModel(),
+    flashcardViewModel: FlashcardViewModel = viewModel()
 ) {
-    val decks by viewModel.allDecks.collectAsState(initial = emptyList())
+    val decks by deckViewModel.allDecks.collectAsState(initial = emptyList())
     var showAddDeckDialog by remember { mutableStateOf(false) }
+    var showGenerateDeckDialog by remember { mutableStateOf(false) }
     var deckToEdit by remember { mutableStateOf<Deck?>(null) }
     var showDeleteDialog by remember { mutableStateOf<Deck?>(null) }
     var searchQuery by remember { mutableStateOf("") }
@@ -50,8 +54,28 @@ fun DecksScreen(
 
     LaunchedEffect(decks) {
         decks.forEach { deck ->
-            val count = viewModel.getFlashcardCountForDeck(deck.id)
+            val count = deckViewModel.getFlashcardCountForDeck(deck.id)
             flashcardCounts = flashcardCounts + (deck.id to count)
+        }
+    }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    val generationResult by flashcardViewModel.flashcardGenerationResult.collectAsState()
+    LaunchedEffect(generationResult) {
+        generationResult?.onSuccess { count ->
+            snackbarHostState.showSnackbar(
+                message = "Deck criado com $count flashcards!",
+                duration = SnackbarDuration.Short
+            )
+            flashcardViewModel.clearFlashcardGenerationResult()
+        }
+        generationResult?.onFailure { error ->
+            snackbarHostState.showSnackbar(
+                message = "Erro ao gerar flashcards: ${error.message}",
+                duration = SnackbarDuration.Long
+            )
+            flashcardViewModel.clearFlashcardGenerationResult()
         }
     }
 
@@ -68,6 +92,7 @@ fun DecksScreen(
 
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = {
@@ -107,13 +132,25 @@ fun DecksScreen(
             )
         },
         floatingActionButton = {
-            StudyFAB(
-                onClick = { showAddDeckDialog = true },
-                icon = Icons.Default.Add,
-                expanded = true,
-                text = "Novo Deck",
-                contentDescription = "Criar novo deck"
-            )
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                StudyFAB(
+                    onClick = { showGenerateDeckDialog = true },
+                    icon = Icons.Default.Psychology,
+                    expanded = true,
+                    text = "Gerar com IA",
+                    contentDescription = "Gerar deck com Inteligência Artificial"
+                )
+                StudyFAB(
+                    onClick = { showAddDeckDialog = true },
+                    icon = Icons.Default.Add,
+                    expanded = true,
+                    text = "Novo Deck",
+                    contentDescription = "Criar novo deck"
+                )
+            }
         }
     ) { paddingValues ->
         Column(
@@ -133,9 +170,9 @@ fun DecksScreen(
                     // No decks at all
                     StudyEmptyState(
                         title = "Nenhum deck criado",
-                        subtitle = "Crie seu primeiro deck para começar a estudar com flashcards",
+                        subtitle = "Crie seu primeiro deck manualmente ou use a IA para gerar um para você!",
                         icon = Icons.Default.Book,
-                        actionText = "Criar Deck",
+                        actionText = "Criar Primeiro Deck",
                         onActionClick = { showAddDeckDialog = true },
                         modifier = Modifier
                             .fillMaxSize()
@@ -186,9 +223,9 @@ fun DecksScreen(
             },
             onSave = { name, theme ->
                 if (deckToEdit != null) {
-                    viewModel.update(deckToEdit!!.copy(name = name, theme = theme))
+                    deckViewModel.update(deckToEdit!!.copy(name = name, theme = theme))
                 } else {
-                    viewModel.insert(Deck(name = name, theme = theme))
+                    deckViewModel.insert(Deck(name = name, theme = theme))
                 }
                 showAddDeckDialog = false
                 deckToEdit = null
@@ -196,12 +233,21 @@ fun DecksScreen(
         )
     }
 
-    // Delete Confirmation Dialog
+    if (showGenerateDeckDialog) {
+        GenerateFlashcardsDialog(
+            onDismiss = { showGenerateDeckDialog = false },
+            onGenerate = { topic, deckName, type ->
+                showGenerateDeckDialog = false
+                flashcardViewModel.generateAndSaveFlashcards(topic, deckName, type)
+            }
+        )
+    }
+
     showDeleteDialog?.let { deck ->
         DeleteDeckDialog(
             deckName = deck.name,
             onConfirm = {
-                viewModel.delete(deck)
+                deckViewModel.delete(deck)
                 showDeleteDialog = null
             },
             onDismiss = { showDeleteDialog = null }
@@ -558,18 +604,18 @@ private fun AddEditDeckDialog(
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
-                        
+
                         Text(
                             text = if (deck == null) "Novo Deck" else "Editar Deck",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
                     }
-                    
+
                     Text(
-                        text = if (deck == null) 
-                            "Crie um novo deck para organizar seus flashcards" 
-                        else 
+                        text = if (deck == null)
+                            "Crie um novo deck para organizar seus flashcards"
+                        else
                             "Edite as informações do seu deck",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -597,7 +643,7 @@ private fun AddEditDeckDialog(
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         )
                     )
 
@@ -618,7 +664,7 @@ private fun AddEditDeckDialog(
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         )
                     )
                 }
@@ -642,7 +688,7 @@ private fun AddEditDeckDialog(
                             fontWeight = FontWeight.Medium
                         )
                     }
-                    
+
                     Button(
                         onClick = {
                             if (name.isNotBlank() && theme.isNotBlank()) {
@@ -702,6 +748,90 @@ private fun DeleteDeckDialog(
                 text = "Cancelar",
                 variant = ButtonVariant.Secondary
             )
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun GenerateFlashcardsDialog(
+    onDismiss: () -> Unit,
+    onGenerate: (String, String, FlashcardType) -> Unit
+) {
+    var topic by remember { mutableStateOf("") }
+    var deckName by remember { mutableStateOf("") }
+    var selectedType by remember { mutableStateOf(FlashcardType.FRONT_BACK) }
+    var isDropdownExpanded by remember { mutableStateOf(false) }
+    val cardTypes = mapOf(
+        FlashcardType.FRONT_BACK to "Frente e Verso",
+        FlashcardType.MULTIPLE_CHOICE to "Múltipla Escolha"
+    )
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Gerar Deck com IA") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                OutlinedTextField(
+                    value = topic,
+                    onValueChange = { topic = it },
+                    label = { Text("Digite o tema dos flashcards") },
+                    placeholder = { Text("Ex: Segunda Guerra Mundial") },
+                    singleLine = true
+                )
+                OutlinedTextField(
+                    value = deckName,
+                    onValueChange = { deckName = it },
+                    label = { Text("Nome para o novo deck") },
+                    placeholder = { Text("Ex: História") },
+                    singleLine = true
+                )
+
+                ExposedDropdownMenuBox(
+                    expanded = isDropdownExpanded,
+                    onExpandedChange = { isDropdownExpanded = !isDropdownExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = cardTypes[selectedType] ?: "",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Tipo de Flashcard") },
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isDropdownExpanded)
+                        },
+                        modifier = Modifier
+                            .menuAnchor()
+                            .fillMaxWidth()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = isDropdownExpanded,
+                        onDismissRequest = { isDropdownExpanded = false }
+                    ) {
+                        cardTypes.forEach { (type, name) ->
+                            DropdownMenuItem(
+                                text = { Text(name) },
+                                onClick = {
+                                    selectedType = type
+                                    isDropdownExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { onGenerate(topic, deckName, selectedType) },
+                enabled = topic.isNotBlank() && deckName.isNotBlank()
+            ) {
+                Text("Gerar")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
         }
     )
 }

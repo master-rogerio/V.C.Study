@@ -9,6 +9,11 @@ class DeckRepository(private val deckDao: DeckDao) {
         return deckDao.getDeckById(id)
     }
 
+    // ADIÇÃO: Tornando a nova função acessível
+    suspend fun getDeckByName(name: String): Deck? {
+        return deckDao.getDeckByName(name)
+    }
+
     suspend fun insert(deck: Deck): Long {
         return deckDao.insert(deck)
     }
@@ -25,7 +30,14 @@ class DeckRepository(private val deckDao: DeckDao) {
         return deckDao.getFlashcardCountForDeck(deckId)
     }
 
+<<<<<<< HEAD
     suspend fun getDeckByFirebaseId(firebaseId: String): Deck? {
         return deckDao.getDeckByFirebaseId(firebaseId)
     }
 } 
+=======
+    fun getDeckCount(): Flow<Int> = deckDao.getDeckCount()
+    fun getRecentDecks(): Flow<List<Deck>> = deckDao.getRecentDecks()
+
+}
+>>>>>>> origin/UX_UI.v4-FINAL

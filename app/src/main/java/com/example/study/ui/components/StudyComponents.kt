@@ -320,8 +320,8 @@ fun GradientBackground(
         modifier = modifier.background(
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    GradientStart.copy(alpha = 0.1f),
-                    GradientEnd.copy(alpha = 0.05f)
+                    GradientStart,
+                    GradientEnd
                 )
             )
         ),

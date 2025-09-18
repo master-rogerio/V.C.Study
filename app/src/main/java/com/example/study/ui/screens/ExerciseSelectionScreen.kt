@@ -114,8 +114,8 @@ fun ExerciseSelectionScreen(
                 actions = {
                     if (totalDueCards > 0) {
                         IconButton(onClick = { 
-                            // Start mixed exercise with all due cards
-                            // TODO: Implement mixed exercise mode
+                            // Iniciar exercício misto com todos os cards pendentes
+                            onNavigateToExercise(-1L, "Exercício Misto") // ID especial para exercício misto
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Shuffle,
@@ -160,7 +160,8 @@ fun ExerciseSelectionScreen(
                     totalDueCards = totalDueCards,
                     totalDecks = filteredDecksForIntelligentRotation.size,
                     onStartMixedExercise = {
-                        // TODO: Implement mixed exercise
+                        // Iniciar exercício misto com todos os cards pendentes
+                        onNavigateToExercise(-1L, "Exercício Misto")
                     },
                     modifier = Modifier.padding(16.dp)
                 )
@@ -221,7 +222,7 @@ private fun ExerciseStatsCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -373,7 +374,7 @@ private fun DeckExerciseItem(
                         if (dueCount > 0) {
                             MaterialTheme.colorScheme.primaryContainer
                         } else {
-                            MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                            MaterialTheme.colorScheme.outline
                         }
                     ),
                 contentAlignment = Alignment.Center
@@ -405,7 +406,7 @@ private fun DeckExerciseItem(
                     color = if (dueCount > 0) {
                         MaterialTheme.colorScheme.onSurface
                     } else {
-                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        MaterialTheme.colorScheme.onSurface
                     }
                 )
 
@@ -481,7 +482,7 @@ private fun IntelligentRotationBanner(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)

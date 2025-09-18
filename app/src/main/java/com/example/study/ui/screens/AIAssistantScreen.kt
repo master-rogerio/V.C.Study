@@ -1,7 +1,5 @@
 package com.example.study.ui.screens
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
 import kotlinx.coroutines.*
 
+// O data class ChatMessage permanece o mesmo
 data class ChatMessage(
     val id: String,
     val text: String,
@@ -43,23 +41,21 @@ fun AIAssistantScreen(
     var messages by remember { mutableStateOf(listOf<ChatMessage>()) }
     var inputText by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
-    
+
     val listState = rememberLazyListState()
-    
-    // Auto scroll to bottom when new message is added
+
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) {
             listState.animateScrollToItem(messages.size - 1)
         }
     }
-    
-    // Initial welcome message
+
     LaunchedEffect(Unit) {
         if (messages.isEmpty()) {
             messages = listOf(
                 ChatMessage(
                     id = "welcome",
-                    text = "Olá! Eu sou o Viber.AI, seu assistente inteligente de estudos! 🤖\n\nPosso te ajudar com:\n• Criação de flashcards\n• Explicações de conceitos\n• Dicas de estudo\n• Planejamento de revisões\n• Análise do seu progresso\n\nComo posso te ajudar hoje?",
+                    text = "Olá! Eu sou o Viber.AI, seu assistente de estudos! 🤖\n\nComo posso te ajudar a entender conceitos ou a planear os seus estudos?",
                     isFromUser = false
                 )
             )
@@ -92,9 +88,9 @@ fun AIAssistantScreen(
                                 modifier = Modifier.size(24.dp)
                             )
                         }
-                        
+
                         Spacer(modifier = Modifier.width(12.dp))
-                        
+
                         Column {
                             Text(
                                 text = "Viber.AI",
@@ -110,7 +106,7 @@ fun AIAssistantScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { 
+                    IconButton(onClick = {
                         messages = listOf(
                             ChatMessage(
                                 id = "welcome_${System.currentTimeMillis()}",
@@ -146,7 +142,6 @@ fun AIAssistantScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Chat messages
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
@@ -156,48 +151,31 @@ fun AIAssistantScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(messages, key = { it.id }) { message ->
-                    ChatMessageItem(
-                        message = message
-                    )
+                    ChatMessageItem(message = message)
                 }
-                
+
                 if (isLoading) {
                     item {
                         TypingIndicator()
                     }
                 }
             }
-            
-            // Quick actions
-            QuickActionsRow(
-                onActionSelected = { action ->
-                    inputText = action
-                }
-            )
-            
-            // Input area
+
+            QuickActionsRow(onActionSelected = { action -> inputText = action })
+
             ChatInputArea(
                 inputText = inputText,
                 onInputChange = { inputText = it },
                 onSendMessage = {
                     if (inputText.isNotBlank()) {
-                        val userMessage = ChatMessage(
-                            id = "user_${System.currentTimeMillis()}",
-                            text = inputText,
-                            isFromUser = true
-                        )
+                        val userMessage = ChatMessage("user_${System.currentTimeMillis()}", inputText, true)
                         messages = messages + userMessage
                         val currentInput = inputText
                         inputText = ""
                         isLoading = true
-                        
-                        // Simulate AI response
+
                         simulateAIResponse(currentInput) { response ->
-                            messages = messages + ChatMessage(
-                                id = "ai_${System.currentTimeMillis()}",
-                                text = response,
-                                isFromUser = false
-                            )
+                            messages = messages + ChatMessage("ai_${System.currentTimeMillis()}", response, false)
                             isLoading = false
                         }
                     }
@@ -222,7 +200,6 @@ private fun ChatMessageItem(
         }
     ) {
         if (!message.isFromUser) {
-            // AI avatar
             Box(
                 modifier = Modifier
                     .size(32.dp)
@@ -239,7 +216,7 @@ private fun ChatMessageItem(
             }
             Spacer(modifier = Modifier.width(8.dp))
         }
-        
+
         Surface(
             modifier = Modifier.widthIn(max = 280.dp),
             shape = RoundedCornerShape(
@@ -266,10 +243,9 @@ private fun ChatMessageItem(
                 }
             )
         }
-        
+
         if (message.isFromUser) {
             Spacer(modifier = Modifier.width(8.dp))
-            // User avatar
             Box(
                 modifier = Modifier
                     .size(32.dp)
@@ -307,9 +283,9 @@ private fun TypingIndicator() {
                 modifier = Modifier.size(20.dp)
             )
         }
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = MaterialTheme.colorScheme.surfaceVariant,
@@ -322,7 +298,7 @@ private fun TypingIndicator() {
             ) {
                 repeat(3) { index ->
                     var scale by remember { mutableFloatStateOf(1f) }
-                    
+
                     LaunchedEffect(Unit) {
                         while (true) {
                             delay(200L * index)
@@ -332,12 +308,12 @@ private fun TypingIndicator() {
                             delay(500 - 200L * index)
                         }
                     }
-                    
+
                     Box(
                         modifier = Modifier
                             .size((6 * scale).dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f))
+                            .background(MaterialTheme.colorScheme.onSurfaceVariant)
                     )
                 }
             }
@@ -355,7 +331,7 @@ private fun QuickActionsRow(
         "Dicas de memorização",
         "Plano de estudos"
     )
-    
+
     LazyColumn(
         modifier = Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -368,7 +344,7 @@ private fun QuickActionsRow(
                 modifier = Modifier.padding(bottom = 4.dp)
             )
         }
-        
+
         items(quickActions.chunked(2)) { actionPair ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -381,8 +357,7 @@ private fun QuickActionsRow(
                         modifier = Modifier.weight(1f)
                     )
                 }
-                
-                // Fill remaining space if odd number
+
                 if (actionPair.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -419,7 +394,7 @@ private fun ChatInputArea(
                 shape = RoundedCornerShape(24.dp),
                 enabled = !isLoading
             )
-            
+
             FloatingActionButton(
                 onClick = onSendMessage,
                 modifier = Modifier.size(48.dp),
@@ -443,49 +418,48 @@ private fun ChatInputArea(
 }
 
 private fun simulateAIResponse(input: String, onResponse: (String) -> Unit) {
-    // Simulate AI processing delay
-    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
-        delay(1500L + (0L..1000L).random()) // 1.5-2.5 seconds
-        
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(1500L + (0L..1000L).random())
+
         val response = when {
             input.contains("flashcard", ignoreCase = true) -> {
                 "Ótima ideia! Para criar flashcards eficazes sobre esse tópico, sugiro:\n\n" +
-                "📚 Divida o conteúdo em conceitos pequenos\n" +
-                "❓ Use perguntas diretas na frente\n" +
-                "✨ Adicione exemplos na resposta\n" +
-                "🔄 Inclua conceitos relacionados\n\n" +
-                "Que tal começarmos? Sobre qual tópico específico você quer criar flashcards?"
+                        "📚 Divida o conteúdo em conceitos pequenos\n" +
+                        "❓ Use perguntas diretas na frente\n" +
+                        "✨ Adicione exemplos na resposta\n" +
+                        "🔄 Inclua conceitos relacionados\n\n" +
+                        "Que tal começarmos? Sobre qual tópico específico você quer criar flashcards?"
             }
-            
+
             input.contains("explicar", ignoreCase = true) || input.contains("conceito", ignoreCase = true) -> {
                 "Claro! Adoro explicar conceitos! 🧠\n\n" +
-                "Para te dar a melhor explicação possível, preciso de mais detalhes:\n\n" +
-                "• Qual é o conceito específico?\n" +
-                "• Qual seu nível atual de conhecimento?\n" +
-                "• Você prefere uma explicação mais teórica ou prática?\n\n" +
-                "Quanto mais específico você for, melhor posso te ajudar!"
+                        "Para te dar a melhor explicação possível, preciso de mais detalhes:\n\n" +
+                        "• Qual é o conceito específico?\n" +
+                        "• Qual seu nível atual de conhecimento?\n" +
+                        "• Você prefere uma explicação mais teórica ou prática?\n\n" +
+                        "Quanto mais específico você for, melhor posso te ajudar!"
             }
-            
+
             input.contains("memorização", ignoreCase = true) || input.contains("dicas", ignoreCase = true) -> {
                 "Aqui estão algumas técnicas poderosas de memorização! 🧠💡\n\n" +
-                "🔄 **Repetição Espaçada**: Revise nos intervalos 1, 3, 7, 14 dias\n" +
-                "🖼️ **Técnica da Visualização**: Crie imagens mentais\n" +
-                "📖 **Método das Histórias**: Conecte informações em narrativas\n" +
-                "🏛️ **Palácio da Memória**: Associe a lugares conhecidos\n" +
-                "✍️ **Resumos Ativos**: Escreva com suas próprias palavras\n\n" +
-                "Qual dessas técnicas você gostaria de explorar mais?"
+                        "🔄 **Repetição Espaçada**: Revise nos intervalos 1, 3, 7, 14 dias\n" +
+                        "🖼️ **Técnica da Visualização**: Crie imagens mentais\n" +
+                        "📖 **Método das Histórias**: Conecte informações em narrativas\n" +
+                        "🏛️ **Palácio da Memória**: Associe a lugares conhecidos\n" +
+                        "✍️ **Resumos Ativos**: Escreva com suas próprias palavras\n\n" +
+                        "Qual dessas técnicas você gostaria de explorar mais?"
             }
-            
+
             input.contains("plano", ignoreCase = true) || input.contains("estudos", ignoreCase = true) -> {
                 "Vamos criar um plano de estudos personalizado! 📅✨\n\n" +
-                "Para montar o melhor plano para você, me conte:\n\n" +
-                "⏰ Quanto tempo você tem disponível por dia?\n" +
-                "📚 Quais matérias/tópicos quer focar?\n" +
-                "🎯 Qual é seu objetivo (prova, concurso, vestibular)?\n" +
-                "📈 Qual seu estilo de aprendizagem preferido?\n\n" +
-                "Com essas informações, posso criar um cronograma eficiente!"
+                        "Para montar o melhor plano para você, me conte:\n\n" +
+                        "⏰ Quanto tempo você tem disponível por dia?\n" +
+                        "📚 Quais matérias/tópicos quer focar?\n" +
+                        "🎯 Qual é seu objetivo (prova, concurso, vestibular)?\n" +
+                        "📈 Qual seu estilo de aprendizagem preferido?\n\n" +
+                        "Com essas informações, posso criar um cronograma eficiente!"
             }
-            
+
             else -> {
                 val responses = listOf(
                     "Interessante! Deixe-me pensar na melhor forma de te ajudar com isso... 🤔\n\nPoderia me dar mais detalhes sobre o que você precisa?",
@@ -496,7 +470,7 @@ private fun simulateAIResponse(input: String, onResponse: (String) -> Unit) {
                 responses.random()
             }
         }
-        
+
         onResponse(response)
     }
 }

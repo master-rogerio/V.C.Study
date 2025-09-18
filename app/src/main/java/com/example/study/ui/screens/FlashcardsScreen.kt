@@ -5,17 +5,21 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
@@ -50,7 +54,7 @@ fun FlashcardsScreen(
         } else {
             flashcards.filter { flashcard ->
                 flashcard.front.contains(searchQuery, ignoreCase = true) ||
-                flashcard.back.contains(searchQuery, ignoreCase = true)
+                        flashcard.back.contains(searchQuery, ignoreCase = true)
             }
         }
     }
@@ -83,14 +87,15 @@ fun FlashcardsScreen(
                 },
                 actions = {
                     if (flashcards.isNotEmpty()) {
+                        // BOTÃO CORRIGIDO PARA NAVEGAR PARA A TELA DE EXERCÍCIOS
                         IconButton(onClick = onNavigateToExercise) {
                             Icon(
                                 imageVector = Icons.Default.PlayArrow,
-                                contentDescription = "Iniciar exercício"
+                                contentDescription = "Iniciar Exercício"
                             )
                         }
                     }
-                    IconButton(onClick = { /* TODO: Configurações */ }) {
+                    IconButton(onClick = { /* TODO: Menu */ }) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
                             contentDescription = "Menu"
@@ -115,17 +120,15 @@ fun FlashcardsScreen(
                 .padding(paddingValues)
         ) {
             if (flashcards.isNotEmpty()) {
-                // Search bar
                 SearchBar(
                     query = searchQuery,
                     onQueryChange = { searchQuery = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
 
-                // Study progress
                 StudyProgressCard(
                     flashcards = flashcards,
-                    onStartStudy = onNavigateToExercise,
+                    onStartStudy = onNavigateToExercise, // Corrigido para usar navegação interna
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
@@ -134,7 +137,6 @@ fun FlashcardsScreen(
 
             if (filteredFlashcards.isEmpty()) {
                 if (flashcards.isEmpty()) {
-                    // No flashcards at all
                     StudyEmptyState(
                         title = "Nenhum flashcard criado",
                         subtitle = "Adicione flashcards para começar a estudar este deck",
@@ -146,7 +148,6 @@ fun FlashcardsScreen(
                             .padding(16.dp)
                     )
                 } else {
-                    // No flashcards match search
                     StudyEmptyState(
                         title = "Nenhum flashcard encontrado",
                         subtitle = "Tente ajustar sua busca ou criar um novo flashcard",
@@ -191,7 +192,6 @@ fun FlashcardsScreen(
         )
     }
 
-    // Quality Dialog
     showQualityDialog?.let { flashcard ->
         QualityDialog(
             flashcard = flashcard,
@@ -204,7 +204,6 @@ fun FlashcardsScreen(
         )
     }
 
-    // Delete Confirmation Dialog
     showDeleteDialog?.let { flashcard ->
         DeleteFlashcardDialog(
             onConfirm = {
@@ -254,8 +253,8 @@ private fun StudyProgressCard(
     onStartStudy: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dueFlashcards = flashcards.filter { 
-        it.nextReviewDate?.time ?: 0 <= System.currentTimeMillis() 
+    val dueFlashcards = flashcards.filter {
+        it.nextReviewDate?.time ?: 0 <= System.currentTimeMillis()
     }
     val progress = if (flashcards.isNotEmpty()) {
         (flashcards.size - dueFlashcards.size).toFloat() / flashcards.size
@@ -409,7 +408,7 @@ private fun FlashcardItem(
                 targetState = isFlipped,
                 transitionSpec = {
                     fadeIn(animationSpec = tween(300)) togetherWith
-                    fadeOut(animationSpec = tween(300))
+                            fadeOut(animationSpec = tween(300))
                 },
                 label = "flashcard_flip"
             ) { flipped ->
@@ -466,6 +465,8 @@ private fun FlashcardTypeChip(
 @Composable
 private fun FlashcardFront(flashcard: Flashcard) {
     Column {
+        flashcard.frontImageUrl?.let { AsyncImage(it, "Imagem da frente", modifier = Modifier.fillMaxWidth().height(150.dp).clip(RoundedCornerShape(12.dp))) }
+        flashcard.frontAudioUrl?.let { AudioPlayer(it) }
         when (flashcard.type) {
             FlashcardType.FRONT_BACK, FlashcardType.TEXT_INPUT -> {
                 Text(
@@ -495,6 +496,8 @@ private fun FlashcardFront(flashcard: Flashcard) {
 @Composable
 private fun FlashcardBack(flashcard: Flashcard) {
     Column {
+        flashcard.backImageUrl?.let { AsyncImage(it, "Imagem do verso", modifier = Modifier.fillMaxWidth().height(150.dp).clip(RoundedCornerShape(12.dp))) }
+        flashcard.backAudioUrl?.let { AudioPlayer(it) }
         when (flashcard.type) {
             FlashcardType.FRONT_BACK, FlashcardType.TEXT_INPUT -> {
                 Text(
@@ -578,7 +581,7 @@ private fun QualityDialog(
                 QualityButton(
                     text = "Difícil",
                     subtitle = "Lembrei com dificuldade",
-                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.error,
                     onClick = { onQualitySelected(2) }
                 )
                 QualityButton(
@@ -590,7 +593,7 @@ private fun QualityDialog(
                 QualityButton(
                     text = "Fácil",
                     subtitle = "Lembrei facilmente",
-                    color = SuccessColor.copy(alpha = 0.7f),
+                    color = SuccessColor,
                     onClick = { onQualitySelected(4) }
                 )
                 QualityButton(
@@ -623,8 +626,8 @@ private fun QualityButton(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = StudyShapes.buttonShape,
-        color = color.copy(alpha = 0.1f),
-        border = androidx.compose.foundation.BorderStroke(1.dp, color.copy(alpha = 0.3f))
+        color = color,
+        border = androidx.compose.foundation.BorderStroke(1.dp, color)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

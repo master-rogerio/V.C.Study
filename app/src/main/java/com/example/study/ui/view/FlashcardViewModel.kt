@@ -1,20 +1,28 @@
+<<<<<<< HEAD
 
 package com.example.study.ui.view // Certifique-se de que o pacote corresponde ao seu
+=======
+package com.example.study.ui.view
+>>>>>>> origin/UX_UI.v4-FINAL
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.study.data.*
+import com.example.study.network.ApiQuizQuestion
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
-
 class FlashcardViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: FlashcardRepository
+    private val deckRepository: DeckRepository
     private val userLocationDao: UserLocationDao
     private val favoriteLocationDao: FavoriteLocationDao
     private val flashcardDao: FlashcardDao
+<<<<<<< HEAD
     // 1. ADICIONE O REPOSITÓRIO DE SINCRONIZAÇÃO
     private val syncRepository: SyncRepository
 
@@ -187,20 +195,86 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
     private val favoriteLocationDao: FavoriteLocationDao
     private val flashcardDao: FlashcardDao
 
+=======
+    private val quizApiRepository: QuizApiRepository
+>>>>>>> origin/UX_UI.v4-FINAL
 
     val allFlashcardsByReview: Flow<List<Flashcard>>
     val allFlashcardsByCreation: Flow<List<Flashcard>>
     val dueFlashcards: Flow<List<Flashcard>>
 
+    private val _apiQuizQuestion = MutableStateFlow<Result<ApiQuizQuestion>?>(null)
+    val apiQuizQuestion: StateFlow<Result<ApiQuizQuestion>?> = _apiQuizQuestion
+
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _flashcardGenerationResult = MutableStateFlow<Result<Int>?>(null)
+    val flashcardGenerationResult: StateFlow<Result<Int>?> = _flashcardGenerationResult
+
+    fun clearFlashcardGenerationResult() {
+        _flashcardGenerationResult.value = null
+    }
+
     init {
         val database = FlashcardDatabase.getDatabase(application)
         flashcardDao = database.flashcardDao()
+        val deckDao = database.deckDao()
+        deckRepository = DeckRepository(deckDao)
         userLocationDao = database.userLocationDao()
         favoriteLocationDao = database.favoriteLocationDao()
         repository = FlashcardRepository(flashcardDao)
+        quizApiRepository = QuizApiRepository()
         allFlashcardsByReview = repository.allFlashcardsByReview
         allFlashcardsByCreation = repository.allFlashcardsByCreation
         dueFlashcards = repository.getDueFlashcards()
+    }
+
+    fun generateAiQuestion(theme: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _apiQuizQuestion.value = null
+            val result = quizApiRepository.generateQuizQuestion(theme)
+            _apiQuizQuestion.value = result
+            _isLoading.value = false
+        }
+    }
+
+    // ATUALIZAÇÃO: A função agora aceita um FlashcardType
+    fun generateAndSaveFlashcards(topic: String, deckName: String, type: FlashcardType) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _flashcardGenerationResult.value = null
+            // A escolha do tipo é passada para o repositório
+            val generationResult = quizApiRepository.generateFlashcards(topic, type)
+
+            generationResult.onSuccess { response ->
+                var deck = deckRepository.getDeckByName(deckName.trim())
+                if (deck == null) {
+                    val newDeck = Deck(name = deckName.trim(), theme = topic)
+                    val newDeckId = deckRepository.insert(newDeck)
+                    deck = Deck(id = newDeckId, name = newDeck.name, theme = newDeck.theme)
+                }
+
+                // A lógica agora cria o tipo correto de flashcard
+                val flashcardsToSave = response.flashcards.map { generated ->
+                    Flashcard(
+                        deckId = deck.id,
+                        front = generated.front,
+                        back = generated.back ?: "", // Usa o verso se existir, senão usa uma string vazia
+                        type = type, // Guarda o tipo correto
+                        options = generated.options,
+                        correctOptionIndex = generated.correctOptionIndex
+                    )
+                }
+
+                flashcardsToSave.forEach { repository.insert(it) }
+                _flashcardGenerationResult.value = Result.success(flashcardsToSave.size)
+            }.onFailure { error ->
+                _flashcardGenerationResult.value = Result.failure(error)
+            }
+            _isLoading.value = false
+        }
     }
 
     fun getFlashcardsForDeckByReview(deckId: Long): Flow<List<Flashcard>> {
@@ -323,6 +397,7 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
             else -> (oldInterval * easeFactor).toInt()
         }
     }
+<<<<<<< HEAD
 }
 
 
@@ -457,3 +532,6 @@ class FlashcardViewModel(application: Application) : AndroidViewModel(applicatio
 }
 
  */
+=======
+}
+>>>>>>> origin/UX_UI.v4-FINAL

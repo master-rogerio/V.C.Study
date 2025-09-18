@@ -1,9 +1,8 @@
 package com.example.study.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -104,7 +103,7 @@ fun PlaceholderExerciseScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Voltar"
                         )
                     }
@@ -171,131 +170,52 @@ fun PlaceholderResultsScreen(
     onRetryExercise: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val percentage = (score.toFloat() / total * 100).toInt()
+    val percentage = if (total > 0) (score.toFloat() / total * 100).toInt() else 0
     val isGoodScore = percentage >= 70
-    
+
     Scaffold(
         modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Resultado",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            )
-        }
+        topBar = { TopAppBar(title = { Text("Resultado", fontWeight = FontWeight.Bold) }) }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(32.dp),
+            modifier = Modifier.fillMaxSize().padding(paddingValues).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Icon(
-                imageVector = if (isGoodScore) Icons.Default.CheckCircle else Icons.Default.Info,
+                imageVector = if (isGoodScore) Icons.Default.EmojiEvents else Icons.Default.Info,
                 contentDescription = null,
                 modifier = Modifier.size(80.dp),
                 tint = if (isGoodScore) SuccessColor else WarningColor
             )
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Text(
-                text = if (isGoodScore) "Parabéns!" else "Continue praticando!",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = "Você acertou $score de $total questões",
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            StudyCard {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    // Score circle
-                    Box(
-                        modifier = Modifier
-                            .size(120.dp)
-                            .background(
-                                color = if (isGoodScore) SuccessColor.copy(alpha = 0.1f) else WarningColor.copy(alpha = 0.1f),
-                                shape = CircleShape
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "$percentage%",
-                                style = MaterialTheme.typography.headlineLarge,
-                                fontWeight = FontWeight.Bold,
-                                color = if (isGoodScore) SuccessColor else WarningColor
-                            )
-                            Text(
-                                text = "$score/$total",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    Text(
-                        text = "Aproveitamento",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    StudyProgressBar(
-                        progress = score.toFloat() / total,
-                        showPercentage = false
-                    )
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(32.dp))
-            
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            Spacer(Modifier.height(16.dp))
+            Text(if (isGoodScore) "Parabéns!" else "Continue praticando!", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(8.dp))
+            Text("Você acertou $score de $total questões", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(24.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 StudyButton(
                     onClick = onRetryExercise,
                     text = "Tentar Novamente",
                     icon = Icons.Default.Refresh,
-                    variant = ButtonVariant.Secondary,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 StudyButton(
                     onClick = onNavigateToDecks,
-                    text = "Meus Decks",
+                    text = "Ver Meus Decks",
                     icon = Icons.Default.Book,
-                    modifier = Modifier.weight(1f)
+                    variant = ButtonVariant.Secondary,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
+
+            Spacer(Modifier.height(16.dp))
+
             StudyButton(
                 onClick = onNavigateToHome,
                 text = "Voltar ao Início",

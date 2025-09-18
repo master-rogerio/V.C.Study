@@ -45,4 +45,7 @@ interface FlashcardDao {
 
     @Query("DELETE FROM flashcards WHERE deckId = :deckId")
     suspend fun deleteAllForDeck(deckId: Long)
+
+    @Query("SELECT COUNT(*) FROM flashcards")
+    fun getFlashcardCount():Flow<Int>
 }

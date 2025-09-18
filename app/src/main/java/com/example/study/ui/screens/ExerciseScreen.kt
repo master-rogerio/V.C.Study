@@ -1,22 +1,25 @@
 package com.example.study.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
-import com.example.study.ui.theme.*
+import com.example.study.ui.theme.SuccessColor
 import com.example.study.ui.view.FlashcardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,23 +34,18 @@ fun ExerciseScreen(
 ) {
     val flashcards by viewModel.getFlashcardsForDeckByCreation(deckId).collectAsState(initial = emptyList())
     val dueFlashcards = remember(flashcards) {
-        // For exercise mode, we want to include flashcards that need review
-        // Priority: new cards (null date) or cards due for review
         val currentTime = System.currentTimeMillis()
         val filtered = flashcards.filter { flashcard ->
-            flashcard.nextReviewDate == null || 
-            flashcard.nextReviewDate.time <= currentTime
+            flashcard.nextReviewDate == null ||
+                    flashcard.nextReviewDate.time <= currentTime
         }
-        
-        // If no cards are due, but we have flashcards, include all for practice
-        // This ensures users can always practice, even if technically "not due"
         if (filtered.isEmpty() && flashcards.isNotEmpty()) {
             flashcards
         } else {
             filtered
         }
     }
-    
+
     var currentIndex by remember { mutableIntStateOf(0) }
     var score by remember { mutableIntStateOf(0) }
     var isShowingAnswer by remember { mutableStateOf(false) }
@@ -60,8 +58,25 @@ fun ExerciseScreen(
         dueFlashcards[currentIndex]
     } else null
 
-    // Don't automatically complete if no due flashcards - let user see the empty state
-    // exerciseCompleted will be set when user actually completes all cards
+    // Função centralizada para processar a resposta e avançar
+    fun handleNextCard(flashcard: Flashcard, quality: Int, isCorrect: Boolean) {
+        if (isCorrect) score++
+
+        val updatedFlashcard = viewModel.calculateNextReview(flashcard, quality)
+        viewModel.update(updatedFlashcard)
+
+        if (currentIndex < dueFlashcards.size - 1) {
+            currentIndex++
+            resetForNextCard(
+                onResetAnswer = { userAnswer = "" },
+                onResetOption = { selectedOption = -1 },
+                onResetShowAnswer = { isShowingAnswer = false },
+                onResetQualityButtons = { showQualityButtons = false }
+            )
+        } else {
+            exerciseCompleted = true
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -90,11 +105,13 @@ fun ExerciseScreen(
                     }
                 },
                 actions = {
-                    Text(
-                        text = "${currentIndex + 1}/${dueFlashcards.size}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(end = 16.dp)
-                    )
+                    if (dueFlashcards.isNotEmpty() && currentFlashcard != null) {
+                        Text(
+                            text = "${currentIndex + 1}/${dueFlashcards.size}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(end = 16.dp)
+                        )
+                    }
                 }
             )
         }
@@ -112,7 +129,7 @@ fun ExerciseScreen(
                         onNavigateToResults = { onNavigateToResults(score, dueFlashcards.size) }
                     )
                 }
-                
+
                 currentFlashcard != null -> {
                     Column(
                         modifier = Modifier
@@ -120,13 +137,11 @@ fun ExerciseScreen(
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        // Progress bar
                         StudyProgressBar(
                             progress = (currentIndex + 1).toFloat() / dueFlashcards.size,
                             showPercentage = false
                         )
 
-                        // Flashcard content
                         FlashcardExerciseContent(
                             flashcard = currentFlashcard,
                             isShowingAnswer = isShowingAnswer,
@@ -135,13 +150,19 @@ fun ExerciseScreen(
                             selectedOption = selectedOption,
                             onOptionSelected = { selectedOption = it },
                             showQualityButtons = showQualityButtons,
-                            onRevealAnswer = { 
+                            onRevealAnswer = {
                                 isShowingAnswer = true
+                                // Mostra botões de qualidade apenas para o tipo FRENTE/VERSO
                                 showQualityButtons = currentFlashcard.type == FlashcardType.FRONT_BACK
                             },
                             onQualitySelected = { quality ->
+                                // Chamado apenas pelos botões de qualidade (FRENTE/VERSO)
+                                val isCorrect = quality >= 3
+                                handleNextCard(currentFlashcard, quality, isCorrect)
+                            },
+                            onContinue = {
+                                // Chamado pelo botão "Continuar" para outros tipos de card
                                 val isCorrect = when (currentFlashcard.type) {
-                                    FlashcardType.FRONT_BACK -> quality >= 3
                                     FlashcardType.TEXT_INPUT -> {
                                         userAnswer.trim().equals(currentFlashcard.back.trim(), ignoreCase = true)
                                     }
@@ -151,32 +172,17 @@ fun ExerciseScreen(
                                     FlashcardType.CLOZE -> {
                                         userAnswer.trim().equals(currentFlashcard.clozeAnswer?.trim() ?: "", ignoreCase = true)
                                     }
+                                    else -> false // Não deve acontecer
                                 }
-                                
-                                if (isCorrect) score++
-                                
-                                // Update spaced repetition
-                                val updatedFlashcard = viewModel.calculateNextReview(currentFlashcard, quality)
-                                viewModel.update(updatedFlashcard)
-                                
-                                // Move to next flashcard
-                                if (currentIndex < dueFlashcards.size - 1) {
-                                    currentIndex++
-                                    resetForNextCard(
-                                        onResetAnswer = { userAnswer = "" },
-                                        onResetOption = { selectedOption = -1 },
-                                        onResetShowAnswer = { isShowingAnswer = false },
-                                        onResetQualityButtons = { showQualityButtons = false }
-                                    )
-                                } else {
-                                    exerciseCompleted = true
-                                }
+                                // Qualidade automática: 4 (Fácil) se acertou, 1 (Muito Difícil) se errou.
+                                val quality = if (isCorrect) 4 else 1
+                                handleNextCard(currentFlashcard, quality, isCorrect)
                             },
                             modifier = Modifier.weight(1f)
                         )
                     }
                 }
-                
+
                 else -> {
                     StudyEmptyState(
                         title = "Nenhum flashcard para revisar",
@@ -201,211 +207,101 @@ private fun FlashcardExerciseContent(
     showQualityButtons: Boolean,
     onRevealAnswer: () -> Unit,
     onQualitySelected: (Int) -> Unit,
+    onContinue: () -> Unit, // Novo callback
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        modifier = modifier.verticalScroll(rememberScrollState()), // Adicionado para evitar overflow
+        verticalArrangement = Arrangement.spacedBy(16.dp) // Reduzido para melhor encaixe
     ) {
-        // Question Card
         StudyCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(24.dp)
+                modifier = Modifier.padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                FlashcardTypeChip(
-                    type = flashcard.type,
-                    modifier = Modifier.align(Alignment.Start)
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                Text(
-                    text = when (flashcard.type) {
-                        FlashcardType.CLOZE -> flashcard.clozeText?.replace("___", "______") ?: flashcard.front
-                        else -> flashcard.front
-                    },
-                    style = MaterialTheme.typography.headlineSmall,
-                    textAlign = TextAlign.Start
-                )
+                StudyChip(text = flashcard.type.name, selected = false)
+                flashcard.frontImageUrl?.let { AsyncImage(it, "Imagem da pergunta", modifier = Modifier.fillMaxWidth().height(150.dp).clip(RoundedCornerShape(12.dp))) }
+                flashcard.frontAudioUrl?.let { AudioPlayer(it) }
+                Text(when (flashcard.type) {
+                    FlashcardType.CLOZE -> flashcard.clozeText?.replace("___", "______") ?: flashcard.front
+                    else -> flashcard.front
+                }, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Start)
             }
         }
 
-        // Answer Section
+        // Renderiza os inputs e botões de acordo com o tipo
         when (flashcard.type) {
             FlashcardType.FRONT_BACK -> {
                 if (!isShowingAnswer) {
-                    StudyButton(
-                        onClick = onRevealAnswer,
-                        text = "Revelar Resposta",
-                        icon = Icons.Default.Visibility,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    StudyButton(onRevealAnswer, text = "Revelar Resposta", icon = Icons.Default.Visibility, modifier = Modifier.fillMaxWidth())
                 } else {
-                    AnswerCard(
-                        answer = flashcard.back,
-                        isCorrect = null
-                    )
+                    AnswerCard(flashcard.back, null, flashcard.backImageUrl, flashcard.backAudioUrl)
                 }
             }
-            
-            FlashcardType.TEXT_INPUT -> {
+            FlashcardType.TEXT_INPUT, FlashcardType.CLOZE -> {
                 OutlinedTextField(
                     value = userAnswer,
                     onValueChange = onUserAnswerChange,
                     label = { Text("Digite sua resposta") },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = false,
-                    maxLines = 3
+                    readOnly = isShowingAnswer
                 )
-                
                 if (!isShowingAnswer) {
-                    StudyButton(
-                        onClick = onRevealAnswer,
-                        text = "Verificar Resposta",
-                        icon = Icons.Default.Check,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
                 } else {
-                    val isCorrect = userAnswer.trim().equals(flashcard.back.trim(), ignoreCase = true)
-                    AnswerCard(
-                        answer = flashcard.back,
-                        isCorrect = isCorrect
-                    )
+                    val expected = flashcard.clozeAnswer ?: flashcard.back
+                    AnswerCard(expected, userAnswer.trim().equals(expected.trim(), ignoreCase = true), flashcard.backImageUrl, flashcard.backAudioUrl)
                 }
             }
-            
             FlashcardType.MULTIPLE_CHOICE -> {
                 flashcard.options?.forEachIndexed { index, option ->
-                    OptionCard(
-                        option = option,
-                        isSelected = selectedOption == index,
-                        isCorrect = if (isShowingAnswer) index == flashcard.correctOptionIndex else null,
-                        onClick = { 
-                            if (!isShowingAnswer) {
-                                onOptionSelected(index)
-                            }
-                        }
-                    )
+                    OptionCard(option, selectedOption == index, if (isShowingAnswer) index == flashcard.correctOptionIndex else null, onClick = { if (!isShowingAnswer) onOptionSelected(index) })
                 }
-                
                 if (selectedOption != -1 && !isShowingAnswer) {
-                    StudyButton(
-                        onClick = onRevealAnswer,
-                        text = "Verificar Resposta",
-                        icon = Icons.Default.Check,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-            
-            FlashcardType.CLOZE -> {
-                OutlinedTextField(
-                    value = userAnswer,
-                    onValueChange = onUserAnswerChange,
-                    label = { Text("Complete a lacuna") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-                
-                if (!isShowingAnswer) {
-                    StudyButton(
-                        onClick = onRevealAnswer,
-                        text = "Verificar Resposta",
-                        icon = Icons.Default.Check,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                } else {
-                    val isCorrect = userAnswer.trim().equals(flashcard.clozeAnswer?.trim() ?: "", ignoreCase = true)
-                    AnswerCard(
-                        answer = flashcard.clozeAnswer ?: "Resposta não definida",
-                        isCorrect = isCorrect
-                    )
+                    StudyButton(onRevealAnswer, text = "Verificar Resposta", icon = Icons.Default.Check, modifier = Modifier.fillMaxWidth())
                 }
             }
         }
 
-        // Quality Buttons (for spaced repetition)
-        if (showQualityButtons || (isShowingAnswer && flashcard.type != FlashcardType.FRONT_BACK)) {
+        Spacer(modifier = Modifier.weight(1f)) // Empurra os botões para baixo
+
+        // Mostra botões de qualidade APENAS para FRENTE/VERSO
+        if (showQualityButtons) {
             QualityButtons(
                 onQualitySelected = onQualitySelected,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        // Mostra botão "Continuar" para os OUTROS tipos após a resposta ser revelada
+        if (isShowingAnswer && flashcard.type != FlashcardType.FRONT_BACK) {
+            StudyButton(
+                onClick = onContinue,
+                text = "Continuar",
+                icon = Icons.Default.ArrowForward,
                 modifier = Modifier.fillMaxWidth()
             )
         }
     }
 }
 
+
 @Composable
-private fun AnswerCard(
-    answer: String,
-    isCorrect: Boolean?,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = when (isCorrect) {
-                true -> MaterialTheme.colorScheme.primaryContainer
-                false -> MaterialTheme.colorScheme.errorContainer
-                null -> MaterialTheme.colorScheme.surfaceVariant
-            }
-        ),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (isCorrect != null) {
-                Surface(
-                    modifier = Modifier.size(32.dp),
-                    shape = CircleShape,
-                    color = when (isCorrect) {
-                        true -> MaterialTheme.colorScheme.primary
-                        false -> MaterialTheme.colorScheme.error
-                    }
-                ) {
-                    Icon(
-                        imageVector = if (isCorrect) Icons.Default.Check else Icons.Default.Close,
-                        contentDescription = null,
-                        tint = when (isCorrect) {
-                            true -> MaterialTheme.colorScheme.onPrimary
-                            false -> MaterialTheme.colorScheme.onError
-                        },
-                        modifier = Modifier.padding(6.dp)
-                    )
+private fun AnswerCard(answer: String, isCorrect: Boolean?, imageUrl: String?, audioUrl: String?, modifier: Modifier = Modifier) {
+    Card(modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = when (isCorrect) { true -> MaterialTheme.colorScheme.primaryContainer; false -> MaterialTheme.colorScheme.errorContainer; null -> MaterialTheme.colorScheme.surfaceVariant })) {
+        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (isCorrect != null) {
+                    Icon(if (isCorrect) Icons.Default.Check else Icons.Default.Close, null, tint = if (isCorrect) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error)
+                    Spacer(Modifier.width(8.dp))
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Text(when (isCorrect) { true -> "Correto!"; false -> "Incorreto"; null -> "Resposta:" }, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold)
             }
-            
-            Column {
-                Text(
-                    text = when (isCorrect) {
-                        true -> "Correto!"
-                        false -> "Incorreto"
-                        null -> "Resposta:"
-                    },
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = when (isCorrect) {
-                        true -> MaterialTheme.colorScheme.primary
-                        false -> MaterialTheme.colorScheme.error
-                        null -> MaterialTheme.colorScheme.onSurfaceVariant
-                    }
-                )
-                
-                Spacer(modifier = Modifier.height(4.dp))
-                
-                Text(
-                    text = answer,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
+            imageUrl?.let { AsyncImage(it, "Imagem da resposta", modifier = Modifier.fillMaxWidth().height(150.dp).clip(RoundedCornerShape(12.dp))) }
+            audioUrl?.let { AudioPlayer(it) }
+            Text(answer, style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
@@ -423,8 +319,8 @@ private fun OptionCard(
         modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = when {
-                isCorrect == true -> SuccessColor.copy(alpha = 0.2f)
-                isCorrect == false && isSelected -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                isCorrect == true -> SuccessColor
+                isCorrect == false && isSelected -> MaterialTheme.colorScheme.errorContainer
                 isSelected -> MaterialTheme.colorScheme.primaryContainer
                 else -> MaterialTheme.colorScheme.surface
             }
@@ -451,9 +347,9 @@ private fun OptionCard(
                     else -> MaterialTheme.colorScheme.onSurfaceVariant
                 }
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Text(
                 text = option,
                 style = MaterialTheme.typography.bodyLarge
@@ -469,14 +365,13 @@ private fun QualityButtons(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier
+                .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
@@ -485,15 +380,15 @@ private fun QualityButtons(
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             val qualities = listOf(
                 1 to Pair("Muito Difícil", "😰"),
-                2 to Pair("Difícil", "😅"), 
+                2 to Pair("Difícil", "😅"),
                 3 to Pair("Normal", "😐"),
                 4 to Pair("Fácil", "😊"),
                 5 to Pair("Muito Fácil", "😎")
             )
-            
+
             qualities.forEach { (quality, textEmoji) ->
                 QualityButton(
                     text = textEmoji.first,
@@ -519,14 +414,14 @@ private fun QualityButton(
         4, 5 -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.primaryContainer
     }
-    
+
     val contentColor = when (quality) {
         1, 2 -> MaterialTheme.colorScheme.onErrorContainer
         3 -> MaterialTheme.colorScheme.onTertiaryContainer
         4, 5 -> MaterialTheme.colorScheme.onPrimaryContainer
         else -> MaterialTheme.colorScheme.onPrimaryContainer
     }
-    
+
     Surface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
@@ -543,7 +438,7 @@ private fun QualityButton(
                 text = emoji,
                 style = MaterialTheme.typography.titleLarge
             )
-            
+
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
@@ -551,11 +446,11 @@ private fun QualityButton(
                 color = contentColor,
                 modifier = Modifier.weight(1f)
             )
-            
+
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = null,
-                tint = contentColor.copy(alpha = 0.7f),
+                tint = contentColor,
                 modifier = Modifier.size(20.dp)
             )
         }
@@ -581,27 +476,27 @@ private fun ExerciseCompletedScreen(
             modifier = Modifier.size(80.dp),
             tint = MaterialTheme.colorScheme.primary
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         Text(
             text = "Exercício Concluído!",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = "Você completou todas as revisões pendentes.",
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         StudyButton(
             onClick = onNavigateToResults,
             text = "Ver Resultados",
@@ -623,22 +518,22 @@ private fun resetForNextCard(
     onResetQualityButtons()
 }
 
-@Composable
-private fun FlashcardTypeChip(
-    type: FlashcardType,
-    modifier: Modifier = Modifier
-) {
-    val (text, icon) = when (type) {
-        FlashcardType.FRONT_BACK -> "Frente/Verso" to Icons.Default.FlipToFront
-        FlashcardType.CLOZE -> "Lacuna" to Icons.Default.TextFormat
-        FlashcardType.TEXT_INPUT -> "Digitação" to Icons.Default.Edit
-        FlashcardType.MULTIPLE_CHOICE -> "Múltipla Escolha" to Icons.Default.CheckCircle
-    }
-
-    StudyChip(
-        text = text,
-        leadingIcon = icon,
-        selected = false,
-        modifier = modifier
-    )
-}
+//@Composable
+//fun FlashcardTypeChip(
+//    type: FlashcardType,
+//    modifier: Modifier = Modifier
+//) {
+//    val (text, icon) = when (type) {
+//        FlashcardType.FRONT_BACK -> "Frente/Verso" to Icons.Default.FlipToFront
+//        FlashcardType.CLOZE -> "Lacuna" to Icons.Default.TextFormat
+//        FlashcardType.TEXT_INPUT -> "Digitação" to Icons.Default.Edit
+//        FlashcardType.MULTIPLE_CHOICE -> "Múltipla Escolha" to Icons.Default.CheckCircle
+//    }
+//
+//    StudyChip(
+//        text = text,
+//        leadingIcon = icon,
+//        selected = false,
+//        modifier = modifier
+//    )
+//}

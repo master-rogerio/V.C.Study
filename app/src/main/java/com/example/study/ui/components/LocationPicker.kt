@@ -228,7 +228,7 @@ fun LocationPickerDialog(
                     // Instructions
                     Card(
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
                         )
                     ) {
                         Column(
