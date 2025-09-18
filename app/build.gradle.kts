@@ -129,7 +129,6 @@ dependencies {
     implementation("androidx.compose.animation:animation-graphics")
 
 
-
     // Integração do Compose com Activities e ViewModels
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
@@ -181,6 +180,8 @@ dependencies {
     // Multimídia
     implementation("io.coil-kt:coil-compose:2.6.0") // Versão atualizada
     implementation("androidx.media3:media3-exoplayer:1.3.1") // Versão atualizada
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
 
     // Location
     implementation("com.google.android.gms:play-services-location:21.2.0")

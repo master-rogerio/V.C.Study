@@ -33,10 +33,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Solicitar permissões necessárias
+        // Solicita permissões necessárias
         requestPermissions()
 
-        // Processar extras da notificação/geofencing
+        // Processa extras da notificação/geofencing
         val locationId = intent.getStringExtra("locationId")
         val preferredCardTypes = intent.getStringArrayExtra("preferredCardTypes")
         val intelligentRotation = intent.getBooleanExtra("intelligentRotation", false)
@@ -103,11 +103,34 @@ class MainActivity : ComponentActivity() {
             permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
         }
         
-        // Verificar e solicitar permissão de notificação (Android 13+)
+        // Verifica e solicita permissão de notificação (Android 13+)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) 
                 != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        // PERMISSÕES PARA MÍDIA
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ - Permissões granulares
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_MEDIA_AUDIO)
+            }
+        } else {
+            // Android 12 e abaixo - Permissões tradicionais
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
         
