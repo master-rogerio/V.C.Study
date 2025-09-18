@@ -535,7 +535,7 @@ private fun IntelligentRotationBanner(
                 ) {
                     preferredCardTypes.forEach { cardType ->
                         StudyChip(
-                            text = cardType,
+                            text = getFriendlyCardTypeName(cardType),
                             selected = true,
                             modifier = Modifier
                         )
@@ -543,5 +543,16 @@ private fun IntelligentRotationBanner(
                 }
             }
         }
+    }
+}
+
+// Função para converter nomes internos de tipos de cards para nomes amigáveis
+private fun getFriendlyCardTypeName(cardType: String): String {
+    return when (cardType) {
+        "FRONT_BACK" -> "Frente e Verso"
+        "MULTIPLE_CHOICE" -> "Múltipla Escolha"
+        "CLOZE" -> "Cloze (Omissão)"
+        "TEXT_INPUT" -> "Digite a Resposta"
+        else -> cardType // Fallback para o nome original se não reconhecer
     }
 }
