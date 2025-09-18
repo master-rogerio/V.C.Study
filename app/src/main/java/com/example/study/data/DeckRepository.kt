@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 class DeckRepository(private val deckDao: DeckDao) {
     val allDecks: Flow<List<Deck>> = deckDao.getAllDecks()
 
-    suspend fun getDeckById(id: Long): Deck? {
+    fun getDeckById(id: Long): Flow<Deck?> { // Não é mais 'suspend'
         return deckDao.getDeckById(id)
     }
 

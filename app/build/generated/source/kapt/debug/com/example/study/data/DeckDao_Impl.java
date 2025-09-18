@@ -46,7 +46,7 @@ public final class DeckDao_Impl implements DeckDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR IGNORE INTO `decks` (`id`,`name`,`theme`,`createdAt`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR REPLACE INTO `decks` (`id`,`name`,`theme`,`createdAt`,`firebaseId`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -64,6 +64,11 @@ public final class DeckDao_Impl implements DeckDao {
           statement.bindString(3, entity.getTheme());
         }
         statement.bindLong(4, entity.getCreatedAt());
+        if (entity.getFirebaseId() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getFirebaseId());
+        }
       }
     };
     this.__deletionAdapterOfDeck = new EntityDeletionOrUpdateAdapter<Deck>(__db) {
@@ -83,7 +88,7 @@ public final class DeckDao_Impl implements DeckDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `decks` SET `id` = ?,`name` = ?,`theme` = ?,`createdAt` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `decks` SET `id` = ?,`name` = ?,`theme` = ?,`createdAt` = ?,`firebaseId` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -101,7 +106,12 @@ public final class DeckDao_Impl implements DeckDao {
           statement.bindString(3, entity.getTheme());
         }
         statement.bindLong(4, entity.getCreatedAt());
-        statement.bindLong(5, entity.getId());
+        if (entity.getFirebaseId() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getFirebaseId());
+        }
+        statement.bindLong(6, entity.getId());
       }
     };
   }
@@ -162,7 +172,7 @@ public final class DeckDao_Impl implements DeckDao {
 
   @Override
   public Flow<List<Deck>> getAllDecks() {
-    final String _sql = "SELECT `decks`.`id` AS `id`, `decks`.`name` AS `name`, `decks`.`theme` AS `theme`, `decks`.`createdAt` AS `createdAt` FROM decks ORDER BY createdAt DESC";
+    final String _sql = "SELECT `decks`.`id` AS `id`, `decks`.`name` AS `name`, `decks`.`theme` AS `theme`, `decks`.`createdAt` AS `createdAt`, `decks`.`firebaseId` AS `firebaseId` FROM decks ORDER BY createdAt DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[] {"decks"}, new Callable<List<Deck>>() {
       @Override
@@ -174,6 +184,7 @@ public final class DeckDao_Impl implements DeckDao {
           final int _cursorIndexOfName = 1;
           final int _cursorIndexOfTheme = 2;
           final int _cursorIndexOfCreatedAt = 3;
+          final int _cursorIndexOfFirebaseId = 4;
           final List<Deck> _result = new ArrayList<Deck>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final Deck _item;
@@ -193,7 +204,13 @@ public final class DeckDao_Impl implements DeckDao {
             }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _item = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt);
+            final String _tmpFirebaseId;
+            if (_cursor.isNull(_cursorIndexOfFirebaseId)) {
+              _tmpFirebaseId = null;
+            } else {
+              _tmpFirebaseId = _cursor.getString(_cursorIndexOfFirebaseId);
+            }
+            _item = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt,_tmpFirebaseId);
             _result.add(_item);
           }
           return _result;
@@ -210,13 +227,12 @@ public final class DeckDao_Impl implements DeckDao {
   }
 
   @Override
-  public Object getDeckById(final long id, final Continuation<? super Deck> $completion) {
+  public Flow<Deck> getDeckById(final long id) {
     final String _sql = "SELECT * FROM decks WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, id);
-    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
-    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Deck>() {
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"decks"}, new Callable<Deck>() {
       @Override
       @Nullable
       public Deck call() throws Exception {
@@ -226,6 +242,7 @@ public final class DeckDao_Impl implements DeckDao {
           final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
           final int _cursorIndexOfTheme = CursorUtil.getColumnIndexOrThrow(_cursor, "theme");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfFirebaseId = CursorUtil.getColumnIndexOrThrow(_cursor, "firebaseId");
           final Deck _result;
           if (_cursor.moveToFirst()) {
             final long _tmpId;
@@ -244,7 +261,77 @@ public final class DeckDao_Impl implements DeckDao {
             }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
-            _result = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt);
+            final String _tmpFirebaseId;
+            if (_cursor.isNull(_cursorIndexOfFirebaseId)) {
+              _tmpFirebaseId = null;
+            } else {
+              _tmpFirebaseId = _cursor.getString(_cursorIndexOfFirebaseId);
+            }
+            _result = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt,_tmpFirebaseId);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public Object getDeckByFirebaseId(final String firebaseId,
+      final Continuation<? super Deck> $completion) {
+    final String _sql = "SELECT * FROM decks WHERE firebaseId = ? LIMIT 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (firebaseId == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, firebaseId);
+    }
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Deck>() {
+      @Override
+      @Nullable
+      public Deck call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfTheme = CursorUtil.getColumnIndexOrThrow(_cursor, "theme");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfFirebaseId = CursorUtil.getColumnIndexOrThrow(_cursor, "firebaseId");
+          final Deck _result;
+          if (_cursor.moveToFirst()) {
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final String _tmpName;
+            if (_cursor.isNull(_cursorIndexOfName)) {
+              _tmpName = null;
+            } else {
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+            }
+            final String _tmpTheme;
+            if (_cursor.isNull(_cursorIndexOfTheme)) {
+              _tmpTheme = null;
+            } else {
+              _tmpTheme = _cursor.getString(_cursorIndexOfTheme);
+            }
+            final long _tmpCreatedAt;
+            _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
+            final String _tmpFirebaseId;
+            if (_cursor.isNull(_cursorIndexOfFirebaseId)) {
+              _tmpFirebaseId = null;
+            } else {
+              _tmpFirebaseId = _cursor.getString(_cursorIndexOfFirebaseId);
+            }
+            _result = new Deck(_tmpId,_tmpName,_tmpTheme,_tmpCreatedAt,_tmpFirebaseId);
           } else {
             _result = null;
           }

@@ -14,7 +14,7 @@ interface DeckDao {
     fun getAllDecks(): Flow<List<Deck>>
 
     @Query("SELECT * FROM decks WHERE id = :id")
-    suspend fun getDeckById(id: Long): Deck?
+    fun getDeckById(id: Long): Flow<Deck?>
 
     // ADICIONE ESTA NOVA FUNÇÃO AQUI
     @Query("SELECT * FROM decks WHERE firebaseId = :firebaseId LIMIT 1")

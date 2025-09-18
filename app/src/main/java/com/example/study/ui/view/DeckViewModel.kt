@@ -85,9 +85,10 @@ class DeckViewModel(application: Application) : AndroidViewModel(application) {
         // TODO: Adicionar lógica de sincronização para delete (syncDeckDelete)
     }
 
-    fun getDeckById(id: Long) = viewModelScope.launch {
-        repository.getDeckById(id)
+    fun getDeckById(id: Long): Flow<Deck?> { // Não retorna mais um 'viewModelScope.launch'
+        return repository.getDeckById(id)
     }
+
 
     suspend fun getFlashcardCountForDeck(deckId: Long): Int {
         return repository.getFlashcardCountForDeck(deckId)

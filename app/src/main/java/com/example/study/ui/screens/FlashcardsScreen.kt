@@ -20,6 +20,7 @@ import com.example.study.data.Flashcard
 import com.example.study.data.FlashcardType
 import com.example.study.ui.components.*
 import com.example.study.ui.theme.*
+import com.example.study.ui.view.DeckViewModel
 import com.example.study.ui.view.FlashcardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +39,10 @@ fun FlashcardsScreen(
     var showDeleteDialog by remember { mutableStateOf<Flashcard?>(null) }
     var showQualityDialog by remember { mutableStateOf<Flashcard?>(null) }
     var searchQuery by remember { mutableStateOf("") }
+    val deckViewModel: DeckViewModel = viewModel()
+
+    val deck by deckViewModel.getDeckById(deckId).collectAsState(initial = null)
+
 
     val filteredFlashcards = remember(flashcards, searchQuery) {
         if (searchQuery.isBlank()) {
@@ -176,7 +181,9 @@ fun FlashcardsScreen(
                 if (flashcardToEdit != null) {
                     viewModel.update(flashcard)
                 } else {
-                    viewModel.insert(flashcard)
+                    // AGORA O CÓDIGO FUNCIONA!
+                    // 'deck' existe e não estará a vermelho.
+                    viewModel.insert(flashcard, deck?.firebaseId)
                 }
                 showAddFlashcardDialog = false
                 flashcardToEdit = null

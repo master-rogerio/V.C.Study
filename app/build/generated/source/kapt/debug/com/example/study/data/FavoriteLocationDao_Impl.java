@@ -461,6 +461,90 @@ public final class FavoriteLocationDao_Impl implements FavoriteLocationDao {
   }
 
   @Override
+  public Object getAllFavoriteLocationsSync(
+      final Continuation<? super List<FavoriteLocation>> $completion) {
+    final String _sql = "SELECT `favorite_locations`.`id` AS `id`, `favorite_locations`.`name` AS `name`, `favorite_locations`.`address` AS `address`, `favorite_locations`.`latitude` AS `latitude`, `favorite_locations`.`longitude` AS `longitude`, `favorite_locations`.`radius` AS `radius`, `favorite_locations`.`isGeofenceActive` AS `isGeofenceActive`, `favorite_locations`.`iconName` AS `iconName`, `favorite_locations`.`preferredCardTypes` AS `preferredCardTypes`, `favorite_locations`.`studySessionCount` AS `studySessionCount`, `favorite_locations`.`averagePerformance` AS `averagePerformance` FROM favorite_locations";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<FavoriteLocation>>() {
+      @Override
+      @NonNull
+      public List<FavoriteLocation> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = 0;
+          final int _cursorIndexOfName = 1;
+          final int _cursorIndexOfAddress = 2;
+          final int _cursorIndexOfLatitude = 3;
+          final int _cursorIndexOfLongitude = 4;
+          final int _cursorIndexOfRadius = 5;
+          final int _cursorIndexOfIsGeofenceActive = 6;
+          final int _cursorIndexOfIconName = 7;
+          final int _cursorIndexOfPreferredCardTypes = 8;
+          final int _cursorIndexOfStudySessionCount = 9;
+          final int _cursorIndexOfAveragePerformance = 10;
+          final List<FavoriteLocation> _result = new ArrayList<FavoriteLocation>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final FavoriteLocation _item;
+            final String _tmpId;
+            if (_cursor.isNull(_cursorIndexOfId)) {
+              _tmpId = null;
+            } else {
+              _tmpId = _cursor.getString(_cursorIndexOfId);
+            }
+            final String _tmpName;
+            if (_cursor.isNull(_cursorIndexOfName)) {
+              _tmpName = null;
+            } else {
+              _tmpName = _cursor.getString(_cursorIndexOfName);
+            }
+            final String _tmpAddress;
+            if (_cursor.isNull(_cursorIndexOfAddress)) {
+              _tmpAddress = null;
+            } else {
+              _tmpAddress = _cursor.getString(_cursorIndexOfAddress);
+            }
+            final double _tmpLatitude;
+            _tmpLatitude = _cursor.getDouble(_cursorIndexOfLatitude);
+            final double _tmpLongitude;
+            _tmpLongitude = _cursor.getDouble(_cursorIndexOfLongitude);
+            final int _tmpRadius;
+            _tmpRadius = _cursor.getInt(_cursorIndexOfRadius);
+            final boolean _tmpIsGeofenceActive;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsGeofenceActive);
+            _tmpIsGeofenceActive = _tmp != 0;
+            final String _tmpIconName;
+            if (_cursor.isNull(_cursorIndexOfIconName)) {
+              _tmpIconName = null;
+            } else {
+              _tmpIconName = _cursor.getString(_cursorIndexOfIconName);
+            }
+            final List<FlashcardType> _tmpPreferredCardTypes;
+            final String _tmp_1;
+            if (_cursor.isNull(_cursorIndexOfPreferredCardTypes)) {
+              _tmp_1 = null;
+            } else {
+              _tmp_1 = _cursor.getString(_cursorIndexOfPreferredCardTypes);
+            }
+            _tmpPreferredCardTypes = __converters.fromFlashcardTypeList(_tmp_1);
+            final int _tmpStudySessionCount;
+            _tmpStudySessionCount = _cursor.getInt(_cursorIndexOfStudySessionCount);
+            final double _tmpAveragePerformance;
+            _tmpAveragePerformance = _cursor.getDouble(_cursorIndexOfAveragePerformance);
+            _item = new FavoriteLocation(_tmpId,_tmpName,_tmpAddress,_tmpLatitude,_tmpLongitude,_tmpRadius,_tmpIsGeofenceActive,_tmpIconName,_tmpPreferredCardTypes,_tmpStudySessionCount,_tmpAveragePerformance);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
   public Object getFavoriteLocationById(final String id,
       final Continuation<? super FavoriteLocation> $completion) {
     final String _sql = "SELECT * FROM favorite_locations WHERE id = ?";

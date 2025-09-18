@@ -37,6 +37,11 @@
     <string name="error_saving_location">Erro ao salvar localização</string>
     <string name="flashcard_options">Opções do Flashcard</string>
     <string name="front_side">Frente</string>
+    <string name="gcm_defaultSenderId" translatable="false">44262275702</string>
+    <string name="google_api_key" translatable="false">AIzaSyCKkh_KBixV2tQZ00MiCvMHcWoPCmVaBf8</string>
+    <string name="google_app_id" translatable="false">1:44262275702:android:e3f7a0e21c43de8315fd57</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCKkh_KBixV2tQZ00MiCvMHcWoPCmVaBf8</string>
+    <string name="google_storage_bucket" translatable="false">vcstudy-5adb5.firebasestorage.app</string>
     <string name="location_coordinates">Lat: %1$.4f, Long: %2$.4f</string>
     <string name="location_deleted">Localização excluída com sucesso</string>
     <string name="location_name">Nome da localização</string>
@@ -46,6 +51,7 @@
     <string name="no_decks">Nenhum deck disponível</string>
     <string name="no_locations">Nenhuma localização cadastrada</string>
     <string name="open">Abrir</string>
+    <string name="project_id" translatable="false">vcstudy-5adb5</string>
     <string name="quality_1">Muito difícil</string>
     <string name="quality_2">Difícil</string>
     <string name="quality_3">Bom</string>
