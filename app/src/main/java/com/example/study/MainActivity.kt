@@ -1,28 +1,124 @@
 package com.example.study
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import com.example.study.ui.StudyApp
 
 class MainActivity : ComponentActivity() {
+    
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val allGranted = permissions.values.all { it }
+        if (allGranted) {
+            android.util.Log.d("MainActivity", "Todas as permissões concedidas")
+        } else {
+            android.util.Log.w("MainActivity", "Algumas permissões foram negadas")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
+        // Solicitar permissões necessárias
+        requestPermissions()
+
+        // Processar extras da notificação/geofencing
+        val locationId = intent.getStringExtra("locationId")
+        val preferredCardTypes = intent.getStringArrayExtra("preferredCardTypes")
+        val intelligentRotation = intent.getBooleanExtra("intelligentRotation", false)
+        val source = intent.getStringExtra("source")
+        val locationName = intent.getStringExtra("locationName")
+
+        // Log para debug
+        android.util.Log.d("MainActivity", "Intent extras:")
+        android.util.Log.d("MainActivity", "locationId: $locationId")
+        android.util.Log.d("MainActivity", "preferredCardTypes: ${preferredCardTypes?.joinToString()}")
+        android.util.Log.d("MainActivity", "intelligentRotation: $intelligentRotation")
+        android.util.Log.d("MainActivity", "source: $source")
+        android.util.Log.d("MainActivity", "locationName: $locationName")
+
+        if (intelligentRotation) {
+            android.util.Log.d("MainActivity", "Rotação inteligente ativada para localização: $locationId")
+            android.util.Log.d("MainActivity", "Tipos de cards preferidos: ${preferredCardTypes?.joinToString()}")
+        }
+
+        // Configuração para resolver problemas de hover - Otimização de Performance
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         setContent {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                StudyApp()
+                StudyApp(
+                    intelligentRotation = intelligentRotation,
+                    preferredCardTypes = preferredCardTypes?.toList() ?: emptyList(),
+                    locationId = locationId,
+                    source = source,
+                    locationName = locationName
+                )
             }
         }
+    }
+
+    private fun requestPermissions() {
+        val permissions = mutableListOf<String>()
+        
+        // Verificar e solicitar permissões de localização
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) 
+            != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) 
+            != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) 
+            != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        }
+        
+        // Verificar e solicitar permissão de notificação (Android 13+)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) 
+                != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+        
+        if (permissions.isNotEmpty()) {
+            requestPermissionLauncher.launch(permissions.toTypedArray())
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Limpa recursos para evitar memory leaks
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.study.ui.screens
 
+import android.widget.Space
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -49,6 +50,14 @@ fun DecksScreen(
     var showDeleteDialog by remember { mutableStateOf<Deck?>(null) }
     var searchQuery by remember { mutableStateOf("") }
     var isGridView by remember { mutableStateOf(true) }
+    var flashcardCounts by remember { mutableStateOf<Map<Long, Int>>(emptyMap()) }
+
+    LaunchedEffect(decks) {
+        decks.forEach { deck ->
+            val count = deckViewModel.getFlashcardCountForDeck(deck.id)
+            flashcardCounts = flashcardCounts + (deck.id to count)
+        }
+    }
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -76,7 +85,7 @@ fun DecksScreen(
         } else {
             decks.filter { deck ->
                 deck.name.contains(searchQuery, ignoreCase = true) ||
-                        deck.theme.contains(searchQuery, ignoreCase = true)
+                deck.theme.contains(searchQuery, ignoreCase = true)
             }
         }
     }
@@ -149,6 +158,7 @@ fun DecksScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Search bar
             SearchBar(
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
@@ -157,6 +167,7 @@ fun DecksScreen(
 
             if (filteredDecks.isEmpty()) {
                 if (decks.isEmpty()) {
+                    // No decks at all
                     StudyEmptyState(
                         title = "Nenhum deck criado",
                         subtitle = "Crie seu primeiro deck manualmente ou use a IA para gerar um para você!",
@@ -168,9 +179,10 @@ fun DecksScreen(
                             .padding(32.dp)
                     )
                 } else {
+                    // No decks match search
                     StudyEmptyState(
                         title = "Nenhum deck encontrado",
-                        subtitle = "Tente ajustar sua busca",
+                        subtitle = "Tente ajustar sua busca ou criar um novo deck",
                         icon = Icons.Default.SearchOff,
                         modifier = Modifier
                             .fillMaxSize()
@@ -181,6 +193,7 @@ fun DecksScreen(
                 if (isGridView) {
                     DecksGrid(
                         decks = filteredDecks,
+                        flashcardCounts = flashcardCounts,
                         onDeckClick = { deck -> onNavigateToFlashcards(deck.id, deck.name) },
                         onEditClick = { deck -> deckToEdit = deck },
                         onDeleteClick = { deck -> showDeleteDialog = deck },
@@ -189,6 +202,7 @@ fun DecksScreen(
                 } else {
                     DecksList(
                         decks = filteredDecks,
+                        flashcardCounts = flashcardCounts,
                         onDeckClick = { deck -> onNavigateToFlashcards(deck.id, deck.name) },
                         onEditClick = { deck -> deckToEdit = deck },
                         onDeleteClick = { deck -> showDeleteDialog = deck },
@@ -199,6 +213,7 @@ fun DecksScreen(
         }
     }
 
+    // Add/Edit Deck Dialog
     if (showAddDeckDialog || deckToEdit != null) {
         AddEditDeckDialog(
             deck = deckToEdit,
@@ -276,6 +291,7 @@ private fun SearchBar(
 @Composable
 private fun DecksGrid(
     decks: List<Deck>,
+    flashcardCounts: Map<Long, Int>,
     onDeckClick: (Deck) -> Unit,
     onEditClick: (Deck) -> Unit,
     onDeleteClick: (Deck) -> Unit,
@@ -291,6 +307,7 @@ private fun DecksGrid(
         items(decks, key = { it.id }) { deck ->
             DeckGridItem(
                 deck = deck,
+                flashcardCount = flashcardCounts[deck.id] ?: 0,
                 onClick = { onDeckClick(deck) },
                 onEditClick = { onEditClick(deck) },
                 onDeleteClick = { onDeleteClick(deck) },
@@ -308,6 +325,7 @@ private fun DecksGrid(
 @Composable
 private fun DecksList(
     decks: List<Deck>,
+    flashcardCounts: Map<Long, Int>,
     onDeckClick: (Deck) -> Unit,
     onEditClick: (Deck) -> Unit,
     onDeleteClick: (Deck) -> Unit,
@@ -321,6 +339,7 @@ private fun DecksList(
         items(decks, key = { it.id }) { deck ->
             DeckListItem(
                 deck = deck,
+                flashcardCount = flashcardCounts[deck.id] ?: 0,
                 onClick = { onDeckClick(deck) },
                 onEditClick = { onEditClick(deck) },
                 onDeleteClick = { onDeleteClick(deck) }
@@ -332,6 +351,7 @@ private fun DecksList(
 @Composable
 private fun DeckGridItem(
     deck: Deck,
+    flashcardCount: Int,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -431,7 +451,7 @@ private fun DeckGridItem(
             Spacer(modifier = Modifier.height(12.dp))
 
             StudyChip(
-                text = "0 cards",
+                text = "$flashcardCount cards", // Usa número real de cards
                 selected = false
             )
         }
@@ -441,6 +461,7 @@ private fun DeckGridItem(
 @Composable
 private fun DeckListItem(
     deck: Deck,
+    flashcardCount: Int,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -495,7 +516,7 @@ private fun DeckListItem(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "0 flashcards",
+                    text = "$flashcardCount flashcards",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -563,6 +584,7 @@ private fun AddEditDeckDialog(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                // Header
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -600,6 +622,7 @@ private fun AddEditDeckDialog(
                     )
                 }
 
+                // Form Fields
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -646,6 +669,7 @@ private fun AddEditDeckDialog(
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
+                // Action Buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -715,7 +739,7 @@ private fun DeleteDeckDialog(
             StudyButton(
                 onClick = onConfirm,
                 text = "Excluir",
-                variant = ButtonVariant.Primary
+                variant = ButtonVariant.Primary // TODO: Add error variant
             )
         },
         dismissButton = {

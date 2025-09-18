@@ -14,6 +14,9 @@ interface FavoriteLocationDao {
     
     @Query("SELECT * FROM favorite_locations")
     fun getAllFavoriteLocationsFlow(): Flow<List<FavoriteLocation>>
+    
+    @Query("SELECT * FROM favorite_locations")
+    suspend fun getAllFavoriteLocationsSync(): List<FavoriteLocation>
 
     @Query("SELECT * FROM favorite_locations WHERE id = :id")
     suspend fun getFavoriteLocationById(id: String): FavoriteLocation?

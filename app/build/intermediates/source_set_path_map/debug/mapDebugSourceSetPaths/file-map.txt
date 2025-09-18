@@ -1,85 +1,85 @@
-com.example.study.app-jetified-ui-tooling-data-release-0 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\046271f1c6df6ab0af1d3e2132583467\transformed\jetified-ui-tooling-data-release\res
-com.example.study.app-jetified-navigation-compose-2.7.6-1 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\0707d53ccc47c6d3b1bf08764144aff5\transformed\jetified-navigation-compose-2.7.6\res
-com.example.study.app-jetified-ui-tooling-preview-release-2 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\07e8d31b30405a9a610d482f2e327f50\transformed\jetified-ui-tooling-preview-release\res
-com.example.study.app-jetified-appcompat-resources-1.7.0-3 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\08804db50562bf62ba90d6c315caf8e7\transformed\jetified-appcompat-resources-1.7.0\res
-com.example.study.app-jetified-material-icons-extended-release-4 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\0ca6803fbad29dece2e71cb393843fca\transformed\jetified-material-icons-extended-release\res
-com.example.study.app-jetified-play-services-basement-18.3.0-5 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\res
-com.example.study.app-constraintlayout-2.1.4-6 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1c94e661bfe59794b787734e2a20c86d\transformed\constraintlayout-2.1.4\res
-com.example.study.app-core-runtime-2.2.0-7 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1dcf0af99ec7f03757ee9fb596427a1a\transformed\core-runtime-2.2.0\res
-com.example.study.app-material-1.12.0-8 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1dffefb89bd69c9df22a8377209e5dba\transformed\material-1.12.0\res
-com.example.study.app-jetified-activity-ktx-1.9.0-9 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\1e52f1f6145f4e02cdb86ff19660f0eb\transformed\jetified-activity-ktx-1.9.0\res
-com.example.study.app-jetified-hilt-navigation-1.2.0-10 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\2330fef32d0dbd63f04cb43ec3b88dc7\transformed\jetified-hilt-navigation-1.2.0\res
-com.example.study.app-jetified-lifecycle-livedata-core-ktx-2.8.1-11 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\2838abf22ffc7941705d5fc62e250fad\transformed\jetified-lifecycle-livedata-core-ktx-2.8.1\res
-com.example.study.app-jetified-ui-tooling-release-12 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\res
-com.example.study.app-jetified-material-release-13 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\2a461af34efb80da9a6b897934eca7cd\transformed\jetified-material-release\res
-com.example.study.app-jetified-lottie-6.1.0-14 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\2d8b181d7165a12ec3a6659ef3403253\transformed\jetified-lottie-6.1.0\res
-com.example.study.app-jetified-animation-release-15 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\2df56cec826da2daadc10236ed5572d9\transformed\jetified-animation-release\res
-com.example.study.app-cardview-1.0.0-16 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\30357d83a1aef96e2bfc00735fdc399d\transformed\cardview-1.0.0\res
-com.example.study.app-navigation-common-ktx-2.7.6-17 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3295fa96a2a5c4bdf09c7d0c4a3de996\transformed\navigation-common-ktx-2.7.6\res
-com.example.study.app-navigation-common-2.7.6-18 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\339b08d3b4a130ef0739d52856dfd914\transformed\navigation-common-2.7.6\res
-com.example.study.app-jetified-profileinstaller-1.3.1-19 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\res
-com.example.study.app-jetified-lifecycle-runtime-ktx-release-20 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3a0da07e8b1a17a622f2d85efc0669cc\transformed\jetified-lifecycle-runtime-ktx-release\res
-com.example.study.app-room-runtime-2.6.1-21 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\res
-com.example.study.app-jetified-lifecycle-viewmodel-compose-release-22 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3ada858ad35aad248d891ad6cc60bd0b\transformed\jetified-lifecycle-viewmodel-compose-release\res
-com.example.study.app-jetified-media3-exoplayer-1.3.1-23 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3b1ddf1c598d38c6cf2c67d75a791b4f\transformed\jetified-media3-exoplayer-1.3.1\res
-com.example.study.app-jetified-ui-unit-release-24 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\3e558b4094104d9e2bbd2dc8bde7cc6a\transformed\jetified-ui-unit-release\res
-com.example.study.app-transition-1.5.0-25 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\409468624a0b1402f0fc480e26ad7098\transformed\transition-1.5.0\res
-com.example.study.app-jetified-material-ripple-release-26 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\450744c9c368c5fca7f80970b5c413d9\transformed\jetified-material-ripple-release\res
-com.example.study.app-jetified-material3-window-size-class-release-27 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\476d23107a87c9e4654fb8971a392645\transformed\jetified-material3-window-size-class-release\res
-com.example.study.app-sqlite-framework-2.4.0-28 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\559abb1e0872d0c021a7cfcb2f867f84\transformed\sqlite-framework-2.4.0\res
-com.example.study.app-jetified-customview-poolingcontainer-1.0.0-29 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\572a2a14528b1644e045540f59e7bb05\transformed\jetified-customview-poolingcontainer-1.0.0\res
-com.example.study.app-jetified-lifecycle-viewmodel-ktx-2.8.1-30 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\5e44275ec6df67a0131c6b8a60fbdae2\transformed\jetified-lifecycle-viewmodel-ktx-2.8.1\res
-com.example.study.app-jetified-material3-release-31 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\5fa01b23b582bd5851d87b7ac5e02e3f\transformed\jetified-material3-release\res
-com.example.study.app-jetified-ui-util-release-32 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\62d29a675f2f012e413f56fdc7dba3dd\transformed\jetified-ui-util-release\res
-com.example.study.app-lifecycle-livedata-2.8.1-33 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\673f2259edc939066d1358350f37fe4e\transformed\lifecycle-livedata-2.8.1\res
-com.example.study.app-jetified-play-services-maps-18.2.0-34 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\res
-com.example.study.app-navigation-runtime-2.7.6-35 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\792c86387a2e52f84f007b722879491d\transformed\navigation-runtime-2.7.6\res
-com.example.study.app-jetified-lifecycle-livedata-ktx-2.8.1-36 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\7aadabbef4ad55921a83f35c5f85469e\transformed\jetified-lifecycle-livedata-ktx-2.8.1\res
-com.example.study.app-jetified-material-icons-core-release-37 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\829fabbc5613b5a90d0b8f91f2f78a74\transformed\jetified-material-icons-core-release\res
-com.example.study.app-jetified-savedstate-1.2.1-38 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\845a6dbd992adf20ff85ade1dda9b2eb\transformed\jetified-savedstate-1.2.1\res
-com.example.study.app-jetified-annotation-experimental-1.4.0-39 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\850aa33b780afe2be9067e36ba6545b9\transformed\jetified-annotation-experimental-1.4.0\res
-com.example.study.app-jetified-activity-1.9.0-40 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\90fce2aeed73fcb92119ecda6f8f0109\transformed\jetified-activity-1.9.0\res
-com.example.study.app-jetified-lifecycle-runtime-compose-release-41 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\92ad6305adddb97390f888a6b434563f\transformed\jetified-lifecycle-runtime-compose-release\res
-com.example.study.app-jetified-viewpager2-1.0.0-42 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\9d1345687ad791e74b19c25c9e1fdc97\transformed\jetified-viewpager2-1.0.0\res
-com.example.study.app-navigation-runtime-ktx-2.7.6-43 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\9dc8c7184e0589a835848ad738464c44\transformed\navigation-runtime-ktx-2.7.6\res
-com.example.study.app-jetified-foundation-layout-release-44 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\9dd95c7acb7b1b29f666ab3dc2c5b8a0\transformed\jetified-foundation-layout-release\res
-com.example.study.app-jetified-core-ktx-1.13.1-45 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\9e2e9671154e234ac8791c3b53a1f21f\transformed\jetified-core-ktx-1.13.1\res
-com.example.study.app-jetified-emoji2-1.3.0-46 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\res
-com.example.study.app-jetified-places-3.3.0-47 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\res
-com.example.study.app-jetified-ui-text-release-48 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a50da189b2a2cc86c9d1d6ba7476f72f\transformed\jetified-ui-text-release\res
-com.example.study.app-fragment-1.5.4-49 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a8a92adfdfe5c52ce074e636d262b28d\transformed\fragment-1.5.4\res
-com.example.study.app-jetified-emoji2-views-helper-1.3.0-50 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\a93a4f88a43707cef9430b1d9339c7a6\transformed\jetified-emoji2-views-helper-1.3.0\res
-com.example.study.app-jetified-ui-release-51 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\aabbcb60de70ee418d144197c8ac833e\transformed\jetified-ui-release\res
-com.example.study.app-jetified-hilt-navigation-compose-1.2.0-52 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\b179a9dc3c06376720efdd1577d38478\transformed\jetified-hilt-navigation-compose-1.2.0\res
-com.example.study.app-drawerlayout-1.1.1-53 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\b25e4356c698ad67cb4d717512e184e5\transformed\drawerlayout-1.1.1\res
-com.example.study.app-jetified-lifecycle-runtime-release-54 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\b62c05cc46096cbc5ec9c286a3f583ea\transformed\jetified-lifecycle-runtime-release\res
-com.example.study.app-recyclerview-1.1.0-55 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\b842ace1ef4c4abbcc9482e9f13e9f96\transformed\recyclerview-1.1.0\res
-com.example.study.app-jetified-room-ktx-2.6.1-56 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\b9f9f466a353b575d7426839674c6f39\transformed\jetified-room-ktx-2.6.1\res
-com.example.study.app-jetified-lifecycle-viewmodel-savedstate-2.8.1-57 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\bb2b3c17f32eb5715469834e137c6717\transformed\jetified-lifecycle-viewmodel-savedstate-2.8.1\res
-com.example.study.app-jetified-ui-geometry-release-58 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\bdbd5c61d8963522708a689b9e418e6e\transformed\jetified-ui-geometry-release\res
-com.example.study.app-coordinatorlayout-1.1.0-59 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\bf4b5063e538352452884b1cf98a2f45\transformed\coordinatorlayout-1.1.0\res
-com.example.study.app-core-1.13.1-60 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\c17e938958cd2f54bac15e7cee409b41\transformed\core-1.13.1\res
-com.example.study.app-jetified-runtime-release-61 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\c75634c0ccf985ebf1400cbbbe7ebb54\transformed\jetified-runtime-release\res
-com.example.study.app-sqlite-2.4.0-62 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\d2aee12e97e3bdff4ffe37360672c182\transformed\sqlite-2.4.0\res
-com.example.study.app-jetified-coil-base-2.6.0-63 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\d543f14ccff3493b734f972da4283448\transformed\jetified-coil-base-2.6.0\res
-com.example.study.app-jetified-animation-graphics-release-64 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\d56f7cc76501279721923fe4c9255227\transformed\jetified-animation-graphics-release\res
-com.example.study.app-jetified-startup-runtime-1.1.1-65 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\d7c4162b208d2c393c871deebc50fe06\transformed\jetified-startup-runtime-1.1.1\res
-com.example.study.app-jetified-animation-core-release-66 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\da998d1334fa11ba34f0fe7ca76b4b96\transformed\jetified-animation-core-release\res
-com.example.study.app-lifecycle-livedata-core-2.8.1-67 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e60db73c9bddc6ea91fb812ccc13b3c3\transformed\lifecycle-livedata-core-2.8.1\res
-com.example.study.app-jetified-window-1.0.0-68 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\res
-com.example.study.app-jetified-activity-compose-1.9.0-69 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\e947d2b3f8f34c1d80c050b63bba0ea6\transformed\jetified-activity-compose-1.9.0\res
-com.example.study.app-jetified-runtime-saveable-release-70 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea26e8df9f2fbac12d2d3473c6d4178b\transformed\jetified-runtime-saveable-release\res
-com.example.study.app-jetified-play-services-base-18.3.0-71 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\res
-com.example.study.app-jetified-ui-graphics-release-72 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ee084e2d87bea91b303813bba58ad5a7\transformed\jetified-ui-graphics-release\res
-com.example.study.app-jetified-lifecycle-process-2.8.1-73 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\res
-com.example.study.app-jetified-savedstate-ktx-1.2.1-74 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f6a9ad8b3a82dd95a3e1cecdcbd54faf\transformed\jetified-savedstate-ktx-1.2.1\res
-com.example.study.app-jetified-ui-test-manifest-1.6.7-75 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\res
-com.example.study.app-appcompat-1.7.0-76 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\fa818efd0dd80c4332dac43c045fa781\transformed\appcompat-1.7.0\res
-com.example.study.app-jetified-lifecycle-viewmodel-release-77 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\fc432159b67dd2b628273249e1c0b1aa\transformed\jetified-lifecycle-viewmodel-release\res
-com.example.study.app-jetified-foundation-release-78 D:\Android\Android Studio\jbr\caches\8.10.2\transforms\ff65bad617a2c6b3a30ba99025b35e49\transformed\jetified-foundation-release\res
-com.example.study.app-resValues-79 D:\Android\AndroidStudioProjects\V.C.Study\app\build\generated\res\resValues\debug
-com.example.study.app-packageDebugResources-80 D:\Android\AndroidStudioProjects\V.C.Study\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.study.app-packageDebugResources-81 D:\Android\AndroidStudioProjects\V.C.Study\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.study.app-debug-82 D:\Android\AndroidStudioProjects\V.C.Study\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.example.study.app-debug-83 D:\Android\AndroidStudioProjects\V.C.Study\app\src\debug\res
-com.example.study.app-main-84 D:\Android\AndroidStudioProjects\V.C.Study\app\src\main\res
+com.example.study.app-resValues-0 C:\PlataformaDeAprendizagem\V.C.Study\app\build\generated\res\resValues\debug
+com.example.study.app-packageDebugResources-1 C:\PlataformaDeAprendizagem\V.C.Study\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.study.app-packageDebugResources-2 C:\PlataformaDeAprendizagem\V.C.Study\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.study.app-debug-3 C:\PlataformaDeAprendizagem\V.C.Study\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.study.app-debug-4 C:\PlataformaDeAprendizagem\V.C.Study\app\src\debug\res
+com.example.study.app-main-5 C:\PlataformaDeAprendizagem\V.C.Study\app\src\main\res
+com.example.study.app-jetified-ui-tooling-data-release-6 C:\Users\patri\.gradle\caches\8.10.2\transforms\046271f1c6df6ab0af1d3e2132583467\transformed\jetified-ui-tooling-data-release\res
+com.example.study.app-jetified-navigation-compose-2.7.6-7 C:\Users\patri\.gradle\caches\8.10.2\transforms\0707d53ccc47c6d3b1bf08764144aff5\transformed\jetified-navigation-compose-2.7.6\res
+com.example.study.app-jetified-ui-tooling-preview-release-8 C:\Users\patri\.gradle\caches\8.10.2\transforms\07e8d31b30405a9a610d482f2e327f50\transformed\jetified-ui-tooling-preview-release\res
+com.example.study.app-jetified-appcompat-resources-1.7.0-9 C:\Users\patri\.gradle\caches\8.10.2\transforms\08804db50562bf62ba90d6c315caf8e7\transformed\jetified-appcompat-resources-1.7.0\res
+com.example.study.app-jetified-material-icons-extended-release-10 C:\Users\patri\.gradle\caches\8.10.2\transforms\0ca6803fbad29dece2e71cb393843fca\transformed\jetified-material-icons-extended-release\res
+com.example.study.app-jetified-play-services-basement-18.3.0-11 C:\Users\patri\.gradle\caches\8.10.2\transforms\1b83b6b33452b5699ecc75ed56003719\transformed\jetified-play-services-basement-18.3.0\res
+com.example.study.app-constraintlayout-2.1.4-12 C:\Users\patri\.gradle\caches\8.10.2\transforms\1c94e661bfe59794b787734e2a20c86d\transformed\constraintlayout-2.1.4\res
+com.example.study.app-core-runtime-2.2.0-13 C:\Users\patri\.gradle\caches\8.10.2\transforms\1dcf0af99ec7f03757ee9fb596427a1a\transformed\core-runtime-2.2.0\res
+com.example.study.app-material-1.12.0-14 C:\Users\patri\.gradle\caches\8.10.2\transforms\1dffefb89bd69c9df22a8377209e5dba\transformed\material-1.12.0\res
+com.example.study.app-jetified-activity-ktx-1.9.0-15 C:\Users\patri\.gradle\caches\8.10.2\transforms\1e52f1f6145f4e02cdb86ff19660f0eb\transformed\jetified-activity-ktx-1.9.0\res
+com.example.study.app-jetified-hilt-navigation-1.2.0-16 C:\Users\patri\.gradle\caches\8.10.2\transforms\2330fef32d0dbd63f04cb43ec3b88dc7\transformed\jetified-hilt-navigation-1.2.0\res
+com.example.study.app-jetified-lifecycle-livedata-core-ktx-2.8.1-17 C:\Users\patri\.gradle\caches\8.10.2\transforms\2838abf22ffc7941705d5fc62e250fad\transformed\jetified-lifecycle-livedata-core-ktx-2.8.1\res
+com.example.study.app-jetified-ui-tooling-release-18 C:\Users\patri\.gradle\caches\8.10.2\transforms\297529e48fd690a210ed0288dd3b2939\transformed\jetified-ui-tooling-release\res
+com.example.study.app-jetified-material-release-19 C:\Users\patri\.gradle\caches\8.10.2\transforms\2a461af34efb80da9a6b897934eca7cd\transformed\jetified-material-release\res
+com.example.study.app-jetified-lottie-6.1.0-20 C:\Users\patri\.gradle\caches\8.10.2\transforms\2d8b181d7165a12ec3a6659ef3403253\transformed\jetified-lottie-6.1.0\res
+com.example.study.app-jetified-animation-release-21 C:\Users\patri\.gradle\caches\8.10.2\transforms\2df56cec826da2daadc10236ed5572d9\transformed\jetified-animation-release\res
+com.example.study.app-cardview-1.0.0-22 C:\Users\patri\.gradle\caches\8.10.2\transforms\30357d83a1aef96e2bfc00735fdc399d\transformed\cardview-1.0.0\res
+com.example.study.app-navigation-common-ktx-2.7.6-23 C:\Users\patri\.gradle\caches\8.10.2\transforms\3295fa96a2a5c4bdf09c7d0c4a3de996\transformed\navigation-common-ktx-2.7.6\res
+com.example.study.app-navigation-common-2.7.6-24 C:\Users\patri\.gradle\caches\8.10.2\transforms\339b08d3b4a130ef0739d52856dfd914\transformed\navigation-common-2.7.6\res
+com.example.study.app-jetified-profileinstaller-1.3.1-25 C:\Users\patri\.gradle\caches\8.10.2\transforms\377bac7923cf54e18b81751c5380de60\transformed\jetified-profileinstaller-1.3.1\res
+com.example.study.app-jetified-lifecycle-runtime-ktx-release-26 C:\Users\patri\.gradle\caches\8.10.2\transforms\3a0da07e8b1a17a622f2d85efc0669cc\transformed\jetified-lifecycle-runtime-ktx-release\res
+com.example.study.app-room-runtime-2.6.1-27 C:\Users\patri\.gradle\caches\8.10.2\transforms\3ab109568f4299bbe39bb007eb658d77\transformed\room-runtime-2.6.1\res
+com.example.study.app-jetified-lifecycle-viewmodel-compose-release-28 C:\Users\patri\.gradle\caches\8.10.2\transforms\3ada858ad35aad248d891ad6cc60bd0b\transformed\jetified-lifecycle-viewmodel-compose-release\res
+com.example.study.app-jetified-media3-exoplayer-1.3.1-29 C:\Users\patri\.gradle\caches\8.10.2\transforms\3b1ddf1c598d38c6cf2c67d75a791b4f\transformed\jetified-media3-exoplayer-1.3.1\res
+com.example.study.app-jetified-ui-unit-release-30 C:\Users\patri\.gradle\caches\8.10.2\transforms\3e558b4094104d9e2bbd2dc8bde7cc6a\transformed\jetified-ui-unit-release\res
+com.example.study.app-transition-1.5.0-31 C:\Users\patri\.gradle\caches\8.10.2\transforms\409468624a0b1402f0fc480e26ad7098\transformed\transition-1.5.0\res
+com.example.study.app-jetified-material-ripple-release-32 C:\Users\patri\.gradle\caches\8.10.2\transforms\450744c9c368c5fca7f80970b5c413d9\transformed\jetified-material-ripple-release\res
+com.example.study.app-jetified-material3-window-size-class-release-33 C:\Users\patri\.gradle\caches\8.10.2\transforms\476d23107a87c9e4654fb8971a392645\transformed\jetified-material3-window-size-class-release\res
+com.example.study.app-sqlite-framework-2.4.0-34 C:\Users\patri\.gradle\caches\8.10.2\transforms\559abb1e0872d0c021a7cfcb2f867f84\transformed\sqlite-framework-2.4.0\res
+com.example.study.app-jetified-customview-poolingcontainer-1.0.0-35 C:\Users\patri\.gradle\caches\8.10.2\transforms\572a2a14528b1644e045540f59e7bb05\transformed\jetified-customview-poolingcontainer-1.0.0\res
+com.example.study.app-jetified-lifecycle-viewmodel-ktx-2.8.1-36 C:\Users\patri\.gradle\caches\8.10.2\transforms\5e44275ec6df67a0131c6b8a60fbdae2\transformed\jetified-lifecycle-viewmodel-ktx-2.8.1\res
+com.example.study.app-jetified-material3-release-37 C:\Users\patri\.gradle\caches\8.10.2\transforms\5fa01b23b582bd5851d87b7ac5e02e3f\transformed\jetified-material3-release\res
+com.example.study.app-jetified-ui-util-release-38 C:\Users\patri\.gradle\caches\8.10.2\transforms\62d29a675f2f012e413f56fdc7dba3dd\transformed\jetified-ui-util-release\res
+com.example.study.app-lifecycle-livedata-2.8.1-39 C:\Users\patri\.gradle\caches\8.10.2\transforms\673f2259edc939066d1358350f37fe4e\transformed\lifecycle-livedata-2.8.1\res
+com.example.study.app-jetified-play-services-maps-18.2.0-40 C:\Users\patri\.gradle\caches\8.10.2\transforms\771ed2ddc2d8d76f1ae3a1e7c7d1b81e\transformed\jetified-play-services-maps-18.2.0\res
+com.example.study.app-navigation-runtime-2.7.6-41 C:\Users\patri\.gradle\caches\8.10.2\transforms\792c86387a2e52f84f007b722879491d\transformed\navigation-runtime-2.7.6\res
+com.example.study.app-jetified-lifecycle-livedata-ktx-2.8.1-42 C:\Users\patri\.gradle\caches\8.10.2\transforms\7aadabbef4ad55921a83f35c5f85469e\transformed\jetified-lifecycle-livedata-ktx-2.8.1\res
+com.example.study.app-jetified-material-icons-core-release-43 C:\Users\patri\.gradle\caches\8.10.2\transforms\829fabbc5613b5a90d0b8f91f2f78a74\transformed\jetified-material-icons-core-release\res
+com.example.study.app-jetified-savedstate-1.2.1-44 C:\Users\patri\.gradle\caches\8.10.2\transforms\845a6dbd992adf20ff85ade1dda9b2eb\transformed\jetified-savedstate-1.2.1\res
+com.example.study.app-jetified-annotation-experimental-1.4.0-45 C:\Users\patri\.gradle\caches\8.10.2\transforms\850aa33b780afe2be9067e36ba6545b9\transformed\jetified-annotation-experimental-1.4.0\res
+com.example.study.app-jetified-activity-1.9.0-46 C:\Users\patri\.gradle\caches\8.10.2\transforms\90fce2aeed73fcb92119ecda6f8f0109\transformed\jetified-activity-1.9.0\res
+com.example.study.app-jetified-lifecycle-runtime-compose-release-47 C:\Users\patri\.gradle\caches\8.10.2\transforms\92ad6305adddb97390f888a6b434563f\transformed\jetified-lifecycle-runtime-compose-release\res
+com.example.study.app-jetified-viewpager2-1.0.0-48 C:\Users\patri\.gradle\caches\8.10.2\transforms\9d1345687ad791e74b19c25c9e1fdc97\transformed\jetified-viewpager2-1.0.0\res
+com.example.study.app-navigation-runtime-ktx-2.7.6-49 C:\Users\patri\.gradle\caches\8.10.2\transforms\9dc8c7184e0589a835848ad738464c44\transformed\navigation-runtime-ktx-2.7.6\res
+com.example.study.app-jetified-foundation-layout-release-50 C:\Users\patri\.gradle\caches\8.10.2\transforms\9dd95c7acb7b1b29f666ab3dc2c5b8a0\transformed\jetified-foundation-layout-release\res
+com.example.study.app-jetified-core-ktx-1.13.1-51 C:\Users\patri\.gradle\caches\8.10.2\transforms\9e2e9671154e234ac8791c3b53a1f21f\transformed\jetified-core-ktx-1.13.1\res
+com.example.study.app-jetified-emoji2-1.3.0-52 C:\Users\patri\.gradle\caches\8.10.2\transforms\a01e2b7bc1e477d26d0387ce2af343e3\transformed\jetified-emoji2-1.3.0\res
+com.example.study.app-jetified-places-3.3.0-53 C:\Users\patri\.gradle\caches\8.10.2\transforms\a0c580f7e6d3c8593ce383dd46f3b7a8\transformed\jetified-places-3.3.0\res
+com.example.study.app-jetified-ui-text-release-54 C:\Users\patri\.gradle\caches\8.10.2\transforms\a50da189b2a2cc86c9d1d6ba7476f72f\transformed\jetified-ui-text-release\res
+com.example.study.app-fragment-1.5.4-55 C:\Users\patri\.gradle\caches\8.10.2\transforms\a8a92adfdfe5c52ce074e636d262b28d\transformed\fragment-1.5.4\res
+com.example.study.app-jetified-emoji2-views-helper-1.3.0-56 C:\Users\patri\.gradle\caches\8.10.2\transforms\a93a4f88a43707cef9430b1d9339c7a6\transformed\jetified-emoji2-views-helper-1.3.0\res
+com.example.study.app-jetified-ui-release-57 C:\Users\patri\.gradle\caches\8.10.2\transforms\aabbcb60de70ee418d144197c8ac833e\transformed\jetified-ui-release\res
+com.example.study.app-jetified-hilt-navigation-compose-1.2.0-58 C:\Users\patri\.gradle\caches\8.10.2\transforms\b179a9dc3c06376720efdd1577d38478\transformed\jetified-hilt-navigation-compose-1.2.0\res
+com.example.study.app-drawerlayout-1.1.1-59 C:\Users\patri\.gradle\caches\8.10.2\transforms\b25e4356c698ad67cb4d717512e184e5\transformed\drawerlayout-1.1.1\res
+com.example.study.app-jetified-lifecycle-runtime-release-60 C:\Users\patri\.gradle\caches\8.10.2\transforms\b62c05cc46096cbc5ec9c286a3f583ea\transformed\jetified-lifecycle-runtime-release\res
+com.example.study.app-recyclerview-1.1.0-61 C:\Users\patri\.gradle\caches\8.10.2\transforms\b842ace1ef4c4abbcc9482e9f13e9f96\transformed\recyclerview-1.1.0\res
+com.example.study.app-jetified-room-ktx-2.6.1-62 C:\Users\patri\.gradle\caches\8.10.2\transforms\b9f9f466a353b575d7426839674c6f39\transformed\jetified-room-ktx-2.6.1\res
+com.example.study.app-jetified-lifecycle-viewmodel-savedstate-2.8.1-63 C:\Users\patri\.gradle\caches\8.10.2\transforms\bb2b3c17f32eb5715469834e137c6717\transformed\jetified-lifecycle-viewmodel-savedstate-2.8.1\res
+com.example.study.app-jetified-ui-geometry-release-64 C:\Users\patri\.gradle\caches\8.10.2\transforms\bdbd5c61d8963522708a689b9e418e6e\transformed\jetified-ui-geometry-release\res
+com.example.study.app-coordinatorlayout-1.1.0-65 C:\Users\patri\.gradle\caches\8.10.2\transforms\bf4b5063e538352452884b1cf98a2f45\transformed\coordinatorlayout-1.1.0\res
+com.example.study.app-core-1.13.1-66 C:\Users\patri\.gradle\caches\8.10.2\transforms\c17e938958cd2f54bac15e7cee409b41\transformed\core-1.13.1\res
+com.example.study.app-jetified-runtime-release-67 C:\Users\patri\.gradle\caches\8.10.2\transforms\c75634c0ccf985ebf1400cbbbe7ebb54\transformed\jetified-runtime-release\res
+com.example.study.app-sqlite-2.4.0-68 C:\Users\patri\.gradle\caches\8.10.2\transforms\d2aee12e97e3bdff4ffe37360672c182\transformed\sqlite-2.4.0\res
+com.example.study.app-jetified-coil-base-2.6.0-69 C:\Users\patri\.gradle\caches\8.10.2\transforms\d543f14ccff3493b734f972da4283448\transformed\jetified-coil-base-2.6.0\res
+com.example.study.app-jetified-animation-graphics-release-70 C:\Users\patri\.gradle\caches\8.10.2\transforms\d56f7cc76501279721923fe4c9255227\transformed\jetified-animation-graphics-release\res
+com.example.study.app-jetified-startup-runtime-1.1.1-71 C:\Users\patri\.gradle\caches\8.10.2\transforms\d7c4162b208d2c393c871deebc50fe06\transformed\jetified-startup-runtime-1.1.1\res
+com.example.study.app-jetified-animation-core-release-72 C:\Users\patri\.gradle\caches\8.10.2\transforms\da998d1334fa11ba34f0fe7ca76b4b96\transformed\jetified-animation-core-release\res
+com.example.study.app-lifecycle-livedata-core-2.8.1-73 C:\Users\patri\.gradle\caches\8.10.2\transforms\e60db73c9bddc6ea91fb812ccc13b3c3\transformed\lifecycle-livedata-core-2.8.1\res
+com.example.study.app-jetified-window-1.0.0-74 C:\Users\patri\.gradle\caches\8.10.2\transforms\e82751ebc83f3335fc0505331720063d\transformed\jetified-window-1.0.0\res
+com.example.study.app-jetified-activity-compose-1.9.0-75 C:\Users\patri\.gradle\caches\8.10.2\transforms\e947d2b3f8f34c1d80c050b63bba0ea6\transformed\jetified-activity-compose-1.9.0\res
+com.example.study.app-jetified-runtime-saveable-release-76 C:\Users\patri\.gradle\caches\8.10.2\transforms\ea26e8df9f2fbac12d2d3473c6d4178b\transformed\jetified-runtime-saveable-release\res
+com.example.study.app-jetified-play-services-base-18.3.0-77 C:\Users\patri\.gradle\caches\8.10.2\transforms\ea9ac43f5ec41296da788c90fd8d341a\transformed\jetified-play-services-base-18.3.0\res
+com.example.study.app-jetified-ui-graphics-release-78 C:\Users\patri\.gradle\caches\8.10.2\transforms\ee084e2d87bea91b303813bba58ad5a7\transformed\jetified-ui-graphics-release\res
+com.example.study.app-jetified-lifecycle-process-2.8.1-79 C:\Users\patri\.gradle\caches\8.10.2\transforms\f2ff06a0c976bc28b12d78a088453854\transformed\jetified-lifecycle-process-2.8.1\res
+com.example.study.app-jetified-savedstate-ktx-1.2.1-80 C:\Users\patri\.gradle\caches\8.10.2\transforms\f6a9ad8b3a82dd95a3e1cecdcbd54faf\transformed\jetified-savedstate-ktx-1.2.1\res
+com.example.study.app-jetified-ui-test-manifest-1.6.7-81 C:\Users\patri\.gradle\caches\8.10.2\transforms\f86ff474ad3f2ea15a3d060cd8b6e459\transformed\jetified-ui-test-manifest-1.6.7\res
+com.example.study.app-appcompat-1.7.0-82 C:\Users\patri\.gradle\caches\8.10.2\transforms\fa818efd0dd80c4332dac43c045fa781\transformed\appcompat-1.7.0\res
+com.example.study.app-jetified-lifecycle-viewmodel-release-83 C:\Users\patri\.gradle\caches\8.10.2\transforms\fc432159b67dd2b628273249e1c0b1aa\transformed\jetified-lifecycle-viewmodel-release\res
+com.example.study.app-jetified-foundation-release-84 C:\Users\patri\.gradle\caches\8.10.2\transforms\ff65bad617a2c6b3a30ba99025b35e49\transformed\jetified-foundation-release\res

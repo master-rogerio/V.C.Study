@@ -119,10 +119,14 @@ dependencies {
     // UI do Compose
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-text-android") //Adicionada
     implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.ui:ui-util") //Adicionada
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.animation:animation-graphics")
+
+
 
     // Integração do Compose com Activities e ViewModels
     implementation("androidx.activity:activity-compose:1.8.2")

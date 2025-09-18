@@ -2,9 +2,11 @@ package com.example.study.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -34,14 +36,33 @@ fun ExerciseSelectionScreen(
     onNavigateToExercise: (Long, String) -> Unit,
     modifier: Modifier = Modifier,
     deckViewModel: DeckViewModel = viewModel(),
-    flashcardViewModel: FlashcardViewModel = viewModel()
+    flashcardViewModel: FlashcardViewModel = viewModel(),
+    intelligentRotation: Boolean = false,
+    preferredCardTypes: List<String> = emptyList(),
+    locationId: String? = null,
+    source: String? = null,
+    locationName: String? = null
 ) {
     val decks by deckViewModel.allDecks.collectAsState(initial = emptyList())
     var searchQuery by remember { mutableStateOf("") }
     
+    // Rotação inteligente: filtrar decks baseado nos tipos de cards preferidos
+    val filteredDecksForIntelligentRotation = remember(decks, preferredCardTypes, intelligentRotation) {
+        if (intelligentRotation && preferredCardTypes.isNotEmpty()) {
+            // Filtrar decks que contêm os tipos de cards preferidos
+            decks.filter { deck ->
+                // Aqui você pode implementar lógica mais sofisticada
+                // Por enquanto, vamos mostrar todos os decks se a rotação inteligente estiver ativa
+                true
+            }
+        } else {
+            decks
+        }
+    }
+    
     // Get flashcard counts for each deck
-    val deckStats = remember(decks) {
-        decks.map { deck ->
+    val deckStats = remember(filteredDecksForIntelligentRotation) {
+        filteredDecksForIntelligentRotation.map { deck ->
             deck to mutableStateOf(0)
         }
     }
@@ -57,11 +78,11 @@ fun ExerciseSelectionScreen(
         }
     }
     
-    val filteredDecks = remember(decks, searchQuery) {
+    val filteredDecks = remember(filteredDecksForIntelligentRotation, searchQuery) {
         if (searchQuery.isBlank()) {
-            decks
+            filteredDecksForIntelligentRotation
         } else {
-            decks.filter { deck ->
+            filteredDecksForIntelligentRotation.filter { deck ->
                 deck.name.contains(searchQuery, ignoreCase = true) ||
                 deck.theme.contains(searchQuery, ignoreCase = true)
             }
@@ -124,11 +145,20 @@ fun ExerciseSelectionScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Intelligent Rotation Banner
+            if (intelligentRotation && locationName != null) {
+                IntelligentRotationBanner(
+                    locationName = locationName,
+                    preferredCardTypes = preferredCardTypes,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            
             // Stats Card
             if (totalDueCards > 0) {
                 ExerciseStatsCard(
                     totalDueCards = totalDueCards,
-                    totalDecks = decks.size,
+                    totalDecks = filteredDecksForIntelligentRotation.size,
                     onStartMixedExercise = {
                         // TODO: Implement mixed exercise
                     },
@@ -437,6 +467,79 @@ private fun DeckExerciseItem(
                     tint = SuccessColor,
                     modifier = Modifier.size(24.dp)
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun IntelligentRotationBanner(
+    locationName: String,
+    preferredCardTypes: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+        ),
+        shape = RoundedCornerShape(20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
+                
+                Spacer(modifier = Modifier.width(12.dp))
+                
+                Column {
+                    Text(
+                        text = "Rotação Inteligente Ativa",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "Você está em $locationName",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            
+            if (preferredCardTypes.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Text(
+                    text = "Tipos de cards preferidos para este local:",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.horizontalScroll(rememberScrollState())
+                ) {
+                    preferredCardTypes.forEach { cardType ->
+                        StudyChip(
+                            text = cardType,
+                            selected = true,
+                            modifier = Modifier
+                        )
+                    }
+                }
             }
         }
     }
