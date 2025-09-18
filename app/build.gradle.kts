@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -63,75 +64,73 @@ android {
 }
 
 dependencies {
+    // Firebase BOM (Bill of Materials) - Apenas uma versão, a mais recente
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    // Firebase Firestore - SEM versão, pois o BOM gere-a por nós
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
-    // Room components - versão mais recente
+
+    // Room components
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-    
-    // Gson para serialização/desserialização JSON
+
+    // Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
-    // Compose BOM - versão mais estável para API 28
-    val composeBom = platform("androidx.compose:compose-bom:2024.02.00") //Modificado era 2024.04.01
+    // Compose BOM
+    val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
-    // Material Design 3
+    // Material Design 3 & Compose UI
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material3:material3-window-size-class")
-
-    // UI do Compose
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-text-android") //Adicionada
+    implementation("androidx.compose.ui:ui-text-android")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.ui:ui-util") //Adicionada
+    implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.animation:animation-graphics")
+    implementation("androidx.compose.material:material-icons-extended")
 
-
-
-    // Integração do Compose com Activities e ViewModels
+    // Integração do Compose
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-
-    // Navigation Compose
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
-    // Ferramentas para preview e debug
+    // Ferramentas de debug
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    
+
     // Lifecycle components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    
+
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-    
-    // Places API for address autocomplete
+
+    // Places API
     implementation("com.google.android.libraries.places:places:3.3.0")
-    
-    // Lottie para animações
+
+    // Lottie
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("com.airbnb.android:lottie-compose:6.1.0")
 
-    // Icons extended
-    implementation("androidx.compose.material:material-icons-extended")
-    
+    // Testes
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

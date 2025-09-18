@@ -16,7 +16,11 @@ interface DeckDao {
     @Query("SELECT * FROM decks WHERE id = :id")
     suspend fun getDeckById(id: Long): Deck?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    // ADICIONE ESTA NOVA FUNÇÃO AQUI
+    @Query("SELECT * FROM decks WHERE firebaseId = :firebaseId LIMIT 1")
+    suspend fun getDeckByFirebaseId(firebaseId: String): Deck?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE) // Mude para REPLACE para facilitar updates
     suspend fun insert(deck: Deck): Long
 
     @Update
@@ -27,4 +31,4 @@ interface DeckDao {
 
     @Query("SELECT COUNT(*) FROM flashcards WHERE deckId = :deckId")
     suspend fun getFlashcardCountForDeck(deckId: Long): Int
-} 
+}

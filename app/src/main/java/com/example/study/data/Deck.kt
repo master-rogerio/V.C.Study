@@ -9,5 +9,6 @@ data class Deck(
     val id: Long = 0,
     val name: String,
     val theme: String,
-    val createdAt: Long = System.currentTimeMillis()
-) 
+    val createdAt: Long = System.currentTimeMillis(),
+    var firebaseId: String? = null // Usamos 'var' para poder atualizá-lo depois de inserir
+)

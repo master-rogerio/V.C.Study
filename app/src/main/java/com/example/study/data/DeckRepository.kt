@@ -24,4 +24,8 @@ class DeckRepository(private val deckDao: DeckDao) {
     suspend fun getFlashcardCountForDeck(deckId: Long): Int {
         return deckDao.getFlashcardCountForDeck(deckId)
     }
+
+    suspend fun getDeckByFirebaseId(firebaseId: String): Deck? {
+        return deckDao.getDeckByFirebaseId(firebaseId)
+    }
 } 
