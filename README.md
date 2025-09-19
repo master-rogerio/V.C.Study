@@ -149,6 +149,8 @@ graph TD
 
 ## 📸 Capturas de Tela do Aplicativo V.C. Study
 
+<br>
+Veja as capturas das principais telas do aplicativo V.C. Study:
 
 <table style="width: 100%; table-layout: fixed; text-align: center;">
   <tr>
@@ -174,7 +176,7 @@ graph TD
       <img src="extras/07.locais.jpg" alt="Localização" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/08.analytics" alt="Analytics Espaciais" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/08.analytics.jpg" alt="Analytics Espaciais" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
    
   </tr>
@@ -194,7 +196,11 @@ graph TD
 
 Veja o Video com o funcionamento do Aplicativo V.C. Study:
 
-<!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI -->
+
+https://github.com/user-attachments/assets/0b3a96eb-3c08-46d8-9635-7988ca814268
+
+
+
 
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
