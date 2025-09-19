@@ -153,28 +153,28 @@ graph TD
 <table style="width: 100%; table-layout: fixed; text-align: center;">
   <tr>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/01.home.jpg" alt="Login" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/01.home.jpg" alt="Home" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/02.decks.jpg" alt="Registro" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/02.decks.jpg" alt="Decks" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/03.flashcarddecks.jpg" alt="Sel. Quiz" style="width: 108 px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/03.flashcarddecks.jpg" alt="Flashcard" style="width: 108 px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/04.exercicios.jpg" alt="Quiz" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/04.exercicios.jpg" alt="Exercicio" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/05.Estudo.jpg" alt="Quiz Acerto" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/05.Estudo.jpg" alt="Frente" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/06.Estudo2.jpg" alt="Quiz Erro" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/06.Estudo2.jpg" alt="Verso" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/07.locais.jpg" alt="Hist. de Quizzes" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/07.locais.jpg" alt="Localização" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
     <td style="width: 12.5%; padding: 10px;">
-      <img src="extras/08.analytics" alt="Rank Pontuação" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+      <img src="extras/08.analytics" alt="Analytics Espaciais" style="width: 108px; height: 240px; object-fit: cover;"><br/>
     </td>
    
   </tr>
@@ -186,7 +186,7 @@ graph TD
     <td><strong>Frente</strong></td>
     <td><strong>Verso</strong></td>
     <td><strong>Localização</strong></td>
-    <td><strong>Análises</strong></td>
+    <td><strong>Analise Espaciais</strong></td>
   </tr>
 </table>
 
@@ -194,6 +194,7 @@ graph TD
 
 Veja o Video com o funcionamento do Aplicativo V.C. Study:
 
+<!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI --><!-- COLOCAR VIDEO AQUI -->
 
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
