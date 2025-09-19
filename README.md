@@ -5,6 +5,8 @@
 # Trabalho da Disciplina Programação para Dispositivos Móveis
 
 Repositório para o trabalho da disciplina Programação para Dispositivos Móveis do curso de Sistemas de Informação da Universidade Federal de Uberlândia.
+<br>
+Acesse aqui o relatório adicional. [Relatório.](https://github.com/master-rogerio/V.C.Study/blob/master/extras/Relat%C3%B3rioFinal%20PDM%20Trab6.pdf)
 ###### Por Arthur Henrique Cavalcante Rosa, Augusto de Faria Pereira, Danilo Eduardo Fonseca Souza, Luiz Fellipe Silva Lima, Eduardo Antonio da Silva, Ótavio Martins Gondim, Patrícia Fernandes Dornelas e Rogério Anastácio
 
 <br>
@@ -277,6 +279,39 @@ https://github.com/user-attachments/assets/0b3a96eb-3c08-46d8-9635-7988ca814268
 - Dispositivo Android com API 24+ ou Emulador
 
 ### **🔧 Configuração**
+
+Para instalar direto em seu dispositivo, siga os passos:
+
+1. **Baixe o APK**
+➡️ Disponível na página da [documentação de lançamento](https://github.com/master-rogerio/V.C.Study/releases/tag/1.0.0).
+
+2. **Transfira para seu smartphone**
+*Pode ser via cabo USB, bluetooth, e-mail ou diretamente do navegador do seu smartphone Android.*
+
+3. **Instale o APK**
+*Se certifique de que a opção de instalar de fontes desconhecidas esteja ativada.*
+
+#### **2. Configuração da API do Gemini**
+1. Acesse o [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Crie uma nova chave de API
+3. Abra o arquivo `local.properties` na raiz do projeto
+4. Adicione a chave:
+```properties
+GEMINI_API_KEY="SUA_API_KEY_AQUI"
+```
+
+#### **3. Configuração do Firebase (Opcional)**
+1. Acesse o [Firebase Console](https://console.firebase.google.com/)
+2. Crie um novo projeto
+3. Adicione um app Android
+4. Baixe o arquivo `google-services.json`
+5. Coloque na pasta `app/`
+
+
+<br>
+
+Ou também pode instalá-lo clonando o repositório atravez dos passos a seguir:
+
 
 #### **1. Clone o Repositório**
 ```bash
