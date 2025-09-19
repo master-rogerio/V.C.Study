@@ -110,13 +110,11 @@ graph TD
 - ✅ **Repetição Espaçada (SM-2)**: Algoritmo científico para otimizar revisões
 - ✅ **Exercícios Adaptativos**: Dificuldade ajustada baseada no desempenho
 - ✅ **Exercício Misto**: Combine flashcards de diferentes baralhos
-- ✅ **Sistema de Qualidade**: Avaliação de 1-5 para ajuste automático dos intervalos
 - ✅ **Estatísticas de Progresso**: Acompanhamento detalhado do aprendizado
 
 ### 🤖 **Inteligência Artificial**
 - ✅ **Geração Automática de Flashcards**: Crie conteúdo automaticamente com IA
 - ✅ **Quiz Inteligente**: Geração de perguntas personalizadas por tema
-- ✅ **Assistente Virtual (Viber.AI)**: Chat interativo para dúvidas
 - ✅ **Rotação Inteligente**: Sugestões baseadas em localização e preferências
 
 ### 📍 **Sistema de Localização**
@@ -134,7 +132,6 @@ graph TD
 ### 🔄 **Sincronização e Backup**
 - ✅ **Sincronização Firebase**: Backup automático na nuvem
 - ✅ **Sincronização Offline**: Funciona sem conexão
-- ✅ **Múltiplos Dispositivos**: Acesse seus dados em qualquer lugar
 - ✅ **Resolução de Conflitos**: Merge inteligente de dados
 
 ### 🎨 **Interface e Experiência**
@@ -333,7 +330,6 @@ O V.C. Study implementa o algoritmo SM-2 (SuperMemo 2) para otimizar o aprendiza
 - **Monitoramento Contínuo**: Detecta entrada/saída de áreas
 - **Notificações Inteligentes**: Lembretes contextuais
 - **Localizações Personalizadas**: Crie suas próprias áreas
-- **Raio Configurável**: Ajuste a sensibilidade (50-500m)
 
 ### **🔧 Configuração**
 1. **Adicionar Localização**: Toque no botão "+" na tela de Ambientes
@@ -357,20 +353,12 @@ O V.C. Study implementa o algoritmo SM-2 (SuperMemo 2) para otimizar o aprendiza
 ### **🧠 Gemini API Integration**
 - **Geração de Flashcards**: Crie conteúdo automaticamente
 - **Quiz Inteligente**: Perguntas personalizadas por tema
-- **Assistente Virtual**: Chat interativo para dúvidas
-- **Análise de Conteúdo**: Sugestões baseadas em IA
 
 ### **🎯 Tipos de Geração**
 1. **Frente e Verso**: Perguntas e respostas tradicionais
 2. **Múltipla Escolha**: Questões com 4 alternativas
 3. **Omissão de Palavras**: Complete as lacunas
 4. **Digite a Resposta**: Resposta livre com validação
-
-### **💬 Assistente Viber.AI**
-- **Chat Natural**: Conversação fluida
-- **Ações Rápidas**: Comandos pré-definidos
-- **Contexto de Estudo**: Entende seu progresso
-- **Sugestões Personalizadas**: Recomendações inteligentes
 
 <br>
 
@@ -432,12 +420,6 @@ O V.C. Study implementa o algoritmo SM-2 (SuperMemo 2) para otimizar o aprendiza
 - **Sincronização**: Controle backup automático
 - **Privacidade**: Gerencie dados compartilhados
 
-### **🔒 Segurança e Privacidade**
-- **Dados Locais**: Informações armazenadas localmente
-- **Criptografia**: Proteção de dados sensíveis
-- **Permissões**: Controle granular de acesso
-- **LGPD**: Conformidade com leis de proteção
-
 <br>
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
@@ -469,5 +451,5 @@ O V.C. Study implementa o algoritmo SM-2 (SuperMemo 2) para otimizar o aprendiza
 
 <div align="center">
   <p><strong>V.C. Study</strong> - Transformando o aprendizado através da tecnologia</p>
-  <p>Desenvolvido com ❤️ pelos alunos de Sistemas de Informação - UFU</p>
+  <p>Desenvolvido pelos alunos de Sistemas de Informação - UFU</p>
 </div>
