@@ -9,7 +9,7 @@ Repositório para o trabalho da disciplina Programação para Dispositivos Móve
 
 <br>
 <div align="center">
-  <img src="extras/pBookIcon.png" alt="VCStudyO Logo" width="300"/>
+  <img src="extras/pBookIcon.png" alt="VCStudyO Logo" width="500"/>
 </div>
 
 
