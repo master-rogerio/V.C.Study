@@ -7,6 +7,12 @@
 Repositório para o trabalho da disciplina Programação para Dispositivos Móveis do curso de Sistemas de Informação da Universidade Federal de Uberlândia.
 ###### Por Arthur Henrique Cavalcante Rosa, Augusto de Faria Pereira, Danilo Eduardo Fonseca Souza, Luiz Fellipe Silva Lima, Eduardo Antonio da Silva, Ótavio Martins Gondim, Patrícia Fernandes Dornelas e Rogério Anastácio
 
+<br>
+<div align="center">
+  <img src="extras/pBookIcon.png" alt="VCStudyO Logo" width="300"/>
+</div>
+
+
 
 ![Plataforma](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android)
 ![Linguagem](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin)
