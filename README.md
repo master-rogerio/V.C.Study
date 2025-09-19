@@ -30,6 +30,7 @@ Repositório para o trabalho da disciplina Programação para Dispositivos Móve
 * [ 📊 Diagrama de Arquitetura do Sistema](#-diagrama-de-arquitetura-do-sistema)
 * [ 📖 Sobre o Aplicativo](#-sobre-o-aplicativo)
 * [ ✅ Funcionalidades](#-funcionalidades)
+* [ 📸 Capturas de Tela do Aplicativo V.C. Study](#-capturas-de-tela-do-aplicativo-vc-study) 
 * [ 🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
 * [ 🚀 Como Executar o Projeto](#-como-executar-o-projeto)
 * [ 📱 Telas e Navegação](#-telas-e-navegação)
@@ -142,6 +143,58 @@ graph TD
 - ✅ **Acessibilidade**: Recursos para usuários com necessidades especiais
 
 <br>
+
+[Retornar ao 🧾Índice](#-%C3%ADndice)
+
+
+## 📸 Capturas de Tela do Aplicativo V.C. Study
+
+
+<table style="width: 100%; table-layout: fixed; text-align: center;">
+  <tr>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/01.home.jpg" alt="Login" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/02.decks.jpg" alt="Registro" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/03.flashcarddecks.jpg" alt="Sel. Quiz" style="width: 108 px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/04.exercicios.jpg" alt="Quiz" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/05.Estudo.jpg" alt="Quiz Acerto" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/06.Estudo2.jpg" alt="Quiz Erro" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/07.locais.jpg" alt="Hist. de Quizzes" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+    <td style="width: 12.5%; padding: 10px;">
+      <img src="extras/08.analytics" alt="Rank Pontuação" style="width: 108px; height: 240px; object-fit: cover;"><br/>
+    </td>
+   
+  </tr>
+  <tr>
+    <td><strong>Home</strong></td>
+    <td><strong>Decks</strong></td>
+    <td><strong>Flash Cards</strong></td>
+    <td><strong>Exercicios</strong></td>
+    <td><strong>Frente</strong></td>
+    <td><strong>Verso</strong></td>
+    <td><strong>Localização</strong></td>
+    <td><strong>Análises</strong></td>
+  </tr>
+</table>
+
+<br>
+
+Veja o Video com o funcionamento do Aplicativo V.C. Study:
+
+
 
 [Retornar ao 🧾Índice](#-%C3%ADndice)
 
